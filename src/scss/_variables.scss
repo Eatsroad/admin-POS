@@ -1,0 +1,14 @@
+// Breakpoints
+$breakpoint-mobile: 335px;
+$breakpoint-tablet: 758px;
+$breakpoint-desktop: 1024px;
+$height: 568px;
+
+$store-bold-font-size: ($breakpoint-mobile/15);
+$table-bold-font-size: ($breakpoint-mobile/25);
+
+// shared dimensions
+$header-height: 35px;
+
+// color scheme
+$base-color: #de7710;

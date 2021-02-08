@@ -1,0 +1,25 @@
+.PreferenceStorePage {
+  color: #000;
+
+  flex: 1;
+  height: 100%;
+
+  box-sizing: border-box;
+  padding: 45px 30px;
+
+  .block {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+}

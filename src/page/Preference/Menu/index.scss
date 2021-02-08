@@ -1,0 +1,27 @@
+@import 'scss/_variables';
+
+.PreferenceMenuPage {
+  color: #000;
+
+  flex: 1;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  .NavBar {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    background-color: #777;
+
+    .btn {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0px 30px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+.HomePage {
+  flex: 1;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+
+  .main {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .plane {
+      // flex: 1;
+      display: flex;
+      width: 100%;
+    }
+  }
+}
+
+body {
+  margin: 0;
+}
+
+.Menu {
+  font-size: 1rem;
+}
+
+.infoBar {
+  margin: 1vh 3vh 0 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.infoHr {
+  margin: 0;
+}
+
+.orderButtonClass {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.newOrderButton {
+  width: 50%;
+  background-color: white;
+  border: none;
+}
+.completeOrderButton {
+  width: 50%;
+  background-color: white;
+  border: none;
+}
+
+.buttonClicked {
+  background-color: #ff1b6d;
+  border: none;
+  color: white;
+}
+
+.radioDiv {
+  margin-top: 1vh;
+}
+
+.pageButton {
+  display: flex;
+  flex-direction: Row;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.circleButton {
+  font-size: 3rem;
+}

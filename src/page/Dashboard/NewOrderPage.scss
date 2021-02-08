@@ -1,0 +1,35 @@
+.NewOrderPage {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  flex: 1;
+
+  .config {
+    height: 30px;
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+  }
+  .container {
+    display: flex;
+    flex: 1;
+
+    .left {
+      background-color: #000;
+      color: #fff;
+
+      width: 330px;
+      height: 100%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .right {
+      flex: 1;
+      height: 100%;
+    }
+  }
+}
