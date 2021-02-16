@@ -1,5 +1,5 @@
 import { Action } from '@redux/Types';
-import { StoreAction } from '@redux/actions';
+import { OrderAction, StoreAction } from '@redux/actions';
 import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import firebase from 'firebase';
@@ -32,6 +32,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
                 description: action.payload.description,
                 price: action.payload.price,
                 categories: [...action.payload.categories],
+                optionGroups:[],
               }),
             })
             .then(() => {
@@ -50,14 +51,15 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
       .collection('stores')
       .where('ownerId', '==', getState().Auth.uid)
       .get()
-      .then((querySnapshot) =>
+      .then((querySnapshot) =>{
         querySnapshot.forEach((store) => {
+          dispatch(OrderAction.loadOrders(store.id));
           const { information, menu } = store.data();
           const { name, address, phone } = information;
           dispatch(StoreAction.setStoreInformation(name, address, phone));
           dispatch(StoreAction.setStoreMenu(menu));
         })
-      )
+      })
       .catch((e) => console.log(e));
   }
 
