@@ -6,10 +6,22 @@
   flex: 1;
 
   .config {
-    height: 30px;
+    display: flex;
+    height: 4.2%;
     width: 100%;
     background-color: #444;
     color:white;
+    text-align: center;
+    .OrderRadio{
+      margin: auto;
+      flex-grow: 1;
+      
+    }
+    .SpecificOrder{
+      margin: auto;
+      flex-grow: 1.8;
+    }
+
   }
   .container {
     display: flex;
@@ -18,30 +30,94 @@
       background-color: #000;
       color: black;
       width: 35.7%;
-      height: 93.6%;
+      height: 89%;
       display: grid;
-      row-gap: 8px;
+      row-gap: 1.2%;
       grid-template-rows: repeat(4,1fr);
+      padding-top: 8px;
+      padding-bottom: 8px;
       .NewOrder{
         width: 95.1%;
-        height: 156px;
+        // height: 23.5%;
         border-radius: 20px;
         background-color: white;
+        margin: 0 auto;
+        overflow: hidden;
+        
+        .NewOrderTable{
+          color: white;
+          background-color: #525252;
+          display: flex;
+          justify-content: space-between;
+          padding: 12px 20px 0 20px;
+          height: 34px;
+        }
+        .NewOrderContent{
+        }
+        .NewOrderPrice{
+          height: 46px;
+          display: flex;
+          margin-top: 18%;
+          .NewOrderSp{
+            flex-grow: 1;
+            background-color: #ff0000;
+            text-align: start;
+            
+            font-size: 15px;
+            font-weight: bold;
+            // padding-left: 18px;
+            color: white;
+            // padding-top: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .NewOrderItemPrice{
+            flex-grow: 4;
+            text-align: right;
+            margin-top: 12px;
+            margin-right: 20px;
+          }
+        }
       }
-      
+      .NoneNew{
+        margin:auto;
+        text-align: center;
+        color: white;
+      }
     }
-    .NewOrderPage{
+    .OrderPage{
       background-color: #333333;
       position: fixed;
       bottom: 0;
-      // left: 0;
+      left: 8.25%;
       right: 59%;
-      height: 5.9%;
+      height: 8.5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .OrderPageButton{
+        color: white;
+        display: flex;
+        button{
+          width: 100px;
+          height: 20px;
+        }
+      }
     }
 
     .right {
       flex: 1;
       height: 100%;
+      .NewOrderSpecific{
+        display: flex;
+        justify-content: space-between;
+        
+      }
+      .NewOrderSpecificPrice{
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }

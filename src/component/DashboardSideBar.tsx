@@ -49,7 +49,7 @@ const DashboardSideBar: React.FC<props> = (props) => {
         className={`btn ${selected === 1 ? 'selected' : ''}`}
         onClick={handleOnClickCompleted}
       >
-        접수 완료
+        결제 대기
       </div>
       <Link className="menuBtn" to={`/preference/store`}>
         설정
