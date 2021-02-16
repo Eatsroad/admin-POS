@@ -2,6 +2,7 @@ import { OrderAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { idText } from 'typescript';
 import './TableViewPage.scss';
 
 interface props {
@@ -22,6 +23,16 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       rederArr.push(orders[i]);
     }
     return rederArr;
+  };
+  const blockClickDe = () => {
+    if(page !== 0 ) {
+      setPage(page - 1);
+    } 
+  };
+  const blockClickIn = () => {
+    if(page !== totalPage - 1){
+      setPage(page + 1);
+    }
   }
   useEffect(() => {
     if(orders.length%9 === 0) {
@@ -47,7 +58,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
               return (
                 <div className="CleanTable">
                   <div>
-                    <div>{order.table_number}</div>
+                    <div>Table {order.table_number}</div>
                   </div>
                 </div>
               );
@@ -55,10 +66,12 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
           })
         }
       </div>
-      <div>
-        <button onClick={()=>setPage(page - 1)}></button>
-        <div>{page + 1}/{totalPage}</div>
-        <button onClick={()=>setPage(page + 1)}></button>
+      <div className="PageButton">
+        <div className="Button">
+          <button onClick={blockClickDe}></button>
+          <div>{page + 1}/{totalPage}</div>
+          <button onClick={blockClickIn}></button>
+        </div>
       </div>
     </div>
   );

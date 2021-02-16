@@ -17,12 +17,33 @@
       background-color: white;
       height: 204px;
       border-radius: 20px;
-
     }
     .CleanTable{
       background-color: #333333;
       height: 204px;
       border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
+.PageButton{
+  position: fixed;
+  background-color: #333333;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Button{
+    display: flex;
+    button{
+      width: 100px;
+      height: 20px;
+    }
+  }
+}
+

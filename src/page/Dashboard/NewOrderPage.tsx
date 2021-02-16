@@ -57,23 +57,29 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
       <div className="config">header</div>
       <div className="container">
         <div className="left">
-          <div>
-            {
-              count() === 0 ? 
-                <div>새로운 주문이 없습니다.</div> 
-              : 
-                orders.map((order:Orders) => {
-                  const newOrders = filter(order.receipt);
-                  return (
-                    <div style={{color:"white"}} onClick={()=>setSelectedOrder(order)}>
-                      <div>Table {order.table_number}</div>
-                      <div>{newOrders[0].name} {newOrders.length === 1 ? '':`외 ${newOrders.length-1}개`}</div>
-                      <div>{itemPrice(newOrders)}원</div>
-                    </div>
-                  );
-                })
-            }
-          </div>
+
+          {
+            count() === 0 ? 
+              <div className="NoneNew">새로운 주문이 없습니다.</div> 
+            : 
+              orders.map((order:Orders) => {
+                const newOrders = filter(order.receipt);
+                return (
+                  <div className="NewOrder" onClick={()=>setSelectedOrder(order)}>
+                    <div>Table {order.table_number}</div>
+                    <div>{newOrders[0].name} {newOrders.length === 1 ? '':`외 ${newOrders.length-1}개`}</div>
+                    <div>{itemPrice(newOrders)}원</div>
+                  </div>
+                );
+              })
+          }
+          {/* <div className="NewOrderPage">
+            gkeks
+          </div> */}
+
+        </div>
+        <div className="NewOrderPage">
+          dfsdf
         </div>
         <div className="right">
           {

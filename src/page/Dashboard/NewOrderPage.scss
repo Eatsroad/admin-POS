@@ -9,22 +9,34 @@
     height: 30px;
     width: 100%;
     background-color: #444;
-    color: #fff;
+    color:white;
   }
   .container {
     display: flex;
     flex: 1;
-
     .left {
       background-color: #000;
-      color: #fff;
-
-      width: 330px;
-      height: 100%;
-
-      display: flex;
-      justify-content: center;
-
+      color: black;
+      width: 35.7%;
+      height: 93.6%;
+      display: grid;
+      row-gap: 8px;
+      grid-template-rows: repeat(4,1fr);
+      .NewOrder{
+        width: 95.1%;
+        height: 156px;
+        border-radius: 20px;
+        background-color: white;
+      }
+      
+    }
+    .NewOrderPage{
+      background-color: #333333;
+      position: fixed;
+      bottom: 0;
+      // left: 0;
+      right: 59%;
+      height: 5.9%;
     }
 
     .right {
