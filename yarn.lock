@@ -4229,7 +4229,7 @@ concat-stream@^1.5.0, concat-stream@^1.6.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-concurrently@^5.3.0:
+concurrently@5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-5.3.0.tgz#7500de6410d043c912b2da27de3202cb489b1e7b"
   integrity sha512-8MhqOB6PWlBfA2vJ8a0bSFKATOdWlHiQlk11IfmQBPaHVP8oP2gsh2MObE6UR3hqDHqvaIvLTyceNW6obVuFHQ==
@@ -4458,7 +4458,7 @@ create-react-app@^4.0.2:
     tmp "0.2.1"
     validate-npm-package-name "3.0.0"
 
-cross-env@^7.0.3:
+cross-env@7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
   integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
@@ -5219,7 +5219,7 @@ ejs@^3.1.5:
   dependencies:
     jake "^10.6.1"
 
-electron-builder@^22.9.1:
+electron-builder@22.9.1:
   version "22.9.1"
   resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-22.9.1.tgz#a2962db6f2757bc01d02489f38fafe0809f68f60"
   integrity sha512-GXPt8l5Mxwm1QKYopUM6/Tdh9W3695G6Ax+IFyj5pQ51G4SD5L1uq4/RkPSsOgs3rP7jNSV6g6OfDzdtVufPdA==
@@ -5239,7 +5239,7 @@ electron-builder@^22.9.1:
     update-notifier "^4.1.1"
     yargs "^16.0.3"
 
-electron-is-dev@^1.2.0:
+electron-is-dev@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.2.0.tgz#2e5cea0a1b3ccf1c86f577cee77363ef55deb05e"
   integrity sha512-R1oD5gMBPS7PVU8gJwH6CtT0e6VSoD0+SzSnYpNm+dBkcijgA+K7VAMHDfnRq/lkKPZArpzplTW6jfiMYosdzw==
@@ -5263,7 +5263,11 @@ electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.591:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.603.tgz#1b71bec27fb940eccd79245f6824c63d5f7e8abf"
   integrity sha512-J8OHxOeJkoSLgBXfV9BHgKccgfLMHh+CoeRo6wJsi6m0k3otaxS/5vrHpMNSEYY4MISwewqanPOuhAtuE8riQQ==
 
+<<<<<<< HEAD
 electron@^11.2.3:
+=======
+electron@11.2.3:
+>>>>>>> 9c59aad120f46553227fffb1ca419b70cad7aec6
   version "11.2.3"
   resolved "https://registry.yarnpkg.com/electron/-/electron-11.2.3.tgz#8ad1d9858436cfca0e2e5ea7fea326794ae58ebb"
   integrity sha512-6yxOc42nDAptHKNlUG/vcOh2GI9x2fqp2nQbZO0/3sz2CrwsJkwR3i3oMN9XhVJaqI7GK1vSCJz0verOkWlXcQ==
@@ -13294,7 +13298,7 @@ w3c-xmlserializer@^2.0.0:
   dependencies:
     xml-name-validator "^3.0.0"
 
-wait-on@^5.2.1:
+wait-on@5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/wait-on/-/wait-on-5.2.1.tgz#05b66fcb4d7f5da01537f03e7cf96e8836422996"
   integrity sha512-H2F986kNWMU9hKlI9l/ppO6tN8ZSJd35yBljMLa1/vjzWP++Qh6aXyt77/u7ySJFZQqBtQxnvm/xgG48AObXcw==

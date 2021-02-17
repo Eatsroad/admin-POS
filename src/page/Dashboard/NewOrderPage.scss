@@ -1,82 +1,83 @@
+@import '../../scss/_variables.scss';
+
 .NewOrderPage {
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  flex: 1;
-
+  display: grid;
+  grid-template-rows: 4.5% 1fr;
   .config {
-    display: flex;
-    height: 4.2%;
-    width: 100%;
     background-color: #444;
     color:white;
     text-align: center;
     .OrderRadio{
       margin: auto;
-      flex-grow: 1;
-      
     }
     .SpecificOrder{
       margin: auto;
-      flex-grow: 1.8;
     }
 
   }
   .container {
-    display: flex;
-    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 2.8fr;
     .left {
-      background-color: #000;
-      color: black;
-      width: 35.7%;
-      height: 89%;
       display: grid;
-      row-gap: 1.2%;
-      grid-template-rows: repeat(4,1fr);
-      padding-top: 8px;
-      padding-bottom: 8px;
-      .NewOrder{
-        width: 95.1%;
-        // height: 23.5%;
-        border-radius: 20px;
-        background-color: white;
-        margin: 0 auto;
-        overflow: hidden;
-        
-        .NewOrderTable{
-          color: white;
-          background-color: #525252;
-          display: flex;
-          justify-content: space-between;
-          padding: 12px 20px 0 20px;
-          height: 34px;
-        }
-        .NewOrderContent{
-        }
-        .NewOrderPrice{
-          height: 46px;
-          display: flex;
-          margin-top: 18%;
-          .NewOrderSp{
-            flex-grow: 1;
-            background-color: #ff0000;
-            text-align: start;
-            
-            font-size: 15px;
-            font-weight: bold;
-            // padding-left: 18px;
+      grid-template-rows: 10fr 1fr;
+      .leftOrders{
+        background-color: #000;
+        color: black;
+        display: grid;
+        row-gap: 1.2%;
+        grid-template-rows: repeat(4,1fr);
+        padding-top: 8px;
+        padding-bottom: 8px;
+        .NewOrder{
+          width: 95.1%;
+          border-radius: 20px;
+          background-color: white;
+          margin: 0 auto;
+          overflow: hidden;
+          display: grid;
+          grid-template-rows: 1fr 1.3fr 1fr;
+          font-size: 15px;
+          
+          .NewOrderTable{
             color: white;
-            // padding-top: 12px;
+            background-color: #525252;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
+            // padding: 12px 20px 0 20px;
+            // height: 34px;
           }
-          .NewOrderItemPrice{
-            flex-grow: 4;
-            text-align: right;
-            margin-top: 12px;
-            margin-right: 20px;
+          .NewOrderContent{
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            border-bottom: solid 1px  #999999;
+            font-weight: bold;
+          }
+          .NewOrderPrice{
+            // height: 46px;
+            display: flex;
+            // margin-top: 18%;
+            .NewOrderSp{
+              flex-grow: 1;
+              background-color: #ff0000;
+              text-align: start;
+              
+              font-size: 15px;
+              font-weight: bold;
+              // padding-left: 18px;
+              color: white;
+              // padding-top: 12px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .NewOrderItemPrice{
+              flex-grow: 2.4;
+              text-align: right;
+              margin: auto;
+              margin-right: 20px;
+            }
           }
         }
       }
@@ -88,35 +89,91 @@
     }
     .OrderPage{
       background-color: #333333;
-      position: fixed;
-      bottom: 0;
-      left: 8.25%;
-      right: 59%;
-      height: 8.5%;
       display: flex;
       justify-content: center;
       align-items: center;
       .OrderPageButton{
         color: white;
         display: flex;
+        .NewOrderPage{
+          margin: auto 32px;
+          font-size: 16px;
+        }
         button{
-          width: 100px;
-          height: 20px;
+          background-color: transparent;
+          border: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          img{
+            width: 20px;
+            height: 20px;
+          }
         }
       }
     }
-
     .right {
       flex: 1;
-      height: 100%;
-      .NewOrderSpecific{
-        display: flex;
-        justify-content: space-between;
-        
-      }
-      .NewOrderSpecificPrice{
-        display: flex;
-        justify-content: space-between;
+      .rightContent{
+        height: 100%;
+        display: grid;
+        grid-template-rows: 11.8fr 1fr 1.3fr;
+        .rightContentSp{
+          margin: 0 20px;
+          margin-top: 10px;
+          .rightContentTableTime{
+            font-size: 17px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom: solid 2px rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+          }
+          .NewOrderItems{
+            margin-top: 15px;
+            border-bottom: solid 2px rgba(0, 0, 0, 0.6);
+            .NewOrderItem{
+              display: grid;
+              grid-template-columns: 2.8fr 1fr;
+              font-size: 15px;
+              font-weight: bold;
+              margin-bottom: 13px;
+              .NewOrderCountPrice{
+                display: flex;
+                justify-content: space-between;
+              }
+            }
+          }
+          .NewOrderSpecificPrice{
+            margin-top: 11px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 17px;
+            font-weight: bold;
+          }
+        }
+        .NewOrderSpecificButton{
+          margin: 0 auto;
+          // height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          button{
+            // height: 100%;
+          }
+          .deniedOrderButton{
+
+          }
+          .checkOrderButton{
+            background-color: $base-color;
+            border: none;
+            border-radius: 60px;
+            width: 90%;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+          }
+        }
       }
     }
   }

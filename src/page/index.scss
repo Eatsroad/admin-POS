@@ -2,10 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 #appContainer {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   height: 100vh;
-  width: 100vw;
+  // width: 100vw;
+  display: grid;
+  grid-template-rows: 1fr 27fr;
 }
 
 #root {
@@ -17,16 +19,33 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+ 
 }
 
 a {
   color: inherit;
-  text-decoration: inherit;
+  text-decoration: none;
+  :link{
+      color: black;
+  }
+  :visited{
+      color: black;
+  }
+  :hover{
+      color: black;
+  }
+  :active{
+      color: black;
+  }
 }
 
 code {
   // font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   //   monospace;
+}
+button{
+  outline: none;
 }
 
 html,

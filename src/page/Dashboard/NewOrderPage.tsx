@@ -2,9 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { OrderAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
+import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './NewOrderPage.scss';
+import ArrowR from '../../@util/image/icon/icon_arrow_right_white_x3.png';
+import ArrowL from '../../@util/image/icon/icon_arrow_left_white_x3.png';
 
 interface props {
   orders: Orders[]
@@ -88,7 +91,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
       </div>
       <div className="container">
         <div className="left">
-
+          <div className="leftOrders">
           {
             count() === 0 ? 
               <div className="NoneNew">새로운 주문이 없습니다.</div> 
@@ -101,56 +104,67 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
                       <div>Table {order.table_number}</div>
                       <div>시간</div>
                     </div>
-                    <div className="NewOrderContent">{newOrders[0].name} {newOrders.length === 1 ? '':`외 ${newOrders.length-1}개`}</div>
+                    <div className="NewOrderContent">{newOrders[0].name} {newOrders.length === 1 ? `${newOrders[0].count}개`:`외 ${newOrders.length-1}개`}</div>
                     <div className="NewOrderPrice">
                       <div className="NewOrderSp">
                         <div>주문 보기</div>
                       </div>
                       <div className="NewOrderItemPrice">
-                        <div>{itemPrice(newOrders)}원</div>
+                        <div>{numberWithCommas(itemPrice(newOrders))}원</div>
                       </div>
                     </div>
                   </div>
                 );
               })
           }
-        </div>
-        <div className="OrderPage">
+          </div>
+          <div className="OrderPage">
           <div className="OrderPageButton">
-            <button onClick={blockClickDe}></button>
-            <div>{page + 1}/{totalPage}</div>
-            <button onClick={blockClickIn}></button>
+            <button onClick={blockClickDe}><img src={ArrowR} alt="arrow"/></button>
+            <div className="NewOrderPage">{page + 1}/{totalPage}</div>
+            <button onClick={blockClickIn}><img src={ArrowL} alt="arrow"/></button>
           </div>
         </div>
-
+        </div>
         <div className="right">
           {
             selectedOrder === undefined 
             ? <div></div>
-            : <>
-                <div>Table {selectedOrder?.table_number}</div>
-                  {
-                  
-                  selectedOrder?.receipt.map((item) => {
-                    if(!item.state){
-                      return(
-                        <div className="NewOrderSpecific">
-                          <div>{item.name}</div>
-                          <div>X{item.count}</div>
-                          <div>{item.options}</div>
-                          {/* redering options */}
-                          <div>{item.item_total_price}원</div>
-                        </div>
-                      );
-                  }})
-                }
-                <div className="NewOrderSpecificPrice">
-                  <div className="">총 금액</div>
-                  <div  className="">{itemPrice(selectedOrder.receipt)}원</div>
+            : <div className="rightContent">
+                <div className="rightContentSp">
+                  <div className="rightContentTableTime">
+                    <div>Table {selectedOrder?.table_number}</div>
+                    <div>time</div>
+                  </div>
+                  <div className="NewOrderItems">
+                    {
+                      selectedOrder?.receipt.map((item) => {
+                        if(!item.state){
+                          return(
+                            <div className="NewOrderItem">
+                              <div>
+                                <div>{item.name}</div>
+                                <div>{item.options}</div>
+                              </div>
+                              <div className="NewOrderCountPrice">
+                                <div>X{item.count}</div>
+                                <div>{numberWithCommas(item.item_total_price)}원</div>
+                              </div>
+                            </div>
+                          );
+                      }})
+                    }
+                  </div>
+                  <div className="NewOrderSpecificPrice">
+                    <div className="">총 금액</div>
+                    <div  className="">{numberWithCommas(itemPrice(selectedOrder.receipt))}원</div>
+                  </div>
                 </div>
-                <button>주문 거부</button>
-                <button onClick={checkOrders}>주문 접수</button>
-              </>
+                <div className="NewOrderSpecificButton">
+                  {/* <button className="deniedOrderButton">주문 거부</button> */}
+                  <button className="checkOrderButton" onClick={checkOrders}>주문 접수</button>
+                </div>
+              </div>
           }
         </div>
       </div>

@@ -24,7 +24,7 @@ const DashbaordRouter = () => {
   }
 
   return (
-    <div className="HomePage">
+    // <div className="HomePage">
       <div className="main">
         <DashboardSideBar
           onClickNewMenu={() => {
@@ -34,11 +34,9 @@ const DashbaordRouter = () => {
             setState(1);
           }}
         />
-        <div className="plane">
-          {state === 0 ? <NewOrder orders={newOrders()}/> : <TableViewPage orders={orders}/>}
-        </div>
+        {state === 0 ? <NewOrder orders={newOrders()}/> : <TableViewPage orders={orders}/>}
       </div>
-    </div>
+    // </div> 
   );
 };
 

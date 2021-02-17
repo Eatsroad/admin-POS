@@ -2,15 +2,15 @@
 
 .Header {
   background-color: black;
-  width: 100vw;
-  height: 3.5px;
-  min-height: $header-height;
+  // width: 100vw;
+  // height: 3.5px;
+  // min-height: $header-height;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  box-sizing: border-box;
+  // box-sizing: border-box;
   padding: 0px 50px;
 
   h1 {

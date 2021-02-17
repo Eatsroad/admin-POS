@@ -1,5 +1,6 @@
 import { OrderAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
+import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { idText } from 'typescript';
@@ -24,6 +25,14 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     }
     return rederArr;
   };
+  const orderItemCount = (receipt:any[]) => {
+    let count = 0;
+    receipt.forEach((item)=> {
+      count += item.count
+    });
+
+    return count;
+  };
   const blockClickDe = () => {
     if(page !== 0 ) {
       setPage(page - 1);
@@ -44,33 +53,42 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
   return(
     <div className="TableViewPage">
       <div className="Tables">
-        {
-          renderArray().map((order) => {
-            if(order.order_state && order.state) {
-              return (
-                <div className='Table'>
-                  <div>{order.table_number}</div>
-                  <button onClick={() => dispatch(OrderAction.checkOrders(1, 0, order.table_number))}>결제대기</button>
-                  {order.receipt_total_price}원
-                </div>
-              );
-            } else {
-              return (
-                <div className="CleanTable">
-                  <div>
-                    <div>Table {order.table_number}</div>
+        <div className="TableBox">
+          {
+            renderArray().map((order) => {
+              if(order.order_state && order.state) {
+                return (
+                  <div className='Table'>
+                    <div className="TableHeader">
+                      <div>Table {order.table_number}</div>
+                      <div>{orderItemCount(order.receipt)}개</div>
+                      <div>time</div>
+                    </div>
+                    <div></div>
+                    <div className="TableButton">
+                      <button onClick={() => dispatch(OrderAction.checkOrders(1, 0, order.table_number))}>결제대기</button>
+                      <div className="TableButtonPrice">{numberWithCommas(order.receipt_total_price)}원</div>
+                    </div>
                   </div>
-                </div>
-              );
-            }
-          })
-        }
-      </div>
-      <div className="PageButton">
-        <div className="Button">
-          <button onClick={blockClickDe}></button>
-          <div>{page + 1}/{totalPage}</div>
-          <button onClick={blockClickIn}></button>
+                );
+              } else {
+                return (
+                  <div className="CleanTable">
+                    <div>
+                      <div>Table {order.table_number}</div>
+                    </div>
+                  </div>
+                );
+              }
+            })
+          }
+        </div>
+        <div className="PageButton">
+          <div className="Button">
+            <button onClick={blockClickDe}></button>
+            <div>{page + 1}/{totalPage}</div>
+            <button onClick={blockClickIn}></button>
+          </div>
         </div>
       </div>
     </div>

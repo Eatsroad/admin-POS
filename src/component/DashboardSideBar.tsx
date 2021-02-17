@@ -39,24 +39,26 @@ const DashboardSideBar: React.FC<props> = (props) => {
 
   return (
     <div className="SideBar">
-      <div
+      <button
         className={`btn ${selected === 0 ? 'selected' : ''}`}
         onClick={handleOnClickNewMenu}
       >
         새로운 주문
-      </div>
-      <div
+      </button>
+      <button
         className={`btn ${selected === 1 ? 'selected' : ''}`}
         onClick={handleOnClickCompleted}
       >
         결제 대기
-      </div>
+      </button>
       <Link className="menuBtn" to={`/preference/store`}>
         설정
       </Link>
-      <div className="logout-btn" onClick={handleOnClickLogout}>
+      <div></div>
+      <button className="logout-btn" onClick={handleOnClickLogout}>
         로그아웃
-      </div>
+      </button>
+      {/* 로그아웃 이동 */}
     </div>
   );
 };

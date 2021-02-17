@@ -1,23 +1,16 @@
 .HomePage {
-  flex: 1;
-  width: 100vw;
+  // display: grid;
 
-  display: flex;
-  flex-direction: column;
+  
+}
+.main {
+  display: grid;
+  grid-template-columns: 1fr 10fr;
 
-  .main {
-    display: flex;
-    height: 100%;
-    width: 100%;
-
-    .plane {
-      // flex: 1;
-      display: flex;
-      width: 100%;
-    }
+  .plane {
+    
   }
 }
-
 body {
   margin: 0;
 }

@@ -1,28 +1,28 @@
 @import 'scss/_variables';
 
 .SideBar {
-  height: 100%;
-  width: 9%;
   background-color: #000000cc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1.3fr 1.3fr 1fr 7.6fr 1.1fr;
 
   .btn {
     width: 100%;
     background-color: #ddd;
     border: none;
-    height: 90px;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: 16px;
+    font-weight: bold;
   }
   a {
     margin-bottom: 30px;
     color: #fff;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .selected {
     background-color: $base-color;
@@ -30,13 +30,15 @@
   }
   .menuBtn {
     box-sizing: 'border-box';
-    padding: 20px 0;
+    // padding: 20px 0;
   }
   .logout-btn {
     box-sizing: 'border-box';
-    padding: 20px 0;
+    // padding: 20px 0;
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
+    background-color: transparent;
+    border: none;
   }
 }
