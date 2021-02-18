@@ -1,8 +1,7 @@
 import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
-import { checkOrders } from '@redux/actions/OrderAction';
-import { Orders } from '@redux/reducers/OrderReducer';
+import { Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
 
 interface param {
@@ -25,15 +24,23 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
             .orderBy('orderAt')
             .onSnapshot((snapShot) => {
                 let orders:any[] = [];
+                let receipts:any[] = [];
                 snapShot.forEach((doc) => {
+                    const data = doc.data();
                     const order = {
                         table_number:doc.id,
-                        ...doc.data()
-                    }
+                        ...data
+                    };
+
+                    data.receipt.map((rec:any) => {
+                        if(rec.state === "주문 완료") {
+                            receipts.push(rec);
+                        }
+                    })
                     orders.push(order);
                 });
-                console.log(orders);
                 dispatch(OrderAction.setOrders(orders));
+                console.log(receipts);
             })
         
     }
@@ -41,22 +48,30 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
         const orders = getState().Order.orders;
         switch(action.payload.mode) {
             case 0:
-                let checkedOrders:any[] = [];
-                orders.map((order) => {
-                    if(order.table_number === action.payload.table_number) {
-                        console.log(order.receipt)
-                        checkedOrders = order.receipt.map((item) => !item.state ? {...item, state:true} : item)
+                let checkedOrders:Receipt[] = [];
+                for(let i=0 ; i<orders.length ; i++) {
+                    if(orders[i].table_number === action.payload.table_number) {
+                        for(let k=0 ; orders[i].receipt.length ; k++) {
+                            console.log(orders[i].receipt)
+                            // let rece:Receipt = {};s
+                            if(orders[i].receipt[k].state === "주문 완료") {
+                                for(let j=0 ; j<orders[i].receipt[k].receipts.length ; j++) {
+                                }
+                            }
+                        }
+                        checkedOrders = orders[i].receipt;
                     }
-                })
+                }
+                console.log(checkedOrders);
                 dbService
                     .collection('stores')
                     .doc(`${storeId}`)
                     .collection('orders')
                     .doc(`${action.payload.table_number}`)
                     .update({
-                        'receipt':[
-                            ...checkedOrders
-                        ],
+                        // 'receipt':[
+                        //     ...checkedOrders
+                        // ],
                         'state':true,
                     });
                 break;

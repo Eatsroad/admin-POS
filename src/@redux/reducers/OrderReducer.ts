@@ -5,11 +5,17 @@ export interface Order {
 }
 export interface Orders {
     table_number:string,
-    receipt: Buckets[],
+    receipt: Receipt[],
     total_price: number,
     receipt_total_price: number,
     state: boolean,
     order_state: boolean,
+    orderAt:string,
+}
+export interface Receipt {
+    order_time:string,
+    state:string,
+    receipts:Buckets[],
 }
 export interface Buckets{
     name: string,

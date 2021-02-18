@@ -1,5 +1,5 @@
 import { Action } from '@redux/Types';
-import { OrderAction, StoreAction } from '@redux/actions';
+import { OrderAction, StoreAction, UIAction } from '@redux/actions';
 import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import firebase from 'firebase';
@@ -58,7 +58,8 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
           const { name, address, phone } = information;
           dispatch(StoreAction.setStoreInformation(name, address, phone));
           dispatch(StoreAction.setStoreMenu(menu));
-        })
+        });
+        dispatch(UIAction.setGlobalLoading(false));
       })
       .catch((e) => console.log(e));
   }
