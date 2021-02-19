@@ -1,7 +1,8 @@
 import { OrderAction } from '../actions';
 import { Action } from '../Types';
 export interface Order {
-    orders:Orders[]
+    orders:Orders[],
+    newOrders:Orders[]
 }
 export interface Orders {
     table_number:string,
@@ -40,12 +41,14 @@ interface OptionList{
 };
 const initialState:Order ={
     orders:[],
+    newOrders:[],
 }
 const OrderReducer = (state:Order = initialState, action:Action) => {
     switch(action.type) {
         case OrderAction.Types.S_SET_ORDERS:
             return {
-                orders:action.payload.orders
+                orders:action.payload.orders,
+                newOrders:action.payload.newOrders
             };
         default:
             return state;

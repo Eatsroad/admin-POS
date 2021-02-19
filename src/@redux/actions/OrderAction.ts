@@ -14,11 +14,12 @@ export const loadOrders: ActionCreator = (storeId: string) => {
         }
     }
 };
-export const setOrders: ActionCreator = (orders) => {
+export const setOrders: ActionCreator = (orders, newOrders) => {
     return {
         type:Types.S_SET_ORDERS,
         payload:{
-            orders:orders
+            orders:orders,
+            newOrders:newOrders
         }
     }
 };

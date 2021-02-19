@@ -9,8 +9,9 @@ import { Orders } from '@redux/reducers/OrderReducer';
 
 const DashbaordRouter = () => {
   const [state, setState] = useState<number>(0);
-  const {orders} = useSelector((state:RootState) => ({
+  const {orders, newOrder} = useSelector((state:RootState) => ({
     orders:state.Order.orders,
+    newOrder:state.Order.newOrders
 
   }));
   const newOrders = () => {
@@ -33,7 +34,7 @@ const DashbaordRouter = () => {
             setState(1);
           }}
         />
-        {state === 0 ? <NewOrder orders={newOrders()}/> : <TableViewPage orders={orders}/>}
+        {state === 0 ? <NewOrder orders={newOrder}/> : <TableViewPage orders={orders}/>}
       </div>
   );
 };
