@@ -12,23 +12,63 @@ import ArrowL from '../../@util/image/icon/icon_arrow_left_white_x3.png';
 interface props {
   orders: Orders[]
 }
+interface Receipt {
+  order_time:string,
+  state:string,
+  receipts:Buckets[],
+}
+interface Buckets{
+  name: string,
+  price: number,
+  id: string,
+  count: number,
+  options:Options_B[],
+  item_total_price: number,
+  state: boolean,
+}
+interface Options_B{
+  option_groups: Option_B[]
+}
+interface Option_B{
+  option_group_name: string,
+  option_list:OptionList[]
+}
+interface OptionList{
+  name: string,
+  price: number,
+  state: boolean,
+};
 
 const NewOrder: React.FC<props> = ({orders}:props) => {
   
   const [selectedOrder, setSelectedOrder] = useState<Orders|undefined>(orders[0]);
   const [page, setPage ] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(1);
+  const [cancleButton, setCancleButton] = useState<boolean>(false);
   const dispatch = useDispatch();
   
-  const filter = (order:any) => {
-    let newOrders:any[] = [];
-    order.forEach((item:any) => {
-      if(!item.state) {
-        newOrders.push(item);
+  const filter = (order:Receipt[]) => {
+    let newOrders:Receipt[] = [];
+    order.forEach((doc) => {
+      if(doc.state === '주문 완료') {
+        newOrders.push(doc);
       }
-    })
-    console.log(newOrders)
+      // doc.receipts.map((item:any) => {
+      //   if(!item.state) {
+      //     newOrders.push(doc);
+      //   }
+      // })
+    });
     return newOrders;
+  };
+  const receiptCount = (order:Receipt[]) => {
+    let count = 0;
+    order.forEach((doc) => {
+      doc.receipts.map((item:any) => {
+        count++;
+      })
+    });
+    return count;
   }
   const renderArray = (newOrders:any[]) => {
     const rederArr:any[] = [];
@@ -41,15 +81,16 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     let count = 0;
     orders.forEach((order) => {
       if(!order.state && order.order_state) count++;
-    })
-    console.log(count)
+    });
     return count;
-  }
-  const itemPrice = (order:any) => {
+  };
+  const itemPrice = (order:Receipt[]) => {
     let price = 0;
-      order.forEach((item:any) => {
+    order.forEach((doc) => {
+      doc.receipts.map((item) => {
         price += item.item_total_price;
       })
+    });
     return price;
   }
   const checkOrders = () => {
@@ -99,12 +140,19 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
               renderArray(orders).map((order:Orders) => {
                 const newOrders = filter(order.receipt);
                 return (
-                  <div className="NewOrder" onClick={()=>setSelectedOrder(order)}>
+                  <div className="NewOrder" onClick={()=>setSelectedOrder(order)} key={order.table_number}>
                     <div className="NewOrderTable">
                       <div>Table {order.table_number}</div>
-                      <div>시간</div>
+                      <div>{order.orderAt}</div>
                     </div>
-                    <div className="NewOrderContent">{newOrders[0].name} {newOrders.length === 1 ? `${newOrders[0].count}개`:`외 ${newOrders.length-1}개`}</div>
+                    <div className="NewOrderContent">
+                      {newOrders[0]?.receipts[0].name} 
+                      {
+                        receiptCount(newOrders) === 1 
+                        ?`${newOrders[0].receipts[0].count}개`
+                        :`외 ${receiptCount(newOrders)-1}개`
+                      }
+                    </div>
                     <div className="NewOrderPrice">
                       <div className="NewOrderSp">
                         <div>주문 보기</div>
@@ -133,26 +181,31 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
             : <div className="rightContent">
                 <div className="rightContentSp">
                   <div className="rightContentTableTime">
-                    <div>Table {selectedOrder?.table_number}</div>
-                    <div>time</div>
+                    <div>Table {selectedOrder.table_number}</div>
+                    <div>{selectedOrder.orderAt}</div>
                   </div>
                   <div className="NewOrderItems">
                     {
-                      selectedOrder?.receipt.map((item) => {
-                        if(!item.state){
-                          return(
-                            <div className="NewOrderItem">
-                              <div>
-                                <div>{item.name}</div>
-                                <div>{item.options}</div>
-                              </div>
-                              <div className="NewOrderCountPrice">
-                                <div>X{item.count}</div>
-                                <div>{numberWithCommas(item.item_total_price)}원</div>
-                              </div>
-                            </div>
-                          );
-                      }})
+                      selectedOrder?.receipt.map((doc) => {
+                        return (
+                          doc.receipts.map((item) => {
+                            if(!item.state){
+                              return(
+                                <div className="NewOrderItem" key={item.name}>
+                                  <div>
+                                    <div>{item.name}</div>
+                                    <div>{item.options}</div>
+                                  </div>
+                                  <div className="NewOrderCountPrice">
+                                    <div>X{item.count}</div>
+                                    <div>{numberWithCommas(item.item_total_price)}원</div>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          })
+                        )
+                      })
                     }
                   </div>
                   <div className="NewOrderSpecificPrice">
@@ -161,8 +214,16 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
                   </div>
                 </div>
                 <div className="NewOrderSpecificButton">
-                  {/* <button className="deniedOrderButton">주문 거부</button> */}
-                  <button className="checkOrderButton" onClick={checkOrders}>주문 접수</button>
+                  { 
+                    !cancleButton 
+                    ?<button className="deniedOrderButton" onClick={()=>setCancleButton(true)}>주문 거부</button>
+                    :<button className="deniedOrderButton_S" >주문 거부</button>
+                  }
+                  {
+                    !cancleButton
+                    ?<button className="checkOrderButton" onClick={checkOrders}>주문 접수</button>
+                    :<button className="checkOrderButton_S" >전체 주문 거부</button>
+                  }
                 </div>
               </div>
           }

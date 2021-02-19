@@ -7,6 +7,8 @@
     background-color: #444;
     color:white;
     text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 2.8fr;
     .OrderRadio{
       margin: auto;
     }
@@ -44,8 +46,8 @@
             background-color: #525252;
             display: flex;
             justify-content: space-between;
-            // padding: 12px 20px 0 20px;
-            // height: 34px;
+            padding: 12px 20px 0 20px;
+            height: 34px;
           }
           .NewOrderContent{
             display: flex;
@@ -162,13 +164,40 @@
             // height: 100%;
           }
           .deniedOrderButton{
+            margin-right: 3.3%;
+            border: none;
+            border-radius: 60px;
+            width: 22.2%;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #bfbfbf;
 
+          }
+          .deniedOrderButton_S{
+            margin-right: 3.3%;
+            border: none;
+            border-radius: 60px;
+            width: 22.2%;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: $base-color;
           }
           .checkOrderButton{
             background-color: $base-color;
             border: none;
             border-radius: 60px;
-            width: 90%;
+            width: 64.6%;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          .checkOrderButton_S{
+            background-color:  #bfbfbf;
+            border: none;
+            border-radius: 60px;
+            width: 64.6%;
             color: white;
             font-weight: bold;
             font-size: 16px;

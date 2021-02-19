@@ -24,8 +24,29 @@
         overflow: hidden;
         .TableHeader{
           background-color: #525252;
-          display: flex;
+          display: grid;
+          grid-template-columns: 1.3fr 2fr 1fr;
           color: white;
+          .TableHeaderTable{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .TableHeaderCount{
+            display: flex;
+            align-items: center;
+          }
+          .TableHeaderTime{
+            display: flex;
+            align-items: center;
+          }
+        }
+        .TableContent{
+          display: flex;
+          align-items: center;
+          margin-left: 20px;
+          font-size: 15px;
+          font-weight: bold;
         }
         .TableButton{
           button{
@@ -75,4 +96,53 @@
   }
 }
 
+.TableViewModal{
+  z-index: 5;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0,0,0, 0.5);
+  color: black;
+  .ModalContent{
+    display: grid;
+    grid-template-rows: 1.04fr 7.54fr 1fr 1.25fr;
+    border-radius: 20px;
+    position: absolute;
+    left: 18.9%;
+    right: 18.9%;
+    top: 11.3%;
+    bottom: 18.5%;
+    margin: auto;
+    background: white;
+    overflow: hidden;
+    .TableViewModalTitle{
+      background-color: #333333;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
 
+    }
+    .TableViewModalContent{
+      color: black;
+      .TableViewModalContentItem{}
+      .TableViewModalContentCountPrice{}
+    }
+    .TableViewModalPageButton{
+      border-top: solid 2px #cccccc;
+    }
+    .TableViewModalButton{
+      display: grid;
+      grid-template-columns: 1fr 1.81fr;
+      button{
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+}

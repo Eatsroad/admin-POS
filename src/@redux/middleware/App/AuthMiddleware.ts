@@ -27,7 +27,6 @@ export const AuthMiddleware = ({ dispatch }: any) => (next: any) => (
   }
 
   if (AuthAction.Types.LOGIN_SUCCESS === action.type) {
-    dispatch(UIAction.setGlobalLoading(false));
     dispatch(StoreAction.loadStoreFirebase());
   }
 
