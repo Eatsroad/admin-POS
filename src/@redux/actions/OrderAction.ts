@@ -24,13 +24,14 @@ export const setOrders: ActionCreator = (orders, newOrders) => {
     }
 };
 
-export const checkOrders:ActionCreator = (mode:number, orderId:string, table_number:string) => {
+export const checkOrders:ActionCreator = (mode:number, orderId:string, table_number:string, order_time:string) => {
     return {
         type:Types.C_CHECK_ORDER,
         payload:{
             mode:mode,
             orderId:orderId,
             table_number:table_number,
+            order_time:order_time
         }
     }
 };

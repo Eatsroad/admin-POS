@@ -5,7 +5,6 @@ import NewOrder from './NewOrderPage';
 import TableViewPage from './TableViewPage';
 import { useSelector } from 'react-redux';
 import { RootState } from '@redux';
-import { Orders } from '@redux/reducers/OrderReducer';
 
 const DashbaordRouter = () => {
   const [state, setState] = useState<number>(0);
@@ -14,15 +13,6 @@ const DashbaordRouter = () => {
     newOrder:state.Order.newOrders
 
   }));
-  const newOrders = () => {
-    const newOrders:Orders[] = [];
-    orders.forEach((order) => {
-      if(!order.state && order.order_state) {
-        newOrders.push(order);
-      }
-    });
-    return newOrders;
-  }
 
   return (
       <div className="main">

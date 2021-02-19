@@ -31,7 +31,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                         table_number:doc.id,
                         ...data
                     };
-
                     data.receipt.map((rec:any) => {
                         if(rec.state === "주문 완료") {
                             const newOrder = {
@@ -45,8 +44,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 });
                 dispatch(OrderAction.setOrders(orders,receipts));
                 console.log(receipts);
-            })
-        
+            });
     }
     if(OrderAction.Types.C_CHECK_ORDER === action.type) {
         const orders = getState().Order.orders;
@@ -56,7 +54,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 for(let i=0 ; i<orders.length ; i++) {
                     if(orders[i].table_number === action.payload.table_number) {
                         for(let k=0 ; k<orders[i].receipt.length ; k++) {
-                            if(orders[i].receipt[k].state === "주문 완료") {
+                            if(orders[i].receipt[k].state === "주문 완료" && orders[i].receipt[k].order_time === action.payload.order_time ) {
                                 let newRe:Buckets[] = [];
                                 for(let j=0 ; j<orders[i].receipt[k].receipts.length ; j++) {
                                     let newO = orders[i].receipt[k].receipts[j];
@@ -69,6 +67,8 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                     receipts:newRe
                                 };
                                 checkedOrders.push(obj);
+                            } else {
+                                checkedOrders.push(orders[i].receipt[k]);
                             }
                         }
                     }

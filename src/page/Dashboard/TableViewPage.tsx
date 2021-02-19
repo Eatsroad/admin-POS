@@ -40,47 +40,76 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
   const [page, setPage ] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [modalState, setModalState] = useState<boolean>(false);
-  const [curOrder, setCurOrder ] = useState<any>();
+  const [curOrder, setCurOrder ] = useState<Orders>();
   
   const renderArray = () => {
     orders.sort(function (a:any, b:any) {
       return a.table_number - b.table_number;
     });
-    const rederArr:any[] = [];
+    const rederArr:Orders[] = [];
     for(let i= page*9 ; i<page + 9 ; i++) {
       rederArr.push(orders[i]);
     }
     return rederArr;
   };
-  const orderItemCount = (receipt:any[]) => {
-    let count = 0;
-    receipt.forEach((item)=> {
-      count += item.count
-    });
-
-    return count;
-  };
   const receiptCount = (order:Receipt[]) => {
     let count = 0;
     order.forEach((doc) => {
       doc.receipts.map((item:any) => {
-        count++;
+        if(item.state)count++;
       })
     });
     return count;
-  }
+  };
   const blockClickDe = () => {
     if(page !== 0 ) {
       setPage(page - 1);
     } 
   };
-  const modal = (curOrder:any[]) => {
+  const checkState = (order:Orders) => {
+    let tCount  = 0;
+    
+    order.receipt.forEach((receipts) => {
+      receipts.receipts.forEach((item) => {
+        if(item.state) tCount++;
+      })
+    });
+    if(tCount === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const receiptPrice = (order:Orders) => {
+    let price = 0;
+    order.receipt.forEach((receipts) => {
+      if(receipts.state === "접수 완료") {
+        receipts.receipts.forEach((item) => {
+          price += item.item_total_price;
+        })
+      }
+    })
+
+    return price;
+  }
+  const checkedItemTotalPrice = () => {
+    let totalPrice = 0;
+    curOrder?.receipt.map((doc) => {
+      if(doc.state === "접수 완료") {
+        doc.receipts.map((item) => {
+          totalPrice += item.item_total_price;
+        })
+      }
+    });
+    return totalPrice;
+  }
+  const modal = (curOrder:Orders) => {
     setCurOrder(curOrder);
     setModalState(true);
 
   };
   const modalClose = () => {
-    dispatch(OrderAction.checkOrders(1,0,curOrder.table_number));
+    dispatch(OrderAction.checkOrders(1,0,curOrder?.table_number));
     setModalState(false);
   }
   const blockClickIn = () => {
@@ -88,6 +117,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setPage(page + 1);
     }
   };
+  console.log(orders);
   useEffect(() => {
     if(orders.length%9 === 0) {
       setTotalPage(Math.floor(orders.length/9));
@@ -103,40 +133,58 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
           <div className="TableViewModal">
             <div className="ModalContent">
               <div className="TableViewModalTitle">
-                <button onClick={()=>setModalState(false)}></button>
-                <div>Table {curOrder.table_number}</div>
+                <button  className="CloseModalButton" onClick={() => setModalState(false)}></button>
+                <div>결제 대기</div>
               </div>
               <div className="TableViewModalContent">
-                {
-                  curOrder.receipt.map((doc:any) => {
-                    return(
-                      doc.receipts.map((item:any) => {
-                        if(!item.state){
-                          return(
-                            <div className="NewOrderItem" key={item.name}>
-                              <div>{doc.order_time}</div>
-                              <div>
-                                <div>{item.name}</div>
-                                <div>{item.options}</div>
-                              </div>
-                              <div className="NewOrderCountPrice">
-                                <div>X{item.count}</div>
-                                <div>{numberWithCommas(item.item_total_price)}원</div>
-                              </div>
-                            </div>
-                          );
-                        }
-                      })
-                    );
-                  })
-                }
+                <div className="TableViewModalContentInfo">
+                  <div>Table {curOrder?.table_number}</div>
+                  <div>{numberWithCommas(checkedItemTotalPrice())}원</div>
+                </div>
+                <div className="TableViewModalInnerContentCon">
+                  {
+                    curOrder?.receipt.map((doc:Receipt) => {
+                      if(doc.state === "접수 완료"){
+                        return(
+                          <div className="TableViewModalInnerContent">
+                            <div className="TableViewModalTime">{doc.order_time}</div>
+                            {
+                              doc.receipts.map((item:Buckets, index:number) => {
+                                if(item.state){
+                                  
+                                  return(
+                                    <div className="TableViewModalContentItem" key={item.name}>
+                                      <div className="TableViewModalContentName">
+                                        <div>{item.name}</div>
+                                        <div>{numberWithCommas(item.item_total_price)}원</div>
+                                      </div>
+                                      <div className="TableViewModalContentCount">
+                                        <div>수량 : {item.count}개</div>
+                                        <div>{numberWithCommas(item.price)}원</div>
+                                      </div>
+                                      <div className="TableViewModalContentOptions">
+                                        <div>{item.options}</div>
+                                      </div>
+                                      {
+                                        index === doc.receipts.length -1? <></>:<div className="TableLine"/>
+                                      }
+                                    </div>
+                                  );
+                                }
+                              })
+                            }
+                          </div>
+                        );
+                    }})
+                  }
+                </div>
               </div>
               <div className="TableViewModalPageButton">
 
               </div>
               <div className="TableViewModalButton">
-                <button>주문 취소</button>
-                <button onClick={modalClose}>결제 완료</button>
+                <button className="TableViewModalCancel">주문 취소</button>
+                <button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
               </div>
             </div>
           </div>
@@ -146,7 +194,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
         <div className="TableBox">
           {
             renderArray().map((order) => {
-              if(order.order_state && order.state) {
+              if(order.order_state && checkState(order)) {
                 return (
                   <div className='Table' key={order.table_number}>
                     <div className="TableHeader">
@@ -164,7 +212,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
                     </div>
                     <div className="TableButton">
                       <button onClick={() => modal(order)}>결제대기</button>
-                      <div className="TableButtonPrice">{numberWithCommas(order.receipt_total_price)}원</div>
+                      <div className="TableButtonPrice">{numberWithCommas(receiptPrice(order))}원</div>
                     </div>
                   </div>
                 );

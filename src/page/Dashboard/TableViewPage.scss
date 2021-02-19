@@ -1,3 +1,4 @@
+@import '../../scss/_variables.scss';
 .TableViewPage {
   
   // flex: 1;
@@ -95,7 +96,6 @@
     }
   }
 }
-
 .TableViewModal{
   z-index: 5;
   position: fixed;
@@ -125,12 +125,65 @@
       font-size: 17px;
       font-weight: bold;
       color: white;
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .CloseModalButton{
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        left: 0.9%;
+      }
     }
     .TableViewModalContent{
       color: black;
-      .TableViewModalContentItem{}
-      .TableViewModalContentCountPrice{}
+      background-color: #dedede;
+      display: grid;
+      grid-template-rows: 1fr 7.22fr;
+      padding: 0px 20px;
+      .TableViewModalContentInfo{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .TableViewModalInnerContentCon{
+        overflow-y: scroll;
+        height: 43vh;
+        .TableViewModalInnerContent{
+          background-color: white;
+          margin-bottom: 10px;
+          padding: 11px 20px;
+          border-radius: 20px;
+          margin-right: 10px;
+          .TableViewModalTime{
+            font-size: 15px;
+            font-weight: bold;
+          }
+          .TableViewModalContentItem{
+            .TableViewModalContentName{
+              display: flex;
+              justify-content: space-between;
+              margin-top: 12px;
+              margin-bottom: 6px;
+              font-size: 15px;
+              font-weight: bold;
+            }
+            .TableViewModalContentCount{
+              display: flex;
+              justify-content: space-between;
+              font-size: 15px;
+              color: #525252;
+            }
+            .TableViewModalContentOptions{
+              padding-bottom: 12px;
+            }
+            .TableLine{
+              border: solid 1px #cccccc;
+            }
+          }
+          
+        }
+      }
     }
     .TableViewModalPageButton{
       border-top: solid 2px #cccccc;
@@ -142,6 +195,14 @@
         border: none;
         font-size: 18px;
         font-weight: bold;
+      }
+      .TableViewModalCancel{
+        background-color: #cccccc;
+        color: #666666;
+      }
+      .TableViewModalCheck{
+        background-color: $base-color;
+        color: white;
       }
     }
   }

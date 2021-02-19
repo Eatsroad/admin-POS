@@ -2,7 +2,7 @@ import { OrderAction } from '../actions';
 import { Action } from '../Types';
 export interface Order {
     orders:Orders[],
-    newOrders:Orders[]
+    newOrders:NewOrders[]
 }
 export interface Orders {
     table_number:string,
@@ -12,6 +12,12 @@ export interface Orders {
     state: boolean,
     order_state: boolean,
     orderAt:string,
+}
+export interface NewOrders {
+    table_number:string,
+    receipts: Buckets[],
+    state: string,
+    order_time:string,
 }
 export interface Receipt {
     order_time:string,
