@@ -31,7 +31,7 @@ export interface Buckets{
     count: number,
     options:Options_B[],
     item_total_price: number,
-    state: boolean,
+    state: string,
 }
 interface Options_B{
     option_groups: Option_B[]

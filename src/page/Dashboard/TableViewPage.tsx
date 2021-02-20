@@ -20,7 +20,7 @@ interface Buckets{
   count: number,
   options:Options_B[],
   item_total_price: number,
-  state: boolean,
+  state: string,
 }
 interface Options_B{
   option_groups: Option_B[]
@@ -88,8 +88,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
           price += item.item_total_price;
         })
       }
-    })
-
+    });
     return price;
   }
   const checkedItemTotalPrice = () => {
@@ -117,7 +116,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setPage(page + 1);
     }
   };
-  console.log(orders);
   useEffect(() => {
     if(orders.length%9 === 0) {
       setTotalPage(Math.floor(orders.length/9));

@@ -1,14 +1,15 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { OrderAction } from '@redux/actions';
+import { CancelMenuAction, OrderAction } from '@redux/actions';
 import { NewOrders } from '@redux/reducers/OrderReducer';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './NewOrderPage.scss';
 import { renderArray } from '@util/renderArr';
 import NewOrderDashLeft from './NewOrderDashLeft';
 import NewOrderDashRight from './NewOrderDashRight';
 import NewOrderDashConfig from './NewOrderDashConfig';
+import { RootState } from '@redux';
 
 interface props {
   orders: NewOrders[]
@@ -20,8 +21,10 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [cancleButton, setCancleButton] = useState<boolean>(false);
   const [cancleModalState, setCancleModalState] = useState<boolean>(false);
-  const [checkedItem, setCheckedItem] = useState<string[]>([]);
 
+  const { checkedItem } = useSelector((state:RootState) => ({
+    checkedItem: state.CancelMenu.checkedItem,
+  }));
   const dispatch = useDispatch();
   const pageArray = () => {
     return renderArray(orders, page);
@@ -44,6 +47,11 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
       setPage(page + 1);
     }
   };
+  const denyButton = () => {
+    dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_number));
+    cancleDeny();
+  }
+
   useEffect(() => {
     if(selectedOrder === undefined) {
       setSelectedOrder(pageArray()[0]);
@@ -77,7 +85,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
               </div>
               <div className="CancleMenuModalButtons">
                 <button onClick={cancleDeny} className="cancel">취소</button>
-                <button className="deny">주문 거부</button>
+                <button className="deny" onClick={denyButton}>주문 거부</button>
               </div>   
             </div>
           </div>

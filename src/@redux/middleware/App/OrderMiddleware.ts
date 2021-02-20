@@ -44,7 +44,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     orders.push(order);
                 });
                 dispatch(OrderAction.setOrders(orders,receipts));
-                console.log(receipts);
             });
     };
     if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {
@@ -64,18 +63,13 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
             }
         };
         console.log(newReceipts);
-        
         // dbService
         //     .collection('stores')
         //     .doc(`${storeId}`)
         //     .collection('orders')
         //     .doc(`${action.payload.table_number}`)
         //     .update({
-
         //     })
-
-
-    
     }
     if(OrderAction.Types.C_CHECK_ORDER === action.type) {
         
@@ -89,7 +83,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                 let newRe:Buckets[] = [];
                                 for(let j=0 ; j<orders[i].receipt[k].receipts.length ; j++) {
                                     let newO = orders[i].receipt[k].receipts[j];
-                                    newO.state = true;
+                                    if(orders[i].receipt[k].receipts[j].state === "주문완료") newO.state = "접수 완료";
                                     newRe.push(newO);
                                 };
                                 let obj:Receipt = {

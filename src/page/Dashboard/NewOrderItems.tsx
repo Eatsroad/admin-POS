@@ -7,11 +7,12 @@ interface Props {
 }
 
 const NewOrderItmes = ({selectedOrder, cancleButton }:Props) => {
+    
     return(
         <div className="NewOrderItems">
             {
                 selectedOrder?.receipts.map((item:any) => {
-                    if(!item.state){
+                    if(item.state === "주문 완료"){
                         return (
                             <NewOrderItem 
                                 name={item.name} 
