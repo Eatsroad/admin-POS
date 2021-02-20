@@ -1,12 +1,12 @@
 import { NewOrders } from '@redux/reducers/OrderReducer';
-import React from 'react';
+import React, { useState } from 'react';
 import NewOrderItem from './NewOrderItem';
 interface Props {
     selectedOrder: NewOrders | undefined;
     cancleButton: boolean;
 }
 
-const NewOrderItmes = ({selectedOrder, cancleButton, }:Props) => {
+const NewOrderItmes = ({selectedOrder, cancleButton }:Props) => {
     return(
         <div className="NewOrderItems">
             {
@@ -15,6 +15,7 @@ const NewOrderItmes = ({selectedOrder, cancleButton, }:Props) => {
                         return (
                             <NewOrderItem 
                                 name={item.name} 
+                                id={item.id}
                                 options={item.options} 
                                 itemTotalPrice={item.item_total_price} 
                                 count={item.count}

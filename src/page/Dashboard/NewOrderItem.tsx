@@ -2,14 +2,16 @@ import numberWithCommas from '@util/addCommaFunc';
 import React, { useState } from 'react';
 interface Props {
     name: string;
+    id:string
     options:any[];
     itemTotalPrice: number;
     count:number;
     cancleButton:boolean;
 }
 
-const NewOrderItem = ({name, options, itemTotalPrice, count, cancleButton}:Props) => {
+const NewOrderItem = ({name, id,  options, itemTotalPrice, count, cancleButton}:Props) => {
     const [checkedState, setCheckedState] = useState<boolean>(false);
+    
     return (
             <div className="NewOrderItem" key={name}>
                 
@@ -18,7 +20,7 @@ const NewOrderItem = ({name, options, itemTotalPrice, count, cancleButton}:Props
                         {
                             cancleButton
                             ? 
-                                <div className={checkedState?'checked':'none'} onClick={()=>setCheckedState(!checkedState)}>
+                                <div className={checkedState?'checked':'none'} onClick={()=>{setCheckedState(!checkedState);}}>
                                 </div>
                             :<></>
                         }

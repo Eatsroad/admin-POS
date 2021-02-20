@@ -1,7 +1,7 @@
 import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
-import { Buckets, Receipt } from '@redux/reducers/OrderReducer';
+import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
 
 interface param {
@@ -13,7 +13,8 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
     next:any
 ) => (action:Action) => {
     next(action);
-   const storeId = window.localStorage.getItem('storeId')
+   const storeId = window.localStorage.getItem('storeId');
+   const orders = getState().Order.orders;
 
     if(OrderAction.Types.C_LOAD_ORDERS === action.type) {
         window.localStorage.setItem('storeId',action.payload.storeId);
@@ -45,9 +46,39 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 dispatch(OrderAction.setOrders(orders,receipts));
                 console.log(receipts);
             });
+    };
+    if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {
+        let newReceipts: Receipt[] = [];
+        for(let k = 0 ; k<orders.length ; k++){
+            if(orders[k].table_number === action.payload.table_number) {
+                const newOrdersObj = orders[k].receipt;
+                for(let i=0 ; i<action.payload.id.length; i++ ) {
+                    const index = orders[k].receipt.findIndex((receipt) => {
+                        return receipt.receipts.findIndex((item) => {
+                            return item.id === action.payload.id[i]
+                        })
+                    })
+                    newOrdersObj.splice(index, 1);
+                };
+                newReceipts = newOrdersObj;
+            }
+        };
+        console.log(newReceipts);
+        
+        // dbService
+        //     .collection('stores')
+        //     .doc(`${storeId}`)
+        //     .collection('orders')
+        //     .doc(`${action.payload.table_number}`)
+        //     .update({
+
+        //     })
+
+
+    
     }
     if(OrderAction.Types.C_CHECK_ORDER === action.type) {
-        const orders = getState().Order.orders;
+        
         switch(action.payload.mode) {
             case 0:
                 let checkedOrders:Receipt[] = [];

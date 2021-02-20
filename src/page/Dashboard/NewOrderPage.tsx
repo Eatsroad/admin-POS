@@ -20,6 +20,8 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [cancleButton, setCancleButton] = useState<boolean>(false);
   const [cancleModalState, setCancleModalState] = useState<boolean>(false);
+  const [checkedItem, setCheckedItem] = useState<string[]>([]);
+
   const dispatch = useDispatch();
   const pageArray = () => {
     return renderArray(orders, page);

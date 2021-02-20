@@ -1,7 +1,7 @@
 import { NewOrders } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import { itemPrice } from '@util/itemPrice';
-import React from 'react';
+import React, { useState } from 'react';
 import NewOrderItmes from './NewOrderItems';
 interface Props {
     selectedOrder: NewOrders | undefined;
@@ -11,7 +11,7 @@ interface Props {
     setCancleModalState:(state:boolean)=>void
 }
 
-const NewOrderDashRight = ({selectedOrder, cancleButton, setCancleButton, checkOrders, setCancleModalState}:Props) => {
+const NewOrderDashRight = ({selectedOrder, cancleButton, setCancleButton, checkOrders, setCancleModalState, }:Props) => {
     return (
         <div className="right">
           {
@@ -25,7 +25,7 @@ const NewOrderDashRight = ({selectedOrder, cancleButton, setCancleButton, checkO
                     </div>
                     <NewOrderItmes 
                         selectedOrder={selectedOrder} 
-                        cancleButton={cancleButton} 
+                        cancleButton={cancleButton}
                     />
                   <div className="NewOrderSpecificPrice">
                     <div className="">총 금액</div>

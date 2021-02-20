@@ -151,7 +151,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
                             {
                               doc.receipts.map((item:Buckets, index:number) => {
                                 if(item.state){
-                                  
                                   return(
                                     <div className="TableViewModalContentItem" key={item.name}>
                                       <div className="TableViewModalContentName">
@@ -203,6 +202,13 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
                       <div className="TableHeaderTime">{order.orderAt}</div>
                     </div>
                     <div className="TableContent">
+                      {/* {
+                        order.receipt.map((receipt) => {
+                          receipt.receipts.map((item) => {
+                            
+                          });
+                        })
+                      } */}
                       {order.receipt[0].receipts[0].name} 
                       {
                         receiptCount(order.receipt) === 1 

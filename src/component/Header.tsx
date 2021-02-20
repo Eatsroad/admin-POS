@@ -33,7 +33,9 @@ const Header: React.FC<props> = (props) => {
   };
 
   const formatTime = (date: Date) => {
+
     const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
     const datestr = `${date.getFullYear()}.${
       date.getMonth() + 1
     }.${date.getDate()} (${dayOfWeek[date.getDay()]}) `;
@@ -41,12 +43,14 @@ const Header: React.FC<props> = (props) => {
     const timestr = `${padNum(date.getHours())}:${padNum(
       date.getMinutes()
     )}:${padNum(date.getSeconds())}`;
+
     return (
       <>
         <span style={{ fontSize: '11px' }}>{datestr}</span>
         <span style={{ fontSize: '15px', marginLeft: '5px' }}>{timestr}</span>
       </>
     );
+    
   };
 
   return (

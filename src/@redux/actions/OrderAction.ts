@@ -3,7 +3,8 @@ import { ActionCreator } from '../Types';
 export enum Types {
     S_SET_ORDERS = '[Orders] set orders',
     C_LOAD_ORDERS = '[Orders] commend load orders',
-    C_CHECK_ORDER = '[Orders] commens check orders',
+    C_CHECK_ORDER = '[Orders] commend check orders',
+    C_DENY_ORDER_ITEM = '[Orders] commend denu order item',
 };
 
 export const loadOrders: ActionCreator = (storeId: string) => {
@@ -34,4 +35,15 @@ export const checkOrders:ActionCreator = (mode:number, orderId:string, table_num
             order_time:order_time
         }
     }
+};
+
+export const denyOrderItem:ActionCreator = (cancelList:string[], orderTime:string, table_number:string,) => {
+    return {
+        type:Types.C_DENY_ORDER_ITEM,
+        payload: {
+            cancelList:cancelList,
+            orderTime:orderTime,
+            table_number:table_number,
+        }
+    };
 };
