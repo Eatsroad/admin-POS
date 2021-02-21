@@ -71,9 +71,10 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     
     order.receipt.forEach((receipts) => {
       receipts.receipts.forEach((item) => {
-        if(item.state) tCount++;
+        if(item.state === "접수 완료") tCount++;
       })
     });
+    console.log(tCount)
     if(tCount === 0) {
       return false;
     } else {
@@ -85,7 +86,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     order.receipt.forEach((receipts) => {
       if(receipts.state === "접수 완료") {
         receipts.receipts.forEach((item) => {
-          price += item.item_total_price;
+            if(item.state === "접수 완료")price += item.item_total_price;
         })
       }
     });

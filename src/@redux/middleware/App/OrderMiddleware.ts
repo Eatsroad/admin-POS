@@ -32,17 +32,27 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                         table_number:doc.id,
                         ...data
                     };
-                    data.receipt.map((rec:any) => {
+                    data.receipt.forEach((rec:any) => {
                         if(rec.state === "주문 완료") {
-                            const newOrder = {
+                            let tmpReceipts:any[] = [];
+                            
+                            console.log(rec.receipts)
+                            rec.receipts.forEach((item:any) => {
+                                if(item.state === "주문 완료") {
+                                    tmpReceipts.push(item);
+                                };
+                            });
+                            let newOrder = {
                                 table_number:doc.id,
+                                receipts: tmpReceipts,
                                 ...rec
-                            }
+                            };
                             receipts.push(newOrder);
                         }
                     })
                     orders.push(order);
                 });
+                console.log(orders, receipts);
                 dispatch(OrderAction.setOrders(orders,receipts));
             });
     };
@@ -50,6 +60,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
         let newReceipts: Receipt[] = [];
         for(let k = 0 ; k<orders.length ; k++){
             if(orders[k].table_number === action.payload.table_number) {
+                console.log('')
                 const newOrdersObj = orders[k].receipt;
                 for(let i=0 ; i<action.payload.id.length; i++ ) {
                     const index = orders[k].receipt.findIndex((receipt) => {
@@ -58,6 +69,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                         })
                     })
                     newOrdersObj.splice(index, 1);
+
                 };
                 newReceipts = newOrdersObj;
             }
@@ -83,8 +95,9 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                 let newRe:Buckets[] = [];
                                 for(let j=0 ; j<orders[i].receipt[k].receipts.length ; j++) {
                                     let newO = orders[i].receipt[k].receipts[j];
-                                    if(orders[i].receipt[k].receipts[j].state === "주문완료") newO.state = "접수 완료";
+                                    if(orders[i].receipt[k].receipts[j].state === "주문 완료") newO.state = "접수 완료";
                                     newRe.push(newO);
+                                    console.log(newO)
                                 };
                                 let obj:Receipt = {
                                     ...orders[i].receipt[k],
@@ -92,12 +105,14 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                     receipts:newRe
                                 };
                                 checkedOrders.push(obj);
+                                console.log(obj);
                             } else {
                                 checkedOrders.push(orders[i].receipt[k]);
                             }
                         }
                     }
-                }
+                };
+                console.log(checkedOrders);
                 dbService
                     .collection('stores')
                     .doc(`${storeId}`)

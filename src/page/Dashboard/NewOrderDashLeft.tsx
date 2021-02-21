@@ -1,4 +1,4 @@
-import { NewOrders } from '@redux/reducers/OrderReducer';
+import { NewOrders, Orders } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import { renderArray } from '@util/renderArr';
 import ArrowR from '../../@util/image/icon/icon_arrow_right_white_x3.png';
@@ -17,6 +17,19 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
     const pageArray = () => {
         return renderArray(orders, page);
     };
+    const checkState = (order:NewOrders) => {
+        let tCount  = 0;
+        
+        order.receipts.forEach((item) => {
+            if(item.state === "주문 완료") tCount++;
+        });
+        console.log(tCount)
+        if(tCount === 0) {
+          return false;
+        } else {
+          return true;
+        }
+    };
     return (
         <div className="left">
           <div className="leftOrders">
@@ -25,30 +38,32 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
                     <div className="NoneNew">새로운 주문이 없습니다.</div> 
                 : 
                     pageArray().map((order:NewOrders) => {
-                        return (
-                            <div className="NewOrder" onClick={()=>setSelectedOrder(order)} key={order.order_time}>
-                                <div className="NewOrderTable">
-                                <div>Table {order.table_number}</div>
-                                <div>{order.order_time}</div>
+                        if(checkState(order)) {
+                            return (
+                                <div className="NewOrder" onClick={()=>setSelectedOrder(order)} key={order.order_time}>
+                                    <div className="NewOrderTable">
+                                    <div>Table {order.table_number}</div>
+                                    <div>{order.order_time}</div>
+                                    </div>
+                                    <div className="NewOrderContent">
+                                    {order.receipts[0].name}
+                                    {
+                                        order.receipts.length === 1 
+                                        ?` ${order.receipts[0].count}개`
+                                        :`외 ${order.receipts.length-1}개`
+                                    }
+                                    </div>
+                                    <div className="NewOrderPrice">
+                                    <div className="NewOrderSp">
+                                        <div>주문 보기</div>
+                                    </div>
+                                    <div className="NewOrderItemPrice">
+                                        <div>{numberWithCommas(itemPrice(order))}원</div>
+                                    </div>
+                                    </div>
                                 </div>
-                                <div className="NewOrderContent">
-                                {order.receipts[0].name}
-                                {
-                                    order.receipts.length === 1 
-                                    ?` ${order.receipts[0].count}개`
-                                    :`외 ${order.receipts.length-1}개`
-                                }
-                                </div>
-                                <div className="NewOrderPrice">
-                                <div className="NewOrderSp">
-                                    <div>주문 보기</div>
-                                </div>
-                                <div className="NewOrderItemPrice">
-                                    <div>{numberWithCommas(itemPrice(order))}원</div>
-                                </div>
-                                </div>
-                            </div>
-                        );
+                            );
+                        }
                     })
             }
           </div>

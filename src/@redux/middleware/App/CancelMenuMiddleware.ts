@@ -1,3 +1,4 @@
+import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import { Receipt } from '@redux/reducers/OrderReducer';
@@ -12,6 +13,7 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
     next:any
 ) => (action:Action) => {
     next(action);
+    const storeId = window.localStorage.getItem('storeId');
     
     if(CancelMenuAction.Types.C_CHECK_ITEM === action.type) {
         if(action.payload.state) {
@@ -27,15 +29,19 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
         let orders = getState().Order.orders;
         let newReceipts:Receipt[] = [];
         console.log(checkedItems);
-        //고쳐야함 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㄴ
+        console.log('Order Time',action.payload.orderTime);
         for(let i=0 ; i<checkedItems.length ; i++) {
             for(let k=0 ; k<orders.length ; k++) {
                 if(orders[k].table_number === action.payload.tableNumber) {
+                    console.log('Table Number',action.payload.tableNumber);
                     for(let j=0 ; j<orders[k].receipt.length ; j++) {
                         if(orders[k].receipt[j].order_time === action.payload.orderTime) {
+                            console.log('Order Time',action.payload.orderTime);
                             for(let l=0 ; l<orders[k].receipt[j].receipts.length; l++) {
-                                if(orders[k].receipt[j].receipts[l].id === action.payload.id) {
+                                console.log(orders[k].receipt[j].receipts.length)
+                                if(orders[k].receipt[j].receipts[l].id === checkedItems[i]) {
                                     console.log(orders[k].receipt[j].receipts[l].state);
+
                                     orders[k].receipt[j].receipts[l].state = "주문 거부";
                                 }
                             }
@@ -46,6 +52,18 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
             }
         }
         console.log("new: ", newReceipts);
+        dbService
+            .collection('stores')
+            .doc(`${storeId}`)
+            .collection('orders')
+            .doc(`${action.payload.tableNumber}`)
+            .update({
+                'receipt':[
+                    ...newReceipts
+                ]
+            }).then(() => {
+                console.log('success')
+            } )
     }
     
 };
