@@ -1,4 +1,4 @@
-@import '../../scss/_variables.scss';
+@import '../../../scss/_variables.scss';
 
 .NewOrderPage {
   display: grid;
@@ -180,13 +180,32 @@
         .rightContentSp{
           margin: 0 20px;
           margin-top: 10px;
-          .rightContentTableTime{
+          .rightContentTable{
             font-size: 17px;
             font-weight: bold;
             padding-bottom: 10px;
             border-bottom: solid 2px rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: space-between;
+          }
+          .rightContentTimeButton{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            .rightContentTime{
+              font-size: 17px;
+              font-weight: bold;
+            }
+            .rightContentButton{
+              padding: 0;
+              font-size: 13px;
+            }
+            button{
+              
+              background-color: white;
+              border: none;
+            }
           }
           .NewOrderItems{
             margin-top: 15px;
@@ -195,20 +214,22 @@
               display: grid;
               grid-template-columns: 2.8fr 1fr;
               font-size: 15px;
-              font-weight: bold;
               margin-bottom: 13px;
               .NewOrderItemName{
                 .NewOrderItemNameCheck{
+                  display: flex;
                   .checked{
                     width: 15px;
                     height: 15px;
                     background-color: blue;
                     border: solid 1px black;
+                    margin-right: 10px;
                   }
                   .none{
                     width: 15px;
                     height: 15px;
                     border: solid 1px black;
+                    margin-right: 10px;
                   }
                 }
               }
@@ -224,7 +245,6 @@
             display: flex;
             justify-content: space-between;
             font-size: 17px;
-            font-weight: bold;
           }
         }
         .NewOrderSpecificButton{
@@ -240,7 +260,7 @@
             margin-right: 3.3%;
             border: none;
             border-radius: 60px;
-            width: 22.2%;
+            width: 43.4%;
             font-size: 16px;
             font-weight: bold;
             color: white;
@@ -251,7 +271,7 @@
             margin-right: 3.3%;
             border: none;
             border-radius: 60px;
-            width: 22.2%;
+            width: 43.4%;
             font-size: 16px;
             font-weight: bold;
             color: white;
@@ -261,7 +281,7 @@
             background-color: $base-color;
             border: none;
             border-radius: 60px;
-            width: 64.6%;
+            width: 43.4%;
             color: white;
             font-weight: bold;
             font-size: 16px;
@@ -270,7 +290,7 @@
             background-color:  #bfbfbf;
             border: none;
             border-radius: 60px;
-            width: 64.6%;
+            width: 43.4%;
             color: white;
             font-weight: bold;
             font-size: 16px;

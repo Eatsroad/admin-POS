@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import NewOrderItem from './NewOrderItem';
 interface Props {
     selectedOrder: NewOrders | undefined;
-    cancleButton: boolean;
 }
 
-const NewOrderItmes = ({selectedOrder, cancleButton }:Props) => {
+const NewOrderItmes = ({selectedOrder }:Props) => {
     
     return(
         <div className="NewOrderItems">
@@ -20,7 +19,6 @@ const NewOrderItmes = ({selectedOrder, cancleButton }:Props) => {
                                 options={item.options} 
                                 itemTotalPrice={item.item_total_price} 
                                 count={item.count}
-                                cancleButton={cancleButton}
                             />
                         );
                     }

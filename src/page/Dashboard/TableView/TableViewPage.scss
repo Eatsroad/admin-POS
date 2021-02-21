@@ -1,4 +1,4 @@
-@import '../../scss/_variables.scss';
+@import '../../../scss/_variables.scss';
 .TableViewPage {
   
   // flex: 1;
@@ -133,6 +133,14 @@
         width: 44px;
         height: 44px;
         left: 0.9%;
+        background-color: transparent;
+        border:none;
+        padding: 0px;
+        img{
+          width: 40%;
+          height: 60%;
+          margin: auto;
+        }
       }
     }
     .TableViewModalContent{

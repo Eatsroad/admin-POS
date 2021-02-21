@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './index.scss';
 import { DashboardSideBar } from '../../component';
-import NewOrder from './NewOrderPage';
-import TableViewPage from './TableViewPage';
+import NewOrder from './NewOrder/NewOrderPage';
+import TableViewPage from './TableView/TableViewPage';
 import { useSelector } from 'react-redux';
 import { RootState } from '@redux';
 

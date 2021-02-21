@@ -9,11 +9,15 @@ interface Notification {
 export interface UI {
   isGlobalLoading: boolean;
   notificationQueue: Notification[];
+  comfirmModalState:boolean
+  cancelModalState:boolean
 }
 
 const initialState: UI = {
   isGlobalLoading: true,
   notificationQueue: [],
+  comfirmModalState: false,
+  cancelModalState: false
 };
 
 const UIReducer = (state = initialState, action: Action) => {
@@ -23,7 +27,17 @@ const UIReducer = (state = initialState, action: Action) => {
         ...state,
         isGlobalLoading: action.payload.isLoading,
       };
-
+    case UIAction.Types.S_CANCEL_MODAL:
+      return {
+        ...state,
+        cancelModalState:action.payload.cancelModalState
+      }
+    case UIAction.Types.S_COMFIRM_MODAL:
+      console.log(UIAction.Types.S_COMFIRM_MODAL);
+      return {
+        ...state,
+        comfirmModalState:action.payload.comfirmModalState
+      }
     default:
       return state;
   }

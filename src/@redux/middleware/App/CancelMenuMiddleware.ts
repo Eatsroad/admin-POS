@@ -17,10 +17,8 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
     
     if(CancelMenuAction.Types.C_CHECK_ITEM === action.type) {
         if(action.payload.state) {
-            console.log(action.payload)
             dispatch(CancelMenuAction.setCanceledItemAdd(action.payload.id));
         } else {
-            console.log(action.payload)
             dispatch(CancelMenuAction.setCanceledItemDelete(action.payload.id));
         }
     };
@@ -28,20 +26,16 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
         const checkedItems = getState().CancelMenu.checkedItem;
         let orders = getState().Order.orders;
         let newReceipts:Receipt[] = [];
-        console.log(checkedItems);
-        console.log('Order Time',action.payload.orderTime);
-        for(let i=0 ; i<checkedItems.length ; i++) {
-            for(let k=0 ; k<orders.length ; k++) {
-                if(orders[k].table_number === action.payload.tableNumber) {
-                    console.log('Table Number',action.payload.tableNumber);
-                    for(let j=0 ; j<orders[k].receipt.length ; j++) {
-                        if(orders[k].receipt[j].order_time === action.payload.orderTime) {
-                            console.log('Order Time',action.payload.orderTime);
-                            for(let l=0 ; l<orders[k].receipt[j].receipts.length; l++) {
-                                console.log(orders[k].receipt[j].receipts.length)
+        for(let k=0 ; k<orders.length ; k++) {
+            if(orders[k].table_number === action.payload.tableNumber) {
+                console.log('Table Number',action.payload.tableNumber);
+                for(let j=0 ; j<orders[k].receipt.length ; j++) {
+                    if(orders[k].receipt[j].order_time === action.payload.orderTime) {
+                        console.log('Order Time',action.payload.orderTime);
+                        for(let l=0 ; l<orders[k].receipt[j].receipts.length; l++) {
+                            console.log(orders[k].receipt[j].receipts.length)
+                            for(let i=0 ; i<checkedItems.length ; i++) {
                                 if(orders[k].receipt[j].receipts[l].id === checkedItems[i]) {
-                                    console.log(orders[k].receipt[j].receipts[l].state);
-
                                     orders[k].receipt[j].receipts[l].state = "주문 거부";
                                 }
                             }
@@ -51,7 +45,6 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
                 }
             }
         }
-        console.log("new: ", newReceipts);
         dbService
             .collection('stores')
             .doc(`${storeId}`)
@@ -65,7 +58,6 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
                 console.log('success')
             } )
     }
-    
 };
 
 export default CancelMenuMiddleware;

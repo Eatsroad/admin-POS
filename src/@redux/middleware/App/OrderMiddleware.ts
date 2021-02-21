@@ -35,11 +35,12 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     data.receipt.forEach((rec:any) => {
                         if(rec.state === "주문 완료") {
                             let tmpReceipts:any[] = [];
-                            
+                            let count = 0;
                             console.log(rec.receipts)
                             rec.receipts.forEach((item:any) => {
                                 if(item.state === "주문 완료") {
                                     tmpReceipts.push(item);
+                                    count++;
                                 };
                             });
                             let newOrder = {
@@ -47,7 +48,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                 receipts: tmpReceipts,
                                 ...rec
                             };
-                            receipts.push(newOrder);
+                            if(count !== 0) receipts.push(newOrder);
                         }
                     })
                     orders.push(order);
@@ -137,7 +138,8 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                         'order_state':false,
                         'receipt_total_price':0,
                         'total_price':0,
-                        'bucket':[]
+                        'bucket':[],
+                        'orderAt':''
                     });
                 break;
             default:

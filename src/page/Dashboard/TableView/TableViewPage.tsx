@@ -4,6 +4,7 @@ import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TableViewPage.scss';
+import TableViewModal from './TableViewModal';
 
 interface props {
   orders:Orders[]
@@ -56,7 +57,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     let count = 0;
     order.forEach((doc) => {
       doc.receipts.map((item:any) => {
-        if(item.state)count++;
+        if(item.state === '접수 완료') count++;
       })
     });
     return count;
@@ -92,17 +93,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     });
     return price;
   }
-  const checkedItemTotalPrice = () => {
-    let totalPrice = 0;
-    curOrder?.receipt.map((doc) => {
-      if(doc.state === "접수 완료") {
-        doc.receipts.map((item) => {
-          totalPrice += item.item_total_price;
-        })
-      }
-    });
-    return totalPrice;
-  }
   const modal = (curOrder:Orders) => {
     setCurOrder(curOrder);
     setModalState(true);
@@ -126,68 +116,13 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
   }, []);
   return(
     <div className="TableViewPage">
-      {
-        modalState
-        ? 
-          <div className="TableViewModal">
-            <div className="ModalContent">
-              <div className="TableViewModalTitle">
-                <button  className="CloseModalButton" onClick={() => setModalState(false)}></button>
-                <div>결제 대기</div>
-              </div>
-              <div className="TableViewModalContent">
-                <div className="TableViewModalContentInfo">
-                  <div>Table {curOrder?.table_number}</div>
-                  <div>{numberWithCommas(checkedItemTotalPrice())}원</div>
-                </div>
-                <div className="TableViewModalInnerContentCon">
-                  {
-                    curOrder?.receipt.map((doc:Receipt) => {
-                      if(doc.state === "접수 완료"){
-                        return(
-                          <div className="TableViewModalInnerContent">
-                            <div className="TableViewModalTime">{doc.order_time}</div>
-                            {
-                              doc.receipts.map((item:Buckets, index:number) => {
-                                if(item.state){
-                                  return(
-                                    <div className="TableViewModalContentItem" key={item.name}>
-                                      <div className="TableViewModalContentName">
-                                        <div>{item.name}</div>
-                                        <div>{numberWithCommas(item.item_total_price)}원</div>
-                                      </div>
-                                      <div className="TableViewModalContentCount">
-                                        <div>수량 : {item.count}개</div>
-                                        <div>{numberWithCommas(item.price)}원</div>
-                                      </div>
-                                      <div className="TableViewModalContentOptions">
-                                        <div>{item.options}</div>
-                                      </div>
-                                      {
-                                        index === doc.receipts.length -1? <></>:<div className="TableLine"/>
-                                      }
-                                    </div>
-                                  );
-                                }
-                              })
-                            }
-                          </div>
-                        );
-                    }})
-                  }
-                </div>
-              </div>
-              <div className="TableViewModalPageButton">
-
-              </div>
-              <div className="TableViewModalButton">
-                <button className="TableViewModalCancel">주문 취소</button>
-                <button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
-              </div>
-            </div>
-          </div>
-        :<></>
-      }
+      {/* <CancelModal/> */}
+      <TableViewModal
+        modalClose={modalClose}
+        setModalState={setModalState}
+        curOrder={curOrder}
+        modalState={modalState}
+      />
       <div className="Tables">
         <div className="TableBox">
           {
@@ -201,13 +136,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
                       <div className="TableHeaderTime">{order.orderAt}</div>
                     </div>
                     <div className="TableContent">
-                      {/* {
-                        order.receipt.map((receipt) => {
-                          receipt.receipts.map((item) => {
-                            
-                          });
-                        })
-                      } */}
                       {order.receipt[0].receipts[0].name} 
                       {
                         receiptCount(order.receipt) === 1 

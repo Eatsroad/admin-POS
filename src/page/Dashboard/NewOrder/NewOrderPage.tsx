@@ -1,15 +1,15 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CancelMenuAction, OrderAction } from '@redux/actions';
+import { CancelMenuAction, OrderAction, UIAction } from '@redux/actions';
 import { NewOrders } from '@redux/reducers/OrderReducer';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './NewOrderPage.scss';
 import { renderArray } from '@util/renderArr';
 import NewOrderDashLeft from './NewOrderDashLeft';
 import NewOrderDashRight from './NewOrderDashRight';
 import NewOrderDashConfig from './NewOrderDashConfig';
-import { RootState } from '@redux';
+import CancelModal from '../CancelModal';
 
 interface props {
   orders: NewOrders[]
@@ -19,12 +19,6 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   const [selectedOrder, setSelectedOrder] = useState<NewOrders | undefined >(orders[0]);
   const [page, setPage ] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const [cancleButton, setCancleButton] = useState<boolean>(false);
-  const [cancleModalState, setCancleModalState] = useState<boolean>(false);
-
-  const { checkedItem } = useSelector((state:RootState) => ({
-    checkedItem: state.CancelMenu.checkedItem,
-  }));
   const dispatch = useDispatch();
   const pageArray = () => {
     return renderArray(orders, page);
@@ -33,10 +27,6 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     dispatch(OrderAction.checkOrders(0,0,selectedOrder?.table_number, selectedOrder?.order_time));
     setSelectedOrder(pageArray()[1]);
   };
-  const cancleDeny = () => {
-    setCancleButton(false);
-    setCancleModalState(false);
-  }
   const blockClickDe = () => {
     if(page !== 0 ) {
       setPage(page - 1);
@@ -49,10 +39,8 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   };
   const denyButton = () => {
     dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_number, selectedOrder?.order_time));
-    cancleDeny();
-    dispatch(CancelMenuAction.initChecked());
+    dispatch(UIAction.cancleDeny());
   }
-
   useEffect(() => {
     if(selectedOrder === undefined) {
       setSelectedOrder(pageArray()[0]);
@@ -70,28 +58,10 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
       setSelectedOrder(pageArray()[0]);
     }
   }, [selectedOrder,orders, page]);
-
+  
   return (
     <div className="NewOrderPage">
-      {
-        cancleModalState
-        ? 
-          <div className="CancleMenuModal">
-            <div className="CancleMenuModalInnerContent">
-              <div className="CancleMenuModalTitle">
-                <div>주문 거부</div>
-              </div>
-              <div className="CancleMenuModalContent">
-                <div>주문을 거부하시겠습니까?</div>
-              </div>
-              <div className="CancleMenuModalButtons">
-                <button onClick={cancleDeny} className="cancel">취소</button>
-                <button className="deny" onClick={denyButton}>주문 거부</button>
-              </div>   
-            </div>
-          </div>
-        :<></>
-      }
+      <CancelModal denyButton={denyButton}/>
       <NewOrderDashConfig/>
       <div className="container">
         <NewOrderDashLeft 
@@ -104,10 +74,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
         />
         <NewOrderDashRight
           selectedOrder={selectedOrder}
-          cancleButton={cancleButton}
-          setCancleButton={setCancleButton}
           checkOrders={checkOrders}
-          setCancleModalState={setCancleModalState}
         />
       </div>
     </div>

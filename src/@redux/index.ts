@@ -6,6 +6,7 @@ import CancelMenuReducer, { CheckedItem } from './reducers/CancelMenuReducer';
 import OrderReducer, { Order } from './reducers/OrderReducer';
 import StoreReducer, { Store } from './reducers/StoreReducer';
 import UIReducer, { UI } from './reducers/UIReducer';
+import ObserverReducer, {Observer}from './reducers/ObserverReducer';
 
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   UI: UIReducer,
   Order:OrderReducer,
   CancelMenu:CancelMenuReducer,
+  Observer:ObserverReducer
 
 });
 
@@ -28,6 +30,7 @@ export interface RootState {
   UI: UI;
   Order: Order,
   CancelMenu: CheckedItem,
+  Observer:Observer,
 
 }
 

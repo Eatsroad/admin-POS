@@ -1,8 +1,8 @@
-import { NewOrders, Orders } from '@redux/reducers/OrderReducer';
+import { Buckets, NewOrders, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import { renderArray } from '@util/renderArr';
-import ArrowR from '../../@util/image/icon/icon_arrow_right_white_x3.png';
-import ArrowL from '../../@util/image/icon/icon_arrow_left_white_x3.png';
+import ArrowR from '@util/image/icon/icon_arrow_right_white_x3.png';
+import ArrowL from '@util/image/icon/icon_arrow_left_white_x3.png';
 import React from 'react';
 import { itemPrice } from '@util/itemPrice';
 interface Props {
@@ -23,34 +23,61 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
         order.receipts.forEach((item) => {
             if(item.state === "주문 완료") tCount++;
         });
-        console.log(tCount)
         if(tCount === 0) {
           return false;
         } else {
           return true;
         }
     };
+    const checkListLength = () => {
+        let lCount = 0;
+        orders.forEach((order) => {
+            if(checkState(order)) lCount++;
+        })
+        if(lCount === 0) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    const receiptCount = (order:Buckets[]) => {
+        let count = 0;
+        order.forEach((doc) => {
+            if(doc.state === '주문 완료') count++;
+        });
+        return count;
+    };
+    const filter = (order:Buckets[]) => {
+        let tmpArr:Buckets[] = [];
+        order.forEach((doc) => {
+            if(doc.state === "주문 완료") {
+                tmpArr.push(doc);
+            }
+        });
+        console.log('',tmpArr);
+        return tmpArr;
+    };
     return (
         <div className="left">
           <div className="leftOrders">
             {
-                orders.length === 0 ? 
-                    <div className="NoneNew">새로운 주문이 없습니다.</div> 
+                orders.length === 0 || !checkListLength()
+                ? <div className="NoneNew">새로운 주문이 없습니다.</div> 
                 : 
                     pageArray().map((order:NewOrders) => {
                         if(checkState(order)) {
                             return (
-                                <div className="NewOrder" onClick={()=>setSelectedOrder(order)} key={order.order_time}>
+                                <div className="NewOrder" onClick={() => setSelectedOrder(order)} key={order.order_time}>
                                     <div className="NewOrderTable">
                                     <div>Table {order.table_number}</div>
                                     <div>{order.order_time}</div>
                                     </div>
                                     <div className="NewOrderContent">
-                                    {order.receipts[0].name}
+                                    {filter(order.receipts)[0].name}
                                     {
-                                        order.receipts.length === 1 
-                                        ?` ${order.receipts[0].count}개`
-                                        :`외 ${order.receipts.length-1}개`
+                                        receiptCount(order.receipts) === 1 
+                                        ?` ${filter(order.receipts)[0].count}개`
+                                        :`외 ${receiptCount(order.receipts)-1}개`
                                     }
                                     </div>
                                     <div className="NewOrderPrice">
