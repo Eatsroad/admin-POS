@@ -1,7 +1,10 @@
+import { UIAction } from '@redux/actions';
 import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import Arrow from '@util/image/icon/icon_arrow_back_white_x3.png'
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import TableViewItems from './TableViewItems';
 
 interface Props {
     modalClose:()=>void;
@@ -11,6 +14,7 @@ interface Props {
 
 }
 const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props) => {
+    const dispatch = useDispatch();
     const checkedItemTotalPrice = () => {
         let totalPrice = 0;
         curOrder?.receipt.map((doc) => {
@@ -45,43 +49,17 @@ const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props
                                         curOrder?.receipt.map((doc:Receipt) => {
                                         if(doc.state === "접수 완료"){
                                             return(
-                                            <div className="TableViewModalInnerContent">
-                                                <div className="TableViewModalTime">{doc.order_time}</div>
-                                                {
-                                                doc.receipts.map((item:Buckets, index:number) => {
-                                                    if(item.state === '접수 완료'){
-                                                    return(
-                                                        <div className="TableViewModalContentItem" key={item.name}>
-                                                            <div className="TableViewModalContentName">
-                                                                <div>{item.name}</div>
-                                                                <div>{numberWithCommas(item.item_total_price)}원</div>
-                                                            </div>
-                                                            <div className="TableViewModalContentCount">
-                                                                <div>수량 : {item.count}개</div>
-                                                                <div>{numberWithCommas(item.price)}원</div>
-                                                            </div>
-                                                            <div className="TableViewModalContentOptions">
-                                                                <div>{item.options}</div>
-                                                            </div>
-                                                            {
-                                                                index === doc.receipts.length -1? <></>:<div className="TableLine"/>
-                                                            }
-                                                        </div>
-                                                    );
-                                                    }
-                                                })
-                                                }
-                                            </div>
+                                                <TableViewItems
+                                                    doc={doc}
+                                                />
                                             );
                                         }})
                                     }
                                 </div>
                             </div>
-                            <div className="TableViewModalPageButton">
-
-                            </div>
+                            <div className="TableViewModalPageButton"></div>
                             <div className="TableViewModalButton">
-                                <button className="TableViewModalCancel">주문 취소</button>
+                                <button className="TableViewModalCancel" onClick={()=>dispatch(UIAction.showCancelModal(true))}>주문 취소</button>
                                 <button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
                             </div>
                         </div>

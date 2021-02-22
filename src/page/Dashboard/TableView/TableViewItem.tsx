@@ -1,17 +1,17 @@
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
+import { Buckets } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 interface Props {
-    name: string;
+    item:Buckets;
+    index:number;
+    length:number;
     id:string
-    options:any[];
-    itemTotalPrice: number;
-    count:number;
 }
 
-const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
+const TableViewItem = ({item, index, length, id, }:Props) => {
     const { checkItemTrigger, checkItemButtonState, showModalState, initCheckedItems } = useSelector((state:RootState) => ({
         checkItemTrigger:state.Observer.checkItemTrigger,
         checkItemButtonState:state.Observer.checkItemButtonState,
@@ -31,7 +31,6 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
             dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
         }
     };
-   
     useEffect(() => {
         if(checkItemButtonState !== prevTriggerState) {
             setCheckedState(checkItemTrigger);
@@ -42,25 +41,32 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
             setPrevInitState(initCheckedItems);
         };
     }, [checkItemButtonState, initCheckedItems]);
+    
     return (
-            <div className="NewOrderItem" key={name}>
-                <div className="NewOrderItemName">
-                    <div className="NewOrderItemNameCheck">
-                        {
-                            showModalState
-                            ? <div className={checkedState?'checked':'none'} onClick={()=>{onChecked()}}/>
-                            : <></>
-                        }
-                        <div>{name}</div>
-                    </div>
-                    <div>{options}</div>
+        <div className="TableViewModalContentItem" key={item.name}>
+            <div className="TableViewModalContentName">
+                <div className="TableViewModalContentCheckBox">
+                    {
+                        showModalState
+                        ? <div className={checkedState?'checked':'none'} onClick={()=>{onChecked()}}/>
+                        : <></>
+                    }
+                    <div>{item.name}</div>
                 </div>
-                <div className="NewOrderCountPrice">
-                    <div>X{count}</div>
-                    <div>{numberWithCommas(itemTotalPrice)}원</div>
-                </div>
+                <div>{numberWithCommas(item.item_total_price)}원</div>
             </div>
+            <div className="TableViewModalContentCount">
+                <div>수량 : {item.count}개</div>
+                <div>{numberWithCommas(item.price)}원</div>
+            </div>
+            <div className="TableViewModalContentOptions">
+                <div>{item.options}</div>
+            </div>
+            {
+                index === length -1? <></>:<div className="TableLine"/>
+            }
+        </div>
     );
 };
 
-export default NewOrderItem;
+export default TableViewItem;
