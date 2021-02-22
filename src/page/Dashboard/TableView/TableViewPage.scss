@@ -175,6 +175,23 @@
               margin-bottom: 6px;
               font-size: 15px;
               font-weight: bold;
+              .TableViewModalContentCheckBox{
+                display: flex;
+                
+                .checked{
+                  width: 15px;
+                  height: 15px;
+                  background-color: blue;
+                  border: solid 1px black;
+                  margin-right: 10px;
+                }
+                .none{
+                  width: 15px;
+                  height: 15px;
+                  border: solid 1px black;
+                  margin-right: 10px;
+                }
+              }
             }
             .TableViewModalContentCount{
               display: flex;
@@ -211,6 +228,14 @@
       .TableViewModalCheck{
         background-color: $base-color;
         color: white;
+      }
+      .TableViewModalCancel_S{
+        background-color: $base-color;
+        color: white;
+      }
+      .TableViewModalCheck_S{
+        background-color: #cccccc;
+        color: #666666;
       }
     }
   }

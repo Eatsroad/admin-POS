@@ -7,10 +7,12 @@ export enum Types {
     C_CHECK_BUTTON = '[Observer] commend for check button state'
 };
 
-export const triggerCheckAll_T:ActionCreator = () => {
+export const triggerCheckAll_T:ActionCreator = (orderTime:string) => {
     return {
         type:Types.C_CEHCK_ALL_ITEM_T,
-        payload: null
+        payload: {
+            orderTime:orderTime
+        }
     }
 };
 export const clickCheckButton:ActionCreator = () => {
@@ -19,10 +21,12 @@ export const clickCheckButton:ActionCreator = () => {
         payload: null
     }
 };
-export const triggerCheckAll_F:ActionCreator = () => {
+export const triggerCheckAll_F:ActionCreator = (orderTime:string) => {
     return {
         type:Types.C_CEHCK_ALL_ITEM_F,
-        payload: null
+        payload: {
+            orderTime:orderTime
+        }
     }
 };
 export const triggerIntiChecked:ActionCreator = () => {

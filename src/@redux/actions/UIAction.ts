@@ -15,6 +15,7 @@ export const setGlobalLoading = (isLoading: boolean) => {
   };
 };
 export const showCancelModal = (cancelModalState: boolean) => {
+  console.log(Types.S_CANCEL_MODAL)
   return {
     type: Types.S_CANCEL_MODAL,
     payload: {

@@ -1,11 +1,13 @@
-import { OrderAction } from '@redux/actions';
+import { CancelMenuAction, OrderAction, UIAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './TableViewPage.scss';
 import TableViewModal from './TableViewModal';
 import TableViewBox from './TableViewBox';
+import { RootState } from '@redux';
+import CancelModal from '../CancelModal';
 
 interface props {
   orders:Orders[]
@@ -43,6 +45,9 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [modalState, setModalState] = useState<boolean>(false);
   const [curOrder, setCurOrder ] = useState<Orders>();
+  const { checkedTableItem } = useSelector((state:RootState) => ({
+    checkedTableItem:state.CancelMenu.checkedTableItem
+  }))
   
   const renderArray = () => {
     orders.sort(function (a:any, b:any) {
@@ -54,22 +59,15 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     }
     return rederArr;
   };
- 
   const blockClickDe = () => {
     if(page !== 0 ) {
       setPage(page - 1);
     } 
   };
-  const receiptPrice = (order:Orders) => {
-    let price = 0;
-    order.receipt.forEach((receipts) => {
-      if(receipts.state === "접수 완료") {
-        receipts.receipts.forEach((item) => {
-            if(item.state === "접수 완료")price += item.item_total_price;
-        })
-      }
-    });
-    return price;
+  const denyButton = () => {
+    console.log(checkedTableItem);
+    dispatch(CancelMenuAction.updateTableReceipt(curOrder?.table_number));
+    dispatch(UIAction.cancleDeny());
   }
   const modal = (curOrder:Orders) => {
     setCurOrder(curOrder);
@@ -91,9 +89,10 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setTotalPage(Math.floor(orders.length/9) + 1);
     }
   }, []);
+  console.log(checkedTableItem);
   return(
     <div className="TableViewPage">
-      {/* <CancelModal/> */}
+      <CancelModal denyButton={denyButton}/>
       <TableViewModal
         modalClose={modalClose}
         setModalState={setModalState}
@@ -101,12 +100,10 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
         modalState={modalState}
       />
       <div className="Tables">
-        <div className="TableBox">
-          <TableViewBox
-            list={renderArray()}
-            modal={modal}
-          />
-        </div>
+        <TableViewBox
+          list={renderArray()}
+          modal={modal}
+        />
         <div className="PageButton">
           <div className="Button">
             <button onClick={blockClickDe}></button>
@@ -114,6 +111,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
             <button onClick={blockClickIn}></button>
           </div>
         </div>
+
       </div>
     </div>
   );

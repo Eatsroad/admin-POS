@@ -2,6 +2,7 @@ import { RootState } from '@redux';
 import { UIAction } from '@redux/actions';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import './CancelModal.scss';
 interface Props {
     denyButton: () => void
 }
@@ -11,7 +12,6 @@ const CancelModal = ({ denyButton}:Props) => {
         showComfirmModal:state.UI.comfirmModalState,
     }));
     const dispatch = useDispatch();
-    console.log(showComfirmModal,'dfdfdfdf')
     return (
         <>
             {

@@ -1,9 +1,12 @@
-import { UIAction } from '@redux/actions';
+import { RootState } from '@redux';
+import { CancelMenuAction, UIAction } from '@redux/actions';
+import { showCancelModal } from '@redux/actions/UIAction';
 import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import Arrow from '@util/image/icon/icon_arrow_back_white_x3.png'
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import CancelModal from '../CancelModal';
 import TableViewItems from './TableViewItems';
 
 interface Props {
@@ -15,6 +18,14 @@ interface Props {
 }
 const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props) => {
     const dispatch = useDispatch();
+    const { checkItemButtonState, showModalState } = useSelector((state:RootState) => ({
+        checkItemButtonState:state.Observer.checkItemButtonState,
+        showModalState:state.UI.cancelModalState,
+      }));
+    const clicKBackButton = () => {
+        setModalState(false);
+        dispatch(UIAction.cancleDeny());
+    }
     const checkedItemTotalPrice = () => {
         let totalPrice = 0;
         curOrder?.receipt.map((doc) => {
@@ -34,7 +45,7 @@ const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props
                     <div className="TableViewModal">
                         <div className="ModalContent">
                             <div className="TableViewModalTitle">
-                                <button className="CloseModalButton" onClick={() => setModalState(false)}>
+                                <button className="CloseModalButton" onClick={clicKBackButton}>
                                     <img src={Arrow} alt="back_arrow"/>
                                 </button>
                                 <div>결제 대기</div>
@@ -47,20 +58,31 @@ const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props
                                 <div className="TableViewModalInnerContentCon">
                                     {
                                         curOrder?.receipt.map((doc:Receipt) => {
-                                        if(doc.state === "접수 완료"){
-                                            return(
-                                                <TableViewItems
-                                                    doc={doc}
-                                                />
-                                            );
-                                        }})
+                                            if(doc.state === "접수 완료"){
+                                                return(
+                                                    <TableViewItems
+                                                        doc={doc}
+                                                    />
+                                                );
+                                            }
+                                        })
                                     }
                                 </div>
                             </div>
                             <div className="TableViewModalPageButton"></div>
                             <div className="TableViewModalButton">
-                                <button className="TableViewModalCancel" onClick={()=>dispatch(UIAction.showCancelModal(true))}>주문 취소</button>
-                                <button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
+                                {
+                                    !showModalState
+                                    ?<button className="TableViewModalCancel" onClick={()=>dispatch(UIAction.showCancelModal(true))}>주문 취소</button>
+                                    :<button className="TableViewModalCancel_S" onClick={()=>dispatch(UIAction.showComfirmModal(true))}>주문 취소</button>
+                                }
+                                {
+                                     !showModalState
+                                     ?<button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
+                                     :<button onClick={()=>dispatch(UIAction.cancleDeny())} className="TableViewModalCheck_S">취소</button>
+                                }
+                                
+                                
                             </div>
                         </div>
                     </div>

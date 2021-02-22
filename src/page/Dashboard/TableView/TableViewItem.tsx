@@ -8,10 +8,11 @@ interface Props {
     item:Buckets;
     index:number;
     length:number;
-    id:string
+    id:string;
+    orderTime:string;
 }
 
-const TableViewItem = ({item, index, length, id, }:Props) => {
+const TableViewItem = ({item, index, length, id, orderTime}:Props) => {
     const { checkItemTrigger, checkItemButtonState, showModalState, initCheckedItems } = useSelector((state:RootState) => ({
         checkItemTrigger:state.Observer.checkItemTrigger,
         checkItemButtonState:state.Observer.checkItemButtonState,
@@ -24,11 +25,12 @@ const TableViewItem = ({item, index, length, id, }:Props) => {
     const dispatch = useDispatch();
     const onChecked = () => {
         if(checkedState) {
+            console.log(checkedState)
             setCheckedState(false);
-            dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
+            dispatch(CancelMenuAction.setTableCanceledItemDelete(id, orderTime));
         } else { 
             setCheckedState(true);
-            dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
+            dispatch(CancelMenuAction.setTableCanceledItemAdd(id, orderTime));
         }
     };
     useEffect(() => {
