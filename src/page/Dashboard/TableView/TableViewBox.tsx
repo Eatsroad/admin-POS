@@ -49,6 +49,7 @@ const TableViewBox = ({list, modal, }:Props) => {
         });
         return tmpArr;
     };
+    console.log(list)
     return (
         <div className="TableBox">
             {

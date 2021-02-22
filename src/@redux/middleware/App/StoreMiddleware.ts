@@ -54,16 +54,41 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
       .then((querySnapshot) =>{
         querySnapshot.forEach((store) => {
           dispatch(OrderAction.loadOrders(store.id));
+          dispatch(StoreAction.setStoreId(store.id))
+
           const { information, menu } = store.data();
-          const { name, address, phone } = information;
-          dispatch(StoreAction.setStoreInformation(name, address, phone));
+          const { name, address, phone, table } = information;
+          dispatch(StoreAction.setStoreInformation(name, address, phone, table));
           dispatch(StoreAction.setStoreMenu(menu));
         });
         dispatch(UIAction.setGlobalLoading(false));
       })
       .catch((e) => console.log(e));
   }
-
+  if(StoreAction.Types.MODIF_TABLE === action.type) {
+    const orderId = getState().Store.storeId;
+    for(let i=0 ; i<action.payload.table ; i++) {
+      dbService
+        .collection("stores")
+        .doc(`${orderId}`)
+        .collection('orders')
+        .add({
+          orderAt:'',
+          receipt:[],
+          bucket:[],
+          total_price:0,
+          receipt_total_price:0,
+          state:false,
+          order_state:false,
+          table_number: i+1
+        }).then(()=>{
+          console.log("success!");
+          dispatch(UIAction.setGlobalLoading(false));
+        }).catch((e)=>{
+          console.log(e);
+        })
+    }
+  }
   if (StoreAction.Types.ADD_CATEGORY_FIREBASE === action.type) {
     console.log('[StoreMiddleware] middle ware add category');
     dbService
@@ -82,7 +107,6 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
               }),
             })
             .then(() => {
-              console.log('ASDFIJASDLFSA');
               dispatch(StoreAction.loadStoreFirebase());
             })
             .catch((e) => {

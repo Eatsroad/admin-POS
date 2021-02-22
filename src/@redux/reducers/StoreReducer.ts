@@ -27,12 +27,14 @@ export interface Store {
     name: string;
     address: string;
     phone: string;
+    table:number;
   };
   menu: {
     categories: Category[];
     optionGroups: OptionGroup[];
     items: Item[];
   };
+  storeId:string
 }
 
 const initialState: Store = {
@@ -40,12 +42,14 @@ const initialState: Store = {
     name: '',
     address: '',
     phone: '',
+    table:0,
   },
   menu: {
     categories: [],
     optionGroups: [],
     items: [],
   },
+  storeId:''
 };
 
 const StoreReducer = (state = initialState, action: Action) => {
@@ -57,9 +61,14 @@ const StoreReducer = (state = initialState, action: Action) => {
           name: action.payload.name,
           address: action.payload.address,
           phone: action.payload.phone,
+          table: action.payload.table
         },
       };
-
+    case StoreAction.Types.S_STORE_ID:
+      return {
+        ...state,
+        storeId:action.payload.storeId,
+      }
     case StoreAction.Types.SET_STORE_MENU:
       return {
         ...state,

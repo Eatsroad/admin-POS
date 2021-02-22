@@ -29,6 +29,10 @@ const PreferenceStorePage: React.FC<props> = (props) => {
         <h2>전화번호</h2>
         <p>{storeInfo.phone}</p>
       </div>
+      <div className="block">
+        <h2>테이블 수</h2>
+        <p>{storeInfo.table}</p>
+      </div>
     </div>
   );
 };

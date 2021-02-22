@@ -29,14 +29,14 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 snapShot.forEach((doc) => {
                     const data = doc.data();
                     const order = {
-                        table_number:doc.id,
+                        table_number:data.table_number,
+                        table_id:doc.id,
                         ...data
                     };
                     data.receipt.forEach((rec:any) => {
                         if(rec.state === "주문 완료") {
                             let tmpReceipts:any[] = [];
                             let count = 0;
-                            console.log(rec.receipts)
                             rec.receipts.forEach((item:any) => {
                                 if(item.state === "주문 완료") {
                                     tmpReceipts.push(item);
@@ -44,7 +44,8 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                 };
                             });
                             let newOrder = {
-                                table_number:doc.id,
+                                table_number:data.table_number,
+                                table_id:doc.id,
                                 receipts: tmpReceipts,
                                 ...rec
                             };
@@ -53,7 +54,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     })
                     orders.push(order);
                 });
-                console.log(orders, receipts);
                 dispatch(OrderAction.setOrders(orders,receipts));
             });
     };
@@ -61,7 +61,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
         let newReceipts: Receipt[] = [];
         for(let k = 0 ; k<orders.length ; k++){
             if(orders[k].table_number === action.payload.table_number) {
-                console.log('')
                 const newOrdersObj = orders[k].receipt;
                 for(let i=0 ; i<action.payload.id.length; i++ ) {
                     const index = orders[k].receipt.findIndex((receipt) => {
@@ -75,14 +74,16 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 newReceipts = newOrdersObj;
             }
         };
-        console.log(newReceipts);
-        // dbService
-        //     .collection('stores')
-        //     .doc(`${storeId}`)
-        //     .collection('orders')
-        //     .doc(`${action.payload.table_number}`)
-        //     .update({
-        //     })
+        dbService
+            .collection('stores')
+            .doc(`${storeId}`)
+            .collection('orders')
+            .doc(`${action.payload.table_number}`)
+            .update({
+                'receipt': [
+                    ...newReceipts
+                ]
+            })
     }
     if(OrderAction.Types.C_CHECK_ORDER === action.type) {
         
@@ -98,7 +99,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                     let newO = orders[i].receipt[k].receipts[j];
                                     if(orders[i].receipt[k].receipts[j].state === "주문 완료") newO.state = "접수 완료";
                                     newRe.push(newO);
-                                    console.log(newO)
                                 };
                                 let obj:Receipt = {
                                     ...orders[i].receipt[k],
@@ -106,14 +106,12 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                     receipts:newRe
                                 };
                                 checkedOrders.push(obj);
-                                console.log(obj);
                             } else {
                                 checkedOrders.push(orders[i].receipt[k]);
                             }
                         }
                     }
                 };
-                console.log(checkedOrders);
                 dbService
                     .collection('stores')
                     .doc(`${storeId}`)

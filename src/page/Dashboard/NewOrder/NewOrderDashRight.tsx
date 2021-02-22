@@ -30,7 +30,6 @@ const NewOrderDashRight = ({selectedOrder, checkOrders, }:Props) => {
     checkItemButtonState:state.Observer.checkItemButtonState,
     showModalState:state.UI.cancelModalState,
   }));
-  console.log(showModalState,"right");
   return (
       <div className="right">
         {

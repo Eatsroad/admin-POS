@@ -38,7 +38,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     }
   };
   const denyButton = () => {
-    dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_number, selectedOrder?.order_time));
+    dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_id, selectedOrder?.order_time));
     dispatch(UIAction.cancleDeny());
   }
   useEffect(() => {

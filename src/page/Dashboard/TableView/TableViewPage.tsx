@@ -45,9 +45,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [modalState, setModalState] = useState<boolean>(false);
   const [curOrder, setCurOrder ] = useState<Orders>();
-  const { checkedTableItem } = useSelector((state:RootState) => ({
-    checkedTableItem:state.CancelMenu.checkedTableItem
-  }))
   
   const renderArray = () => {
     orders.sort(function (a:any, b:any) {
@@ -55,7 +52,8 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     });
     const rederArr:Orders[] = [];
     for(let i= page*9 ; i<page + 9 ; i++) {
-      rederArr.push(orders[i]);
+      if( orders[i] !== undefined ) rederArr.push(orders[i]);
+      else break;
     }
     return rederArr;
   };
@@ -65,7 +63,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     } 
   };
   const denyButton = () => {
-    console.log(checkedTableItem);
     dispatch(CancelMenuAction.updateTableReceipt(curOrder?.table_number));
     dispatch(UIAction.cancleDeny());
   }
@@ -89,7 +86,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setTotalPage(Math.floor(orders.length/9) + 1);
     }
   }, []);
-  console.log(checkedTableItem);
   return(
     <div className="TableViewPage">
       <CancelModal denyButton={denyButton}/>

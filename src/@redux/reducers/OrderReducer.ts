@@ -6,6 +6,7 @@ export interface Order {
 }
 export interface Orders {
     table_number:string,
+    table_id:string,
     receipt: Receipt[],
     total_price: number,
     receipt_total_price: number,
@@ -15,6 +16,7 @@ export interface Orders {
 }
 export interface NewOrders {
     table_number:string,
+    table_id:string,
     receipts: Buckets[],
     state: string,
     order_time:string,
