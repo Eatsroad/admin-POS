@@ -1,12 +1,10 @@
 import { CancelMenuAction, OrderAction, UIAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
-import numberWithCommas from '@util/addCommaFunc';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './TableViewPage.scss';
 import TableViewModal from './TableViewModal';
 import TableViewBox from './TableViewBox';
-import { RootState } from '@redux';
 import CancelModal from '../CancelModal';
 
 interface props {
@@ -71,7 +69,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     setModalState(true);
   };
   const modalClose = () => {
-    dispatch(OrderAction.checkOrders(1,0,curOrder?.table_number));
+    dispatch(OrderAction.checkOrders(1,curOrder?.table_id, curOrder?.table_number));
     setModalState(false);
   }
   const blockClickIn = () => {

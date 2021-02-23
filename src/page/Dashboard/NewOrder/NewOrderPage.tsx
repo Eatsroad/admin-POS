@@ -24,7 +24,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     return renderArray(orders, page);
   };
   const checkOrders = () => {
-    dispatch(OrderAction.checkOrders(0,0,selectedOrder?.table_number, selectedOrder?.order_time));
+    dispatch(OrderAction.checkOrders(0,selectedOrder?.table_id,selectedOrder?.table_number, selectedOrder?.order_time));
     setSelectedOrder(pageArray()[1]);
   };
   const blockClickDe = () => {
@@ -38,7 +38,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     }
   };
   const denyButton = () => {
-    dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_id, selectedOrder?.order_time));
+    dispatch(CancelMenuAction.updateReceipt(selectedOrder?.table_id, selectedOrder?.order_time, selectedOrder?.table_number));
     dispatch(UIAction.cancleDeny());
   }
   useEffect(() => {

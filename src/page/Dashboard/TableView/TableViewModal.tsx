@@ -1,12 +1,10 @@
 import { RootState } from '@redux';
-import { CancelMenuAction, UIAction } from '@redux/actions';
-import { showCancelModal } from '@redux/actions/UIAction';
-import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
+import { UIAction } from '@redux/actions';
+import { Orders, Receipt } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import Arrow from '@util/image/icon/icon_arrow_back_white_x3.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CancelModal from '../CancelModal';
 import TableViewItems from './TableViewItems';
 
 interface Props {
@@ -18,7 +16,7 @@ interface Props {
 }
 const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props) => {
     const dispatch = useDispatch();
-    const { checkItemButtonState, showModalState } = useSelector((state:RootState) => ({
+    const { showModalState } = useSelector((state:RootState) => ({
         checkItemButtonState:state.Observer.checkItemButtonState,
         showModalState:state.UI.cancelModalState,
       }));

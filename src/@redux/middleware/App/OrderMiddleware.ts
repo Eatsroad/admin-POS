@@ -116,7 +116,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     .collection('stores')
                     .doc(`${storeId}`)
                     .collection('orders')
-                    .doc(`${action.payload.table_number}`)
+                    .doc(`${action.payload.tableId}`)
                     .update({
                         'receipt':[
                             ...checkedOrders
@@ -129,7 +129,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     .collection('stores')
                     .doc(`${storeId}`)
                     .collection('orders')
-                    .doc(`${action.payload.table_number}`)
+                    .doc(`${action.payload.tableId}`)
                     .update({
                         'receipt':[],
                         'state':false,

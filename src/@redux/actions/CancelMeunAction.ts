@@ -75,12 +75,13 @@ export const updateTableReceipt:ActionCreator = (tableNumber:string) => {
         }
     }
 };
-export const updateReceipt:ActionCreator = (tableNumber:string, orderTime:string) => {
+export const updateReceipt:ActionCreator = (tableId:string, orderTime:string, tableNumber:string) => {
     return {
         type:Types.Q_CANCEL_ITEM,
         payload: {
+            tableId:tableId,
+            orderTime:orderTime,
             tableNumber:tableNumber,
-            orderTime:orderTime
         }
     }
 };

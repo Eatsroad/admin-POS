@@ -25,12 +25,12 @@ export const setOrders: ActionCreator = (orders, newOrders) => {
     }
 };
 
-export const checkOrders:ActionCreator = (mode:number, orderId:string, table_number:string, order_time:string) => {
+export const checkOrders:ActionCreator = (mode:number, tableId:string, table_number:string, order_time:string) => {
     return {
         type:Types.C_CHECK_ORDER,
         payload:{
             mode:mode,
-            orderId:orderId,
+            tableId:tableId,
             table_number:table_number,
             order_time:order_time
         }

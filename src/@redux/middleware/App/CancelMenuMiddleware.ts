@@ -48,7 +48,7 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
             .collection('stores')
             .doc(`${storeId}`)
             .collection('orders')
-            .doc(`${action.payload.tableNumber}`)
+            .doc(`${action.payload.tableId}`)
             .update({
                 'receipt':[
                     ...newReceipts
