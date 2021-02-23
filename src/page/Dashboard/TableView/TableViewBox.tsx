@@ -40,13 +40,16 @@ const TableViewBox = ({list, modal, }:Props) => {
         });
         return price;
     };
-    const filter = (order:Buckets[]) => {
+    const filter = (receipt:Receipt[]) => {
         let tmpArr:Buckets[] = [];
-        order.forEach((doc) => {
-            if(doc.state === "접수 완료") {
-                tmpArr.push(doc);
+        receipt.forEach((receipts) => {
+            if(receipts.state === "접수 완료") {
+                receipts.receipts.forEach((item) => {
+                    if(item.state === "접수 완료") tmpArr.push(item);
+                })
             }
-        });
+            
+        })
         return tmpArr;
     };
     console.log(list)
@@ -63,10 +66,10 @@ const TableViewBox = ({list, modal, }:Props) => {
                                     <div className="TableHeaderTime">{order.orderAt}</div>
                                 </div>
                                 <div className="TableContent">
-                                    {filter(order.receipt[0].receipts)[0].name} 
+                                    {filter(order.receipt)[0].name} 
                                     {
                                         receiptCount(order.receipt) === 1 
-                                        ? `${order.receipt[0].receipts[0].count}개`
+                                        ? ` ${filter(order.receipt)[0].count}개`
                                         :`외 ${receiptCount(order.receipt)-1}개`
                                     }
                                 </div>

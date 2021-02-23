@@ -26,6 +26,7 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
         let checkedItems = getState().CancelMenu.checkedItem;
         let orders = getState().Order.orders;
         let newReceipts:Receipt[] = [];
+        console.log(action.payload)
         for(let k=0 ; k<orders.length ; k++) {
             if(orders[k].table_number === action.payload.tableNumber) {
                 for(let j=0 ; j<orders[k].receipt.length ; j++) {
@@ -80,18 +81,18 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
             }
         }
         console.log(newReceipts);
-        // dbService
-        //     .collection('stores')
-        //     .doc(`${storeId}`)
-        //     .collection('orders')
-        //     .doc(`${action.payload.tableNumber}`)
-        //     .update({
-        //         'receipt':[
-        //             ...newReceipts
-        //         ]
-        //     }).then(() => {
-        //         console.log('success')
-        //     } )
+        dbService
+            .collection('stores')
+            .doc(`${storeId}`)
+            .collection('orders')
+            .doc(`${action.payload.tableId}`)
+            .update({
+                'receipt':[
+                    ...newReceipts
+                ]
+            }).then(() => {
+                console.log('success')
+            } )
     }
 };
 

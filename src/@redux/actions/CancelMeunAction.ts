@@ -67,10 +67,11 @@ export const setTableCanceledItemDelete:ActionCreator = (id:string, orderTime:st
         }
     }
 };
-export const updateTableReceipt:ActionCreator = (tableNumber:string) => {
+export const updateTableReceipt:ActionCreator = (tableId:string, tableNumber:string) => {
     return {
         type:Types.Q_CANCEL_ITEM_TABLE,
         payload: {
+            tableId:tableId,
             tableNumber:tableNumber,
         }
     }

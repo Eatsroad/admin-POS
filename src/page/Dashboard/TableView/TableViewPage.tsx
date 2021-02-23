@@ -61,7 +61,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     } 
   };
   const denyButton = () => {
-    dispatch(CancelMenuAction.updateTableReceipt(curOrder?.table_number));
+    dispatch(CancelMenuAction.updateTableReceipt(curOrder?.table_id, curOrder?.table_number));
     dispatch(UIAction.cancleDeny());
   }
   const modal = (curOrder:Orders) => {
