@@ -3,7 +3,8 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
-const PosPinter = require(" electron-pos-printer");
+const {ipcMain} = require("electron");
+// const fs = require("fs");
 
 let mainWindow;
 
@@ -13,21 +14,19 @@ function createWindow() {
     height: 680,
     webPreferences: {
       nodeIntegration: true,
+      preload: path.join(__dirname + './preload.js'),
       enableRemoteModule: true,
       devTools: isDev,
     },
   });
-  
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-  
   if (isDev) {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
-  
   mainWindow.setResizable(true);
   mainWindow.on('closed', () => (mainWindow = null));
   mainWindow.focus();

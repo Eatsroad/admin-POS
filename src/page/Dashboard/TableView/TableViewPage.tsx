@@ -6,7 +6,6 @@ import './TableViewPage.scss';
 import TableViewModal from './TableViewModal';
 import TableViewBox from './TableViewBox';
 import CancelModal from '../CancelModal';
-
 interface props {
   orders:Orders[]
 };
@@ -65,7 +64,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     dispatch(UIAction.cancleDeny());
   }
   const modal = (curOrder:Orders) => {
-    setCurOrder(curOrder);
+    setCurOrder(curOrder); 
     setModalState(true);
   };
   const modalClose = () => {
@@ -76,6 +75,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     if(page !== totalPage - 1){
       setPage(page + 1);
     }
+    
   };
   useEffect(() => {
     if(orders.length%9 === 0) {
