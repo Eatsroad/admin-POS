@@ -11,7 +11,7 @@ function useAuthStateObserver() {
     let unregisterAuthObserver: any;
     unregisterAuthObserver = firebase.auth().onAuthStateChanged((user) => {
       console.log('[useAuthStateObserver] login state changed');
-      console.log(user);
+      // console.log(user);
       if (!!user) {
         // console.log(user.uid);
         dispatch(AuthAction.setUid(user.uid));
@@ -20,11 +20,9 @@ function useAuthStateObserver() {
         dispatch(AuthAction.logoutSuccess());
       }
     });
-
     return () => {
       unregisterAuthObserver();
     };
   });
 }
-
 export default useAuthStateObserver;

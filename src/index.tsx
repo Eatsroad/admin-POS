@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom';
 import RootRouter from './page';
 import { Provider } from 'react-redux';
 import store from '@redux';
-
+import Electron from 'electron';
+declare global {
+  interface Window {
+    ipcRenderer: Electron.IpcRenderer;
+  }
+}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

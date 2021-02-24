@@ -1,8 +1,12 @@
+import { ActionCreator } from "../Types";
+
 export enum Types {
   SET_GLOBAL_LOADING = '[UI] set global loading',
   S_CANCEL_MODAL = '[UI] set show cancel modal',
   S_COMFIRM_MODAL = '[UI] set show comfirm modal',
   C_CANCEL_DENY  = '[UI] commend cancel deny process',
+  S_NEW_ORDER_IN = '[UI] set order count increse',
+  S_NEW_ORDER_DE = '[UI] set order count decrese',
 
 }
 
@@ -30,11 +34,22 @@ export const cancleDeny = () => {
   };
 };
 export const showComfirmModal = (comfirmModalState: boolean) => {
-  console.log(comfirmModalState,'dfsfasgegsadfa')
   return {
     type: Types.S_COMFIRM_MODAL,
     payload: {
       comfirmModalState:comfirmModalState
     },
   };
+};
+export const increseOrderCount: ActionCreator = () => {
+  return {
+    type:Types.S_NEW_ORDER_IN,
+    payload: null
+  }
+};
+export const decreseOrderCount: ActionCreator = () => {
+  return {
+    type:Types.S_NEW_ORDER_DE,
+    payload: null
+  }
 };

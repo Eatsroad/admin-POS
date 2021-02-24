@@ -6,6 +6,7 @@ import './TableViewPage.scss';
 import TableViewModal from './TableViewModal';
 import TableViewBox from './TableViewBox';
 import CancelModal from '../CancelModal';
+const {ipcRenderer} = window;
 interface props {
   orders:Orders[]
 };
@@ -76,6 +77,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setPage(page + 1);
     }
     
+    // ipcRenderer.send('print', {name:"fff"})
   };
   useEffect(() => {
     if(orders.length%9 === 0) {

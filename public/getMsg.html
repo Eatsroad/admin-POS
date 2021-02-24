@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" id="msgBox">
+  <body>
+    <div></div>
+    <button onclick="button1_click();">
+      X
+    </button>
+    <button onclick="button2_click();">
+      주문 보기
+    </button>
+  </body>
+  <script>
+    function button1_click() {
+      require('electron').ipcRenderer.send('hideChild');
+    }
+    function button2_click() {
+      require('electron').ipcRenderer.send('openMainWindow');
+    }
+  </script>
+</html>

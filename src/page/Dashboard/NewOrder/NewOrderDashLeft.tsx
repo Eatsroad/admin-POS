@@ -3,8 +3,8 @@ import numberWithCommas from '@util/addCommaFunc';
 import { renderArray } from '@util/renderArr';
 import ArrowR from '@util/image/icon/icon_arrow_right_white_x3.png';
 import ArrowL from '@util/image/icon/icon_arrow_left_white_x3.png';
-import React from 'react';
 import { itemPrice } from '@util/itemPrice';
+
 interface Props {
     orders: NewOrders[];
     page:number;
@@ -38,7 +38,8 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
             return false;
         } else {
             return true;
-        }
+        };
+
     };
     const receiptCount = (order:Buckets[]) => {
         let count = 0;
@@ -54,7 +55,6 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
                 tmpArr.push(doc);
             }
         });
-        console.log('',tmpArr);
         return tmpArr;
     };
     return (

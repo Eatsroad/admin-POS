@@ -11,13 +11,15 @@ export interface UI {
   notificationQueue: Notification[];
   comfirmModalState:boolean
   cancelModalState:boolean
+  orderCount:number
 }
 
 const initialState: UI = {
   isGlobalLoading: true,
   notificationQueue: [],
   comfirmModalState: false,
-  cancelModalState: false
+  cancelModalState: false,
+  orderCount:0
 };
 
 const UIReducer = (state = initialState, action: Action) => {

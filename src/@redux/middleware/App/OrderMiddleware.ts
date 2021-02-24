@@ -3,6 +3,7 @@ import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
 import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
+const {ipcRenderer} = window;
 
 interface param {
     dispatch: any;
@@ -15,6 +16,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
     next(action);
    const storeId = window.localStorage.getItem('storeId');
    const orders = getState().Order.orders;
+   let count = 0;
 
     if(OrderAction.Types.C_LOAD_ORDERS === action.type) {
         window.localStorage.setItem('storeId',action.payload.storeId);
@@ -54,8 +56,20 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     })
                     orders.push(order);
                 });
+                // tempArr = receipts;
                 dispatch(OrderAction.setOrders(orders,receipts));
+                if(count < receipts.length) {
+                    console.log("new Order");
+                    count = receipts.length;
+                    ipcRenderer.send('msgReceive', {
+                        table_number:1
+                    });
+                } else if(count>receipts.length) {
+                    count = receipts.length;
+                }
             });
+            
+            
     };
     if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {
         let newReceipts: Receipt[] = [];
