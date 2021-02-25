@@ -59,7 +59,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
           }
           display: grid;
           grid-template-columns: 1fr 1.7fr;
@@ -67,7 +66,6 @@
             margin: auto;
             margin-right: 20px;
             font-size: 15px;
-
           }
         }
       }
@@ -88,9 +86,20 @@
       align-items: center;
       .Button{
         display: flex;
+        .TablePage{
+          margin: auto 32px;
+        }
         button{
-          width: 100px;
-          height: 20px;
+          background-color: transparent;
+          border: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          
+          img{
+            width: 20px;
+            height: 20px;
+          }
         }
       }
     }
@@ -177,7 +186,6 @@
               font-weight: bold;
               .TableViewModalContentCheckBox{
                 display: flex;
-                
                 .checked{
                   width: 15px;
                   height: 15px;
@@ -206,7 +214,6 @@
               border: solid 1px #cccccc;
             }
           }
-          
         }
       }
     }

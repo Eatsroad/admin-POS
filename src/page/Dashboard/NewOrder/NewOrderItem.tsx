@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import numberWithCommas from '@util/addCommaFunc';

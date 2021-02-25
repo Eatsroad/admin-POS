@@ -19,7 +19,6 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
     };
     const checkState = (order:NewOrders) => {
         let tCount  = 0;
-
         order.receipts.forEach((item) => {
             if(item.state === "주문 완료") tCount++;
         });
@@ -39,7 +38,6 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
         } else {
             return true;
         };
-
     };
     const orderCount = (order:Buckets[]) => {
         let count = 0;

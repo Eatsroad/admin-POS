@@ -6,7 +6,10 @@ import './TableViewPage.scss';
 import TableViewModal from './TableViewModal';
 import TableViewBox from './TableViewBox';
 import CancelModal from '../CancelModal';
-const {ipcRenderer} = window;
+import ArrowR from '@util/image/icon/icon_arrow_right_white_x3.png';
+import ArrowL from '@util/image/icon/icon_arrow_left_white_x3.png';
+// const {ipcRenderer} = window;
+
 interface props {
   orders:Orders[]
 };
@@ -76,6 +79,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     if(page !== totalPage - 1){
       setPage(page + 1);
     }
+    // ipcRenderer.send('print')
   
   };
   useEffect(() => {
@@ -101,9 +105,9 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
         />
         <div className="PageButton">
           <div className="Button">
-            <button onClick={blockClickDe}></button>
-            <div>{page + 1}/{totalPage}</div>
-            <button onClick={blockClickIn}></button>
+            <button onClick={blockClickDe}><img src={ArrowR} alt="arrow"/></button>
+            <div className="TablePage">{page + 1}/{totalPage}</div>
+            <button onClick={blockClickIn}><img src={ArrowL} alt="arrow"/></button>
           </div>
         </div>
 
