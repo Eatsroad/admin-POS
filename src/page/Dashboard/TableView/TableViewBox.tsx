@@ -24,7 +24,16 @@ const TableViewBox = ({list, modal, }:Props) => {
         let count = 0;
         order.forEach((doc) => {
             doc.receipts.map((item:any) => {
-            if(item.state === '접수 완료') count++;
+            if(item.state === '접수 완료') count ++;
+            })
+        });
+        return count;
+    };
+    const orderCount = (order:Receipt[]) => {
+        let count = 0;
+        order.forEach((doc) => {
+            doc.receipts.map((item:any) => {
+            if(item.state === '접수 완료') count += item.count;
             })
         });
         return count;
@@ -62,7 +71,7 @@ const TableViewBox = ({list, modal, }:Props) => {
                             <div className='Table' key={order.table_number}>
                                 <div className="TableHeader">
                                     <div className="TableHeaderTable">Table {order.table_number}</div>
-                                    <div className="TableHeaderCount">{receiptCount(order.receipt)}개</div>
+                                    <div className="TableHeaderCount">{orderCount(order.receipt)}개</div>
                                     <div className="TableHeaderTime">{order.orderAt}</div>
                                 </div>
                                 <div className="TableContent">

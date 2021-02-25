@@ -40,7 +40,6 @@
           display: grid;
           grid-template-rows: 1fr 1.3fr 1fr;
           font-size: 15px;
-          
           .NewOrderTable{
             color: white;
             background-color: #525252;
@@ -48,6 +47,12 @@
             justify-content: space-between;
             padding: 12px 20px 0 20px;
             height: 34px;
+            .NewOrderTableInfo{
+              display: flex;
+              .NewOrderTableCount{
+                margin-left: 11px;
+              }
+            }
           }
           .NewOrderContent{
             display: flex;

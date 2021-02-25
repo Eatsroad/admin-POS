@@ -19,7 +19,7 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
     };
     const checkState = (order:NewOrders) => {
         let tCount  = 0;
-        
+
         order.receipts.forEach((item) => {
             if(item.state === "주문 완료") tCount++;
         });
@@ -40,6 +40,13 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
             return true;
         };
 
+    };
+    const orderCount = (order:Buckets[]) => {
+        let count = 0;
+        order.forEach((doc) => {
+            if(doc.state === '주문 완료') count+=doc.count;
+        });
+        return count;
     };
     const receiptCount = (order:Buckets[]) => {
         let count = 0;
@@ -69,8 +76,11 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
                             return (
                                 <div className="NewOrder" onClick={() => setSelectedOrder(order)} key={order.order_time}>
                                     <div className="NewOrderTable">
-                                    <div>Table {order.table_number}</div>
-                                    <div>{order.order_time}</div>
+                                        <div className="NewOrderTableInfo">
+                                            <div>Table {order.table_number}</div>
+                                            <div className="NewOrderTableCount">{orderCount(order.receipts)}개</div>
+                                        </div>
+                                        <div>{order.order_time}</div>
                                     </div>
                                     <div className="NewOrderContent">
                                     {filter(order.receipts)[0].name}

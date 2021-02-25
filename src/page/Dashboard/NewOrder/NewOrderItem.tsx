@@ -36,6 +36,7 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
         if(checkItemButtonState !== prevTriggerState) {
             setCheckedState(checkItemTrigger);
             setPrevTriggerState(checkItemTrigger);
+            onChecked();
         };
         if(initCheckedItems !== prevInitState) {
             setCheckedState(false);

@@ -76,8 +76,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     if(page !== totalPage - 1){
       setPage(page + 1);
     }
-    
-    // ipcRenderer.send('print', {name:"fff"})
+  
   };
   useEffect(() => {
     if(orders.length%9 === 0) {
