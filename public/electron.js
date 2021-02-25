@@ -69,8 +69,7 @@ app.on("activate", () => {
 ipcMain.on('msgReceive', (event, data) => {
   if(mainWindow.isFocused() === false){
     child.reload();
-    child.webContents.once('did-finish-load', () => {
-      console.log(data, 'ffdfß')
+    child.webContents.on('did-finish-load', () => {
       child.webContents.send("requestMsg",data);
       child.show();
     });

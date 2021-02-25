@@ -3,6 +3,7 @@ import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
 import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
+import numberWithCommas from '@util/addCommaFunc';
 const {ipcRenderer} = window;
 
 interface param {
@@ -60,8 +61,24 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 dispatch(OrderAction.setOrders(orders,receipts));
                 if(count < receipts.length) {
                     count = receipts.length;
+                    console.log(receipts);
+                    let oCount = 0;
+                    let totalPrice = 0;
+                    console.log(receipts[count-1])
+                    for(let i=0 ; i<receipts.length ; i++){
+                        for(let k=0 ; k<receipts[i].receipts.length ; k++) {
+                            if(receipts[i].receipts[k].state === '주문 완료') {
+                                oCount+=receipts[i].receipts[k].count;
+                                totalPrice += receipts[i].receipts[k].item_total_price;
+                            }
+                        }
+                    }
                     ipcRenderer.send('msgReceive', {
+                        content:receipts[count-1].receipts,
+                        order_count:receipts[count-1].receipts.length,
                         table_number:receipts[count-1].table_number,
+                        count: oCount,
+                        total_price: numberWithCommas(totalPrice)
                     });
                 } else if(count>receipts.length) {
                     count = receipts.length;
