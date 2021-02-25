@@ -59,10 +59,9 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 // tempArr = receipts;
                 dispatch(OrderAction.setOrders(orders,receipts));
                 if(count < receipts.length) {
-                    console.log("new Order");
                     count = receipts.length;
                     ipcRenderer.send('msgReceive', {
-                        table_number:1
+                        table_number:receipts[count-1].table_number,
                     });
                 } else if(count>receipts.length) {
                     count = receipts.length;

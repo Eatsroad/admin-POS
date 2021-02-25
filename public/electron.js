@@ -67,17 +67,13 @@ app.on("activate", () => {
   }
 });
 ipcMain.on('msgReceive', (event, data) => {
-  console.log(mainWindow.isFocused());
-  console.log(data.table_number)
   if(mainWindow.isFocused() === false){
     child.reload();
-    console.log("sfsdfsw")
     child.webContents.once('did-finish-load', () => {
+      console.log(data, 'ffdfß')
       child.webContents.send("requestMsg",data);
       child.show();
     });
-  } else {
-    
   }
 });
 ipcMain.on('hideChild', (event, data) => {

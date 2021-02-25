@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" id="msgBox">
+  <head></head>
   <body>
     <div></div>
     <button onclick="button1_click();">
@@ -8,8 +9,19 @@
     <button onclick="button2_click();">
       주문 보기
     </button>
+    <div>
+      <div>Table</div>
+      <div>새로운 주문이 들어왔습니다!</div>
+    </div>
+    <script>
+      const {ipcRenderer} = require('electron');
+      ipcRenderer.on('requestMsg', function(event,data) {
+        console.log("dfdf")
+      });
+    </script>
   </body>
   <script>
+    
     function button1_click() {
       require('electron').ipcRenderer.send('hideChild');
     }
