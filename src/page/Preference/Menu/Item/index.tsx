@@ -32,6 +32,7 @@ const ItemTile: React.FC<itemTileProps> = (props) => {
   );
 };
 
+
 const Items: React.FC<props> = (props) => {
   const sortOptions = [
     { value: 'nameAcs', label: '이름 오름차' },
