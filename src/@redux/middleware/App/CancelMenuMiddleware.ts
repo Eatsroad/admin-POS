@@ -53,7 +53,8 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
             .update({
                 'receipt':[
                     ...newReceipts
-                ]
+                ],
+                'deny_state':true
             }).then(() => {
                 console.log('success')
             } )
@@ -89,7 +90,8 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
             .update({
                 'receipt':[
                     ...newReceipts
-                ]
+                ],
+                'deny_state':true
             }).then(() => {
                 console.log('success')
             } )

@@ -46,12 +46,10 @@
     "mac": {
       "target": [
         "default"
-      ],
-      "icon": "./resources/installer/Icon.icns"
+      ]
     },
     "dmg": {
-      "title": "EatsRoadPOS",
-      "icon": "./resources/installer/Icon.icns"
+      "title": "EatsRoadPOS"
     },
     "win": {
       "target": [
