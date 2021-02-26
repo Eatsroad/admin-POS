@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import React from 'react';
@@ -61,14 +62,13 @@ const TableViewBox = ({list, modal, }:Props) => {
         })
         return tmpArr;
     };
-    console.log(list)
     return (
         <div className="TableBox">
             {
                 list.map((order) => {
                     if(order.order_state && checkState(order)) {
                         return (
-                            <div className='Table' key={order.table_number}>
+                            <div className='Table' key={order.table_id}>
                                 <div className="TableHeader">
                                     <div className="TableHeaderTable">Table {order.table_number}</div>
                                     <div className="TableHeaderCount">{orderCount(order.receipt)}개</div>

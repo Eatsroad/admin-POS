@@ -5,15 +5,10 @@ import firebase from 'firebase';
 
 function useAuthStateObserver() {
   const dispatch = useDispatch();
-  console.log('[firebase] initiating useAuthStateObserver');
-
   useEffect(() => {
     let unregisterAuthObserver: any;
     unregisterAuthObserver = firebase.auth().onAuthStateChanged((user) => {
-      console.log('[useAuthStateObserver] login state changed');
-      // console.log(user);
       if (!!user) {
-        // console.log(user.uid);
         dispatch(AuthAction.setUid(user.uid));
         dispatch(AuthAction.loginSuccess());
       } else {

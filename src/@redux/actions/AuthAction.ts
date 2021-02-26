@@ -23,7 +23,6 @@ export const initiateLogin: ActionCreator = (
 };
 
 export const loginSuccess: ActionCreator = () => {
-  console.log('[AuthAction] generating loginSuccess Action');
   return {
     type: Types.LOGIN_SUCCESS,
     payload: null,

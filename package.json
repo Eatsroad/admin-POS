@@ -17,6 +17,7 @@
     "electron-windows-notifications": "^3.0.8",
     "firebase": "8.2.0",
     "node-sass": "4.14.1",
+    "play-sound": "^1.1.3",
     "query-string": "6.13.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -34,10 +35,12 @@
   "build": {
     "productName": "EatsRoadPOS",
     "appId": "com.electron.pos",
-    "asar": true, 
-    "protocols" : {
-        "name" : "EatsRoadPOS",
-        "schemes" : ["EatsRoadPOS"]
+    "asar": true,
+    "protocols": {
+      "name": "EatsRoadPOS",
+      "schemes": [
+        "EatsRoadPOS"
+      ]
     },
     "mac": {
       "target": [
@@ -45,20 +48,20 @@
       ],
       "icon": "./resources/installer/Icon.icns"
     },
-    "dmg": { 
+    "dmg": {
       "title": "EatsRoadPOS",
       "icon": "./resources/installer/Icon.icns"
     },
-    "win": { 
-      "target": [ 
-        "zip",  
-        "nsis"  
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
       ],
       "icon": "./resources/installer/Icon.ico"
     },
-    "linux": { 
+    "linux": {
       "target": [
-        "AppImage", 
+        "AppImage",
         "deb",
         "rpm",
         "zip",
@@ -66,9 +69,9 @@
       ],
       "icon": "./resources/linuxicon"
     },
-    "nsis":{
-      "oneClick" : false, 
-      "allowToChangeInstallationDirectory" :true 
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "directories": {
       "buildResources": "resources/installer/",
@@ -84,7 +87,7 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "start": "concurrently \"cross-env NODE_ENV=development BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "build": "yarn react-build && electron-builder $$ npm run build:win",
+    "build": "yarn react-build && electron-builder",
     "release": "yarn react-build && electron-builder --publish=always"
   },
   "eslintConfig": {
@@ -112,7 +115,7 @@
     "concurrently": "5.3.0",
     "cross-env": "7.0.3",
     "electron": "11.2.3",
-    "electron-builder": "22.9.1",
+    "electron-builder": "^22.9.1",
     "electron-packager": "^15.2.0",
     "prettier": "2.2.1",
     "wait-on": "5.2.1"
