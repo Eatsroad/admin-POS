@@ -73,6 +73,11 @@ ipcMain.on('msgReceive', (event, data) => {
       child.webContents.send("requestMsg",data);
       child.show();
     });
+  } else {
+    child.reload();
+    child.webContents.on('did-finish-load', () => {
+      child.webContents.send("requestMsg",data);
+    })
   }
 });
 ipcMain.on('hideChild', (event, data) => {
