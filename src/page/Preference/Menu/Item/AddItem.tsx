@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './AddItem.scss';
-
 import Modal from 'react-modal';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@redux';
 import { StoreAction } from '@redux/actions';
-
+// import { finished } from 'stream';
+import { v4 as uuidv4 } from 'uuid';
+import { storage } from '@firebase';
 interface props {
   currentCategory: string;
 }
@@ -17,8 +18,12 @@ const AddItem: React.FC<props> = (props) => {
   const [newMenuPrice, setNewMenuPrice] = useState(8000);
   const [newMenuDescription, setNewMenuDescription] = useState('');
   const [newMenuCategories, setNewMenuCategories] = useState([]);
+  const [attachement, setAttachment] = useState<string | null>(null);
   const menu = useSelector((state: RootState) => state.Store.menu);
   const dispatch = useDispatch();
+  const { storeId } = useSelector((state:RootState) => ({
+    storeId:state.Store.storeId
+  }));
 
   const handleOnClickAddBtn = () => {
     setIsModalOpen(true);
@@ -27,32 +32,58 @@ const AddItem: React.FC<props> = (props) => {
   const handleOnCancel = () => {
     setIsModalOpen(false);
   };
-
-  const handleOnAdd = () => {
+  const fileUpload = async () => {
+    let attachementUrl:string = '';
+    if(attachement !== null) {
+      const fileRef =  storage.ref().child(`${storeId}/${uuidv4()}`);
+      const response = await fileRef.putString(attachement, 'data_url');
+      attachementUrl = await response.ref.getDownloadURL();
+    };
+    return attachementUrl;
+  }
+  const handleOnAdd = async () => { 
+    
+    const dataUrl = await fileUpload();
+    console.log(dataUrl);
+    setNewMenuName('');
+    setNewMenuPrice(0);
+    setNewMenuDescription('');
+    setIsModalOpen(false);
+    setAttachment(null);
     dispatch(
       StoreAction.addMenuFirebase(
         newMenuName,
         newMenuPrice,
         newMenuDescription,
-        newMenuCategories
+        newMenuCategories,
+        dataUrl
       )
     );
-    setNewMenuName('');
-    setNewMenuPrice(0);
-    setNewMenuDescription('');
-    setIsModalOpen(false);
+    
   };
-
+  const onFileChange = (event: any) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onload = (finishedEvent:any) => {
+      const { 
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    }
+    reader.readAsDataURL(theFile);
+  }
   const handleOnSelectCategories = (data: any) => {
     setNewMenuCategories(data.map((cat: any) => cat.value));
   };
-
+  const onClearAttachment = () => setAttachment(null);
   return (
     <>
       <div className="AddBtn" onClick={handleOnClickAddBtn}>
         추가
       </div>
-
       <Modal
         isOpen={isModalOpen}
         className="Modal"
@@ -79,6 +110,17 @@ const AddItem: React.FC<props> = (props) => {
             onChange={(e) => setNewMenuDescription(e.target.value)}
             value={newMenuDescription}
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => onFileChange(e)}
+          />
+          { attachement && 
+            <div>
+              <img src={attachement} style={{width:"100px", height:"100px"}} alt="menuImg"/>
+              <button onClick={onClearAttachment}>취소</button>
+            </div>
+          }
           <Select
             isMulti={true}
             options={menu.categories.map((cat) => {

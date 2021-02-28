@@ -15,7 +15,6 @@ export enum Types {
   DELETE_OPTION_FIREBASE= '[STORE] delete option from firebase',
   DELETE_OPTIONGROUP_FIREBASE= '[STORE] delete option from firebase',
 };
-
 export const modifTable: ActionCreator = (table:number) => {
   return {
     type:Types.MODIF_TABLE,
@@ -32,9 +31,6 @@ export const setStoreId: ActionCreator = (storeId:string) => {
     }
   }
 }
-
-
-
 export const deleteOptionGroupFirebase:ActionCreator=(
     name:string,
 )=>{
@@ -45,7 +41,6 @@ export const deleteOptionGroupFirebase:ActionCreator=(
     }
   }
 }
-
 export const deleteOptionFirebase:ActionCreator=(
     group_name:string,
     option_name:string
@@ -58,8 +53,6 @@ export const deleteOptionFirebase:ActionCreator=(
     }
   }
 }
-
-
 export const addOptionGroupFirebase:ActionCreator=(
     name:string,
     max_Select:number,
@@ -74,7 +67,6 @@ export const addOptionGroupFirebase:ActionCreator=(
     }
   }
 }
-
 export const modifyCategoryFireBase: ActionCreator = (
     name: string,
     description: string,
@@ -103,12 +95,12 @@ export const deleteCategoryFireBase: ActionCreator = (
     },
   };
 };
-
 export const addMenuFirebase: ActionCreator = (
   name,
   price,
   description,
-  categories
+  categories,
+  PhotoUrl
 ) => {
   return {
     type: Types.ADD_MENU_FIREBASE,
@@ -117,10 +109,10 @@ export const addMenuFirebase: ActionCreator = (
       price: price,
       description: description,
       categories: categories,
+      PhotoUrl:PhotoUrl
     },
   };
 };
-
 export const addCategoryFireBase: ActionCreator = (
   name: string,
   description: string
@@ -133,7 +125,6 @@ export const addCategoryFireBase: ActionCreator = (
     },
   };
 };
-
 export const setStoreInformation: ActionCreator = (
   name: string,
   address: string,
@@ -150,7 +141,6 @@ export const setStoreInformation: ActionCreator = (
     },
   };
 };
-
 export const setStoreMenu: ActionCreator = (menu) => {
   return {
     type: Types.SET_STORE_MENU,
@@ -159,7 +149,6 @@ export const setStoreMenu: ActionCreator = (menu) => {
     },
   };
 };
-
 export const loadStoreFirebase: ActionCreator = () => {
   return {
     type: Types.LOAD_STORE_FIREBASE,

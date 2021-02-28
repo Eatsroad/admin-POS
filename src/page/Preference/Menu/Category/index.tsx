@@ -101,6 +101,7 @@ const Categories: React.FC<props> = (props) => {
                                 <button onClick={()=>{
                                     setModifyState(true);
                                     setPropsIndex(props.index);
+                                    handleOnClickModifyCategory();
                                 }}>수정하기</button>
                                 <button onClick={()=>{
                                     setPropsIndex(props.index);

@@ -9,7 +9,7 @@ interface props {
 
 const OptionGroupEditor: React.FC<props> = (props) => {
     const menu = useSelector((state: RootState) => state.Store.menu.optionGroups);
-    const [options,setOptions]=useState([{name:'name',price:0}]);
+    const [options,setOptions] = useState([{name:'',price:0}]);
     const [newOptionGroupName,setNewOptionGroupName]=useState('');
     const [newMaxSelect,setNewMaxSelect]= useState(0);
     const dispatch = useDispatch();
@@ -50,7 +50,6 @@ const OptionGroupEditor: React.FC<props> = (props) => {
         console.log(menu);
         setNewOptionGroupName('');
         setNewMaxSelect(0);
-
     }
     return (
         <div className="OptionGroupEditor">

@@ -1,8 +1,9 @@
 import { Action } from '@redux/Types';
 import { OrderAction, StoreAction, UIAction } from '@redux/actions';
-import { dbService } from '@firebase';
+import { dbService, storage } from '@firebase';
 import { RootState } from '@redux';
 import firebase from 'firebase';
+import { v4 as uuidv4 } from 'uuid';
 // import {Category} from "@redux/reducers/StoreReducer";
 //const store=window.localStorage.setItem()
 interface param {
@@ -12,12 +13,13 @@ interface param {
 
 export const StoreMiddleware = ({ dispatch, getState }: param) => (
   next: any
-) => (action: Action) => {
+) => async (action: Action) => {
   next(action);
-    const category = getState().Store.menu.categories;
-    const categoryLength = category.length;
-    const option = getState().Store.menu.optionGroups;
-    const optionGroupsLength=getState().Store.menu.optionGroups.length;
+  
+  const category = getState().Store.menu.categories;
+  const categoryLength = category.length;
+  const option = getState().Store.menu.optionGroups;
+  const optionGroupsLength=getState().Store.menu.optionGroups.length;
     
   if(StoreAction.Types.ADD_OPTIONGROUP_FIREBASE===action.type){
     dbService
@@ -46,8 +48,8 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
         .catch((e) => console.log(e.message));
   }
   if(StoreAction.Types.DELETE_OPTION_FIREBASE===action.type){
-      const groupName=action.payload.name;
-      const optionName=action.payload.optionName;
+      const groupName = action.payload.name;
+      const optionName = action.payload.optionName;
 
       let arr:any=[];
       let modifOptions:any = {
@@ -70,7 +72,6 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
               arr.push(getState().Store.menu.optionGroups[i])
           }
       }
-
       const categories = getState().Store.menu.categories;
       const items = getState().Store.menu.items;
       dbService
@@ -103,9 +104,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
               })
           )
           .catch((e) => console.log(e.message));
-
   }
-
   if(StoreAction.Types.DELETE_OPTIONGROUP_FIREBASE===action.type){
       const groupName=action.payload.name;
 
@@ -115,8 +114,6 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
               arr.push(getState().Store.menu.optionGroups[i]);
           }
       }
-
-
       const categories = getState().Store.menu.categories;
       const items = getState().Store.menu.items;
       console.log(arr)
@@ -156,6 +153,72 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
 
   }
   if (StoreAction.Types.ADD_MENU_FIREBASE === action.type) {
+    // const storeId = getState().Store.storeId
+    // console.log(storeId, action.payload.PhotoUrl)
+    // let photoUrl:string = '';
+    // if(action.payload.PhotoUrl !== null) {
+    //   const getUrl = async () => {
+    //     const fileRef =  storage.ref().child(`${storeId}/${uuidv4()}`);
+    //     const response = await fileRef.putString(action.payload.PhotoUrl, 'data_url');
+    //     photoUrl = await response.ref.getDownloadURL();
+    //   }
+    //   getUrl();
+    //   dbService
+    //     .collection('stores')
+    //     .where('ownerId', '==', getState().Auth.uid)
+    //     .get()
+    //     .then((querySnapshot) =>
+    //       querySnapshot.forEach((store) => {
+    //         console.log('[StoreMiddleware] found a store');
+    //         store.ref
+    //           .update({
+    //             'menu.items': firebase.firestore.FieldValue.arrayUnion({
+    //               name: action.payload.name,
+    //               description: action.payload.description,
+    //               price: action.payload.price,
+    //               categories: [...action.payload.categories],
+    //               optionGroups:[],
+    //               photoUrl:photoUrl
+    //             }),
+    //           })
+    //           .then(() => {
+    //             dispatch(StoreAction.loadStoreFirebase());
+    //           })
+    //           .catch((e) => {
+    //             console.log(e.message);
+    //           });
+    //       })
+    //     )
+    //   .catch((e) => console.log(e.message));
+    // } else {
+    //   dbService
+    //   .collection('stores')
+    //   .where('ownerId', '==', getState().Auth.uid)
+    //   .get()
+    //   .then((querySnapshot) =>
+    //     querySnapshot.forEach((store) => {
+    //       console.log('[StoreMiddleware] found a store');
+    //       store.ref
+    //         .update({
+    //           'menu.items': firebase.firestore.FieldValue.arrayUnion({
+    //             name: action.payload.name,
+    //             description: action.payload.description,
+    //             price: action.payload.price,
+    //             categories: [...action.payload.categories],
+    //             optionGroups:[],
+    //             photoUrl:''
+    //           }),
+    //         })
+    //         .then(() => {
+    //           dispatch(StoreAction.loadStoreFirebase());
+    //         })
+    //         .catch((e) => {
+    //           console.log(e.message);
+    //         });
+    //     })
+    //   )
+    //   .catch((e) => console.log(e.message));
+    // }
     dbService
       .collection('stores')
       .where('ownerId', '==', getState().Auth.uid)
@@ -171,6 +234,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
                 price: action.payload.price,
                 categories: [...action.payload.categories],
                 optionGroups:[],
+                photoUrl:action.payload.PhotoUrl
               }),
             })
             .then(() => {
@@ -182,8 +246,8 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
         })
       )
       .catch((e) => console.log(e.message));
-  }
-
+    
+  } 
   if (StoreAction.Types.LOAD_STORE_FIREBASE === action.type) {
     dbService
       .collection('stores')
