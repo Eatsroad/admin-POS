@@ -64,6 +64,10 @@
     padding: 15px 0;
 
     .ItemTile {
+      img{
+        width: 70px;
+
+      }
       display: flex;
       align-content: center;
       justify-content: space-around;

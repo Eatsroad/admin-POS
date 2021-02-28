@@ -13,11 +13,13 @@ interface itemTileProps {
   price: string;
   description: string;
   categories: string[];
+  photoUrl:string
 }
 
 const ItemTile: React.FC<itemTileProps> = (props) => {
   return (
     <div className="ItemTile">
+      { props.photoUrl && <img src={props.photoUrl} alt="meneImg"/>}
       <h3>{props.title}</h3>
       <p>{`${props.price}원`}</p>
       <p>{props.description}</p>
@@ -158,6 +160,7 @@ const Items: React.FC<props> = (props) => {
             price={item.price}
             description={item.description}
             categories={item.categories}
+            photoUrl={item.photoUrl}
           />
         ))
       );

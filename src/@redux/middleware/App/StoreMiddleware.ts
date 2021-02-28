@@ -153,73 +153,43 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
 
   }
   if (StoreAction.Types.ADD_MENU_FIREBASE === action.type) {
-    // const storeId = getState().Store.storeId
-    // console.log(storeId, action.payload.PhotoUrl)
-    // let photoUrl:string = '';
-    // if(action.payload.PhotoUrl !== null) {
-    //   const getUrl = async () => {
-    //     const fileRef =  storage.ref().child(`${storeId}/${uuidv4()}`);
-    //     const response = await fileRef.putString(action.payload.PhotoUrl, 'data_url');
-    //     photoUrl = await response.ref.getDownloadURL();
-    //   }
-    //   getUrl();
-    //   dbService
-    //     .collection('stores')
-    //     .where('ownerId', '==', getState().Auth.uid)
-    //     .get()
-    //     .then((querySnapshot) =>
-    //       querySnapshot.forEach((store) => {
-    //         console.log('[StoreMiddleware] found a store');
-    //         store.ref
-    //           .update({
-    //             'menu.items': firebase.firestore.FieldValue.arrayUnion({
-    //               name: action.payload.name,
-    //               description: action.payload.description,
-    //               price: action.payload.price,
-    //               categories: [...action.payload.categories],
-    //               optionGroups:[],
-    //               photoUrl:photoUrl
-    //             }),
-    //           })
-    //           .then(() => {
-    //             dispatch(StoreAction.loadStoreFirebase());
-    //           })
-    //           .catch((e) => {
-    //             console.log(e.message);
-    //           });
-    //       })
-    //     )
-    //   .catch((e) => console.log(e.message));
-    // } else {
-    //   dbService
-    //   .collection('stores')
-    //   .where('ownerId', '==', getState().Auth.uid)
-    //   .get()
-    //   .then((querySnapshot) =>
-    //     querySnapshot.forEach((store) => {
-    //       console.log('[StoreMiddleware] found a store');
-    //       store.ref
-    //         .update({
-    //           'menu.items': firebase.firestore.FieldValue.arrayUnion({
-    //             name: action.payload.name,
-    //             description: action.payload.description,
-    //             price: action.payload.price,
-    //             categories: [...action.payload.categories],
-    //             optionGroups:[],
-    //             photoUrl:''
-    //           }),
-    //         })
-    //         .then(() => {
-    //           dispatch(StoreAction.loadStoreFirebase());
-    //         })
-    //         .catch((e) => {
-    //           console.log(e.message);
-    //         });
-    //     })
-    //   )
-    //   .catch((e) => console.log(e.message));
-    // }
-    dbService
+    const storeId = getState().Store.storeId
+    if(action.payload.PhotoUrl !== null) {
+      const getUrl = async() => {
+        const fileRef =  storage.ref().child(`${storeId}/${uuidv4()}`);
+        const response = await fileRef.putString(action.payload.PhotoUrl, 'data_url');
+        return await response.ref.getDownloadURL();
+      }
+      const photoUrl:string = await getUrl();
+      dbService
+        .collection('stores')
+        .where('ownerId', '==', getState().Auth.uid)
+        .get()
+        .then((querySnapshot) =>
+          querySnapshot.forEach((store) => {
+            console.log('[StoreMiddleware] found a store');
+            store.ref
+              .update({
+                'menu.items': firebase.firestore.FieldValue.arrayUnion({
+                  name: action.payload.name,
+                  description: action.payload.description,
+                  price: action.payload.price,
+                  categories: [...action.payload.categories],
+                  optionGroups:[],
+                  photoUrl:photoUrl,
+                }),
+              })
+              .then(() => {
+                dispatch(StoreAction.loadStoreFirebase());
+              })
+              .catch((e) => {
+                console.log(e.message);
+              });
+          })
+        )
+      .catch((e) => console.log(e.message));
+    } else {
+      dbService
       .collection('stores')
       .where('ownerId', '==', getState().Auth.uid)
       .get()
@@ -234,7 +204,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
                 price: action.payload.price,
                 categories: [...action.payload.categories],
                 optionGroups:[],
-                photoUrl:action.payload.PhotoUrl
+                photoUrl:''
               }),
             })
             .then(() => {
@@ -246,6 +216,37 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
         })
       )
       .catch((e) => console.log(e.message));
+    }
+
+
+
+    // dbService
+    //   .collection('stores')
+    //   .where('ownerId', '==', getState().Auth.uid)
+    //   .get()
+    //   .then((querySnapshot) =>
+    //     querySnapshot.forEach((store) => {
+    //       console.log('[StoreMiddleware] found a store');
+    //       store.ref
+    //         .update({
+    //           'menu.items': firebase.firestore.FieldValue.arrayUnion({
+    //             name: action.payload.name,
+    //             description: action.payload.description,
+    //             price: action.payload.price,
+    //             categories: [...action.payload.categories],
+    //             optionGroups:[],
+    //             photoUrl:action.payload.PhotoUrl
+    //           }),
+    //         })
+    //         .then(() => {
+    //           dispatch(StoreAction.loadStoreFirebase());
+    //         })
+    //         .catch((e) => {
+    //           console.log(e.message);
+    //         });
+    //     })
+    //   )
+    //   .catch((e) => console.log(e.message));
     
   } 
   if (StoreAction.Types.LOAD_STORE_FIREBASE === action.type) {

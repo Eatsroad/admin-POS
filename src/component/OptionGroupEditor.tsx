@@ -9,15 +9,14 @@ interface props {
 
 const OptionGroupEditor: React.FC<props> = (props) => {
     const menu = useSelector((state: RootState) => state.Store.menu.optionGroups);
-    const [options,setOptions] = useState([{name:'',price:0}]);
+    const [options,setOptions] = useState<any>();
     const [newOptionGroupName,setNewOptionGroupName]=useState('');
     const [newMaxSelect,setNewMaxSelect]= useState(0);
     const dispatch = useDispatch();
-
     const [newOptionName,setNewOptionName]=useState('');
     const [newOptionPrice,setNewOptionPrice]= useState(0);
-    useEffect(()=>{
 
+    useEffect(()=>{
     },[options])
 
     const onChangeName = (e: any) => {
@@ -38,16 +37,14 @@ const OptionGroupEditor: React.FC<props> = (props) => {
         setNewMaxSelect( parseInt(newMaxSelect) );
     };
 
-
     const onSubmitOptionGroup=()=>{
+        
         menu.push({
             name: newOptionGroupName, max_select: newMaxSelect, options: [...options]
         });
-        console.log(menu);
         dispatch(
             StoreAction.addOptionGroupFirebase(newOptionGroupName,newMaxSelect,options)
         )
-        console.log(menu);
         setNewOptionGroupName('');
         setNewMaxSelect(0);
     }
@@ -87,7 +84,6 @@ const OptionGroupEditor: React.FC<props> = (props) => {
             <div className="AddedOptionsDiv">
                 <h2>추가된 세부 옵션 목록</h2>
                 {
-                    console.log(options)
                 }
                 {/*
 

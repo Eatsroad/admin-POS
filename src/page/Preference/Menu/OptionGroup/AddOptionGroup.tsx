@@ -7,8 +7,6 @@ interface props {}
 const AddOptionGroup: React.FC<props> = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-
     return (
         <>
             <div onClick={() => setIsModalOpen(!isModalOpen)}>옵션그룹 추가</div>

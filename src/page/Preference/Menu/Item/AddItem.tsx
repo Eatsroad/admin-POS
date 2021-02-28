@@ -5,25 +5,21 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@redux';
 import { StoreAction } from '@redux/actions';
-// import { finished } from 'stream';
-import { v4 as uuidv4 } from 'uuid';
-import { storage } from '@firebase';
 interface props {
   currentCategory: string;
-}
+};
 
 const AddItem: React.FC<props> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newMenuName, setNewMenuName] = useState('');
-  const [newMenuPrice, setNewMenuPrice] = useState(8000);
+  const [newMenuPrice, setNewMenuPrice] = useState(0);
   const [newMenuDescription, setNewMenuDescription] = useState('');
   const [newMenuCategories, setNewMenuCategories] = useState([]);
   const [attachement, setAttachment] = useState<string | null>(null);
-  const menu = useSelector((state: RootState) => state.Store.menu);
-  const dispatch = useDispatch();
-  const { storeId } = useSelector((state:RootState) => ({
-    storeId:state.Store.storeId
+  const { menu } = useSelector((state: RootState) => ({
+    menu: state.Store.menu
   }));
+  const dispatch = useDispatch();
 
   const handleOnClickAddBtn = () => {
     setIsModalOpen(true);
@@ -31,20 +27,11 @@ const AddItem: React.FC<props> = (props) => {
 
   const handleOnCancel = () => {
     setIsModalOpen(false);
+    setNewMenuName('');
+    setNewMenuPrice(0);
+    setNewMenuDescription('');
   };
-  const fileUpload = async () => {
-    let attachementUrl:string = '';
-    if(attachement !== null) {
-      const fileRef =  storage.ref().child(`${storeId}/${uuidv4()}`);
-      const response = await fileRef.putString(attachement, 'data_url');
-      attachementUrl = await response.ref.getDownloadURL();
-    };
-    return attachementUrl;
-  }
   const handleOnAdd = async () => { 
-    
-    const dataUrl = await fileUpload();
-    console.log(dataUrl);
     setNewMenuName('');
     setNewMenuPrice(0);
     setNewMenuDescription('');
@@ -56,7 +43,7 @@ const AddItem: React.FC<props> = (props) => {
         newMenuPrice,
         newMenuDescription,
         newMenuCategories,
-        dataUrl
+        attachement
       )
     );
     
