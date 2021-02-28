@@ -9,8 +9,6 @@ import PreferenceStorePage from 'page/Preference/Store';
 interface props {}
 
 const PreferenceRouter: React.FC<props> = (props) => {
-  console.log('hihihi');
-  console.log(process.env);
 
   return (
     <div className="PreferencePage">

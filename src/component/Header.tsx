@@ -43,7 +43,6 @@ const Header: React.FC<props> = (props) => {
     const timestr = `${padNum(date.getHours())}:${padNum(
       date.getMinutes()
     )}:${padNum(date.getSeconds())}`;
-
     return (
       <>
         <span style={{ fontSize: '11px' }}>{datestr}</span>

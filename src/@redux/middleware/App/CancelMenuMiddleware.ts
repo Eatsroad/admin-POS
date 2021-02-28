@@ -43,7 +43,6 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
                 }
                 break;
             }
-            
         }
         dbService
             .collection('stores')
@@ -59,7 +58,6 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
                 console.log('success')
             } )
     };
-    
     if(CancelMenuAction.Types.Q_CANCEL_ITEM_TABLE === action.type) {
         let checkedTableItem = getState().CancelMenu.checkedTableItem;
         let orders = getState().Order.orders;
@@ -94,7 +92,7 @@ export const CancelMenuMiddleware = ({dispatch, getState}:param) => (
                 'deny_state':true
             }).then(() => {
                 console.log('success')
-            } )
+            })
     }
 };
 
