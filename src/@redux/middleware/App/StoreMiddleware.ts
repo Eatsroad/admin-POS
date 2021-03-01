@@ -16,9 +16,9 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
 ) => async (action: Action) => {
   next(action);
   
-  const category = getState().Store.menu.categories;
-  const categoryLength = category.length;
-  const option = getState().Store.menu.optionGroups;
+  // const category = getState().Store.menu.categories;
+  // const categoryLength = category.length;
+  // const option = getState().Store.menu.optionGroups;
   const optionGroupsLength=getState().Store.menu.optionGroups.length;
     
   if(StoreAction.Types.ADD_OPTIONGROUP_FIREBASE===action.type){
@@ -63,7 +63,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
               modifOptions.maxSelect=0;
               modifOptions.name=groupName;
               for(let j=0; j<getState().Store.menu.optionGroups[i].options.length;j++){
-                  if(getState().Store.menu.optionGroups[i].options[j].name!=optionName){
+                  if(getState().Store.menu.optionGroups[i].options[j].name!==optionName){
                       modifOptions.options.push(getState().Store.menu.optionGroups[i].options[j]);
                   }
               }
@@ -110,7 +110,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
 
       let arr:any=[];
       for(let i=0; i<optionGroupsLength;i++){
-          if(getState().Store.menu.optionGroups[i].name!=groupName) {
+          if(getState().Store.menu.optionGroups[i].name!==groupName) {
               arr.push(getState().Store.menu.optionGroups[i]);
           }
       }

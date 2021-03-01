@@ -1,4 +1,4 @@
-import { Buckets, NewOrders, Orders, Receipt } from '@redux/reducers/OrderReducer';
+import { Buckets, NewOrders, } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import { renderArray } from '@util/renderArr';
 import ArrowR from '@util/image/icon/icon_arrow_right_white_x3.png';

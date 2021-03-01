@@ -1,7 +1,7 @@
 import { dbService } from '@firebase';
 import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
-import { Buckets, Orders, Receipt } from '@redux/reducers/OrderReducer';
+import { Buckets, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
 import numberWithCommas from '@util/addCommaFunc';
 const {ipcRenderer} = window;
@@ -73,6 +73,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                             }
                         }
                     }
+
                     ipcRenderer.send('msgReceive', {
                         content:receipts[count-1].receipts,
                         order_count:receipts[count-1].receipts.length,
@@ -84,8 +85,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     count = receipts.length;
                 }
             });
-            
-            
     };
     if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {
         let newReceipts: Receipt[] = [];

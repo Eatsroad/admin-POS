@@ -1,5 +1,5 @@
 import { NewOrders } from '@redux/reducers/OrderReducer';
-import React, { useState } from 'react';
+import React from 'react';
 import NewOrderItem from './NewOrderItem';
 interface Props {
     selectedOrder: NewOrders | undefined;

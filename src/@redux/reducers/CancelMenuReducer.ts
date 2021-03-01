@@ -1,4 +1,3 @@
-import StateManager from 'react-select';
 import { CancelMenuAction } from '../actions';
 import { Action } from '../Types';
 

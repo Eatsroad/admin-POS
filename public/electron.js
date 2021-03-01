@@ -14,6 +14,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({ 
     minWidth: 900, 
     minHeight: 680,
+    autoHideMenuBar:true,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, '/preload.js'),
@@ -32,6 +33,7 @@ function createWindow() {
   mainWindow.setResizable(true);
   mainWindow.on('closed', () => (mainWindow = null));
   mainWindow.focus();
+  mainWindow.maximize();
 
   child = new BrowserWindow({
     width: 340, 
@@ -45,7 +47,7 @@ function createWindow() {
   });
   // child.setIgnoreMouseEvents(true);
   child.setAlwaysOnTop(true);
-  child.setPosition(electron.screen.getPrimaryDisplay().bounds.width-210, electron.screen.getPrimaryDisplay().bounds.height-60);
+  // child.setPosition(electron.screen.getPrimaryDisplay().bounds.width-210, electron.screen.getPrimaryDisplay().bounds.height-60);
   child.loadURL(
     `file://${path.join(__dirname, "/getMsg.html")}`
   );

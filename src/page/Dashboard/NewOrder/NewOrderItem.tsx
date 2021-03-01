@@ -55,7 +55,7 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
                         }
                         <div>{name}</div>
                     </div>
-                    <div>{options}</div>
+                    {/* <div>{options}</div> */}
                 </div>
                 <div className="NewOrderCountPrice">
                     <div>X{count}</div>
