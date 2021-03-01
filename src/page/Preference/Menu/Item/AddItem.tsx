@@ -31,6 +31,7 @@ const AddItem: React.FC<props> = (props) => {
     setNewMenuName('');
     setNewMenuPrice(0);
     setNewMenuDescription('');
+    setAttachment(null);
   };
   const handleOnAdd = async () => { 
     setNewMenuName('');
@@ -52,30 +53,38 @@ const AddItem: React.FC<props> = (props) => {
     const {
       target: { files },
     } = event;
+
     const theFile = files[0];
     const maxWidth = 375;
     const maxHeight = 375;
     const compressFormat = 'JPEG';
-    const quality = 50;
+    const quality = 100;
     const rotation = 0;
-    if(theFile) {
-      try{
-        Resizer.imageFileResizer(theFile,maxWidth, maxHeight, compressFormat, quality, rotation,
-          uri => {
-              setAttachment(uri);
-          },
-          'base64'
-      );
-      }
-      catch(err) {
-      }
-    }
     const reader = new FileReader();
+    
     reader.onload = (finishedEvent:any) => {
       const { 
         currentTarget: { result },
       } = finishedEvent;
-      setAttachment(result);
+      if(result) {
+        try{
+          Resizer.imageFileResizer(
+            theFile,
+            maxWidth, 
+            maxHeight, 
+            compressFormat, 
+            quality, 
+            rotation,
+            uri => {
+              console.log(uri)
+              setAttachment(uri);
+            },
+            'base64'
+          );
+        }
+        catch(err) {
+        }
+      }
     }
     reader.readAsDataURL(theFile);
   }
@@ -121,7 +130,7 @@ const AddItem: React.FC<props> = (props) => {
           />
           { attachement && 
             <div>
-              <img src={attachement} style={{width:"100px", height:"100px"}} alt="menuImg"/>
+              <img src={attachement} style={{width:"100px", height:"100px"}}  alt="menuImg"/>
               <button onClick={onClearAttachment}>취소</button>
             </div>
           }
