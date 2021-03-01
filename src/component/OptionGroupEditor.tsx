@@ -11,7 +11,7 @@ interface OptionsType{
 };
 interface newOptionGroup {
     name:string,
-    max_select:number,
+    maxSelect:number,
     options: OptionsType[],
 }
 const OptionGroupEditor: React.FC<props> = (props) => {
@@ -57,7 +57,7 @@ const OptionGroupEditor: React.FC<props> = (props) => {
         props.setIsModalOpen(false);
         const optionGroupObj:newOptionGroup = {
             name: newOptionGroupName,
-            max_select: newMaxSelect,
+            maxSelect: newMaxSelect,
             options: options
         }
         dispatch(

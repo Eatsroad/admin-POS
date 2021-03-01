@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
@@ -7,12 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 interface Props {
     name: string;
     id:string
-    options:any[];
+    options:any;
     itemTotalPrice: number;
     count:number;
 }
 
-const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
+const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
     const { checkItemTrigger, checkItemButtonState, showModalState, initCheckedItems } = useSelector((state:RootState) => ({
         checkItemTrigger:state.Observer.checkItemTrigger,
         checkItemButtonState:state.Observer.checkItemButtonState,
@@ -32,7 +33,6 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
             dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
         }
     };
-   
     useEffect(() => {
         if(checkItemButtonState !== prevTriggerState) {
             setCheckedState(checkItemTrigger);
@@ -55,7 +55,32 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
                         }
                         <div>{name}</div>
                     </div>
-                    <div>{options}</div>
+                    <div>
+                        
+                        {
+                            options.map((doc:any) => {
+                                return (
+                                    <div>
+                                        <div>{doc.name}</div>
+                                        <div>
+                                            {
+                                                doc.options.map((option:any) => {
+                                                    if(option.state) {
+                                                        return (
+                                                            <div>
+                                                                <div>{option.name}{numberWithCommas(option.price)}원</div>
+                                                            </div>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        
+                    </div>
                 </div>
                 <div className="NewOrderCountPrice">
                     <div>X{count}</div>
