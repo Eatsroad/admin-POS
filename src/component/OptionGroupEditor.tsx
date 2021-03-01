@@ -83,14 +83,7 @@ const OptionGroupEditor: React.FC<props> = (props) => {
             </div>
             <div className="AddedOptionsDiv">
                 <h2>추가된 세부 옵션 목록</h2>
-                {
-                }
-                {/*
-
-                 options.map 들어갈 곳  ${options.map(name=> {return(<div>{name.name}</div>)})
-                */}
             </div>
-
             <div className="ButtonDiv">
                 <button onClick={()=>{onSubmitOptionGroup()}}>저장</button>
             </div>
