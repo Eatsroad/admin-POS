@@ -32,9 +32,7 @@ export const StoreMiddleware = ({ dispatch, getState }: param) => (
                 store.ref
                     .update({
                         'menu.optionGroups': firebase.firestore.FieldValue.arrayUnion({
-                            name: action.payload.name,
-                            maxSelect:action.payload.max_Select,
-                            options:action.payload.options
+                            ...action.payload.newOptionGroups
                         }),
                     })
                     .then(() => {

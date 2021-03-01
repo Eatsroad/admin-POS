@@ -54,16 +54,12 @@ export const deleteOptionFirebase:ActionCreator=(
   }
 }
 export const addOptionGroupFirebase:ActionCreator=(
-    name:string,
-    max_Select:number,
-    options:any,
+    newOptionGroups,
 )=>{
   return{
     type:Types.ADD_OPTIONGROUP_FIREBASE,
     payload:{
-      name:name,
-      max_Select:max_Select,
-      options:options,
+      newOptionGroups:newOptionGroups
     }
   }
 }

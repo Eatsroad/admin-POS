@@ -1,18 +1,21 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import numberWithCommas from '@util/addCommaFunc';
+import { O_DSYNC } from 'constants';
+import OptionGroups from 'page/Preference/Menu/OptionGroup';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 interface Props {
     name: string;
     id:string
-    options:any[];
+    options:any;
     itemTotalPrice: number;
     count:number;
 }
 
-const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
+const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
     const { checkItemTrigger, checkItemButtonState, showModalState, initCheckedItems } = useSelector((state:RootState) => ({
         checkItemTrigger:state.Observer.checkItemTrigger,
         checkItemButtonState:state.Observer.checkItemButtonState,
@@ -55,7 +58,29 @@ const NewOrderItem = ({name, id,  options, itemTotalPrice, count}:Props) => {
                         }
                         <div>{name}</div>
                     </div>
-                    {/* <div>{options}</div> */}
+                    <div className="noio-con">
+                        {
+                            options.map((doc:any) => {
+                                return (
+                                    <div className="noio-o-con">
+                                        <div className="noio-o-name">{doc.name} : </div>
+                                        <div className="noio-n-p">
+                                            {
+                                                doc.options.map((option:any) => {
+                                                    if(option.state) {
+                                                        return (
+                                                            <div>{option.name}({numberWithCommas(option.price)}원)</div>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
                 </div>
                 <div className="NewOrderCountPrice">
                     <div>X{count}</div>
