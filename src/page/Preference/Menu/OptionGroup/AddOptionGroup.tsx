@@ -20,7 +20,7 @@ const AddOptionGroup: React.FC<props> = (props) => {
             >
                 <div>옵션그룹을 추가해보세요</div>
                 <div>
-                    <OptionGroupEditor onChange={() => {}} />
+                    <OptionGroupEditor setIsModalOpen={setIsModalOpen}/>
                 </div>
                 <div>
                     <button onClick={()=>setIsModalOpen(false)}>닫기</button>

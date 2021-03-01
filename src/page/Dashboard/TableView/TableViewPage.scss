@@ -206,9 +206,21 @@
               justify-content: space-between;
               font-size: 15px;
               color: #525252;
+              margin-bottom: 6px;
             }
             .TableViewModalContentOptions{
               padding-bottom: 12px;
+              font-size: 15px;
+              color: #525252;
+              .tvmco-con{
+                display: flex;
+                .tvmco-o-name{
+
+                }
+                .tvmco-name-price{
+
+                }
+              }
             }
             .TableLine{
               border: solid 1px #cccccc;

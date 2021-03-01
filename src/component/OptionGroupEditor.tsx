@@ -4,20 +4,28 @@ import {RootState} from "../@redux";
 import "./OptionGroupEditor.scss"
 import {StoreAction} from "../@redux/actions";
 interface props {
-    onChange: () => any;
+    setIsModalOpen:(state:boolean) => void
 }
-
+interface OptionsType{
+    name:string,
+    price:number
+};
+interface newOptionGroup {
+    name:string,
+    max_select:number,
+    options: OptionsType[],
+}
 const OptionGroupEditor: React.FC<props> = (props) => {
-    const menu = useSelector((state: RootState) => state.Store.menu.optionGroups);
-    const [options,setOptions] = useState<any>();
-    const [newOptionGroupName,setNewOptionGroupName]=useState('');
-    const [newMaxSelect,setNewMaxSelect]= useState(0);
-    const dispatch = useDispatch();
-    const [newOptionName,setNewOptionName]=useState('');
-    const [newOptionPrice,setNewOptionPrice]= useState(0);
+    const { optionGroups, } = useSelector((state: RootState) => ({
+        optionGroups: state.Store.menu.optionGroups
+    }));
+    const [ options, setOptions ] = useState<OptionsType[]>([]);
+    const [ newOptionGroupName, setNewOptionGroupName ] = useState<string>('');
+    const [ newMaxSelect, setNewMaxSelect ] = useState<number>(0);
+    const [ newOptionName, setNewOptionName ] = useState<string>('');
+    const [ newOptionPrice, setNewOptionPrice ] = useState<number>(0);
 
-    useEffect(()=>{
-    },[options])
+    const dispatch = useDispatch();
 
     const onChangeName = (e: any) => {
         const name = e.target.value;
@@ -28,22 +36,36 @@ const OptionGroupEditor: React.FC<props> = (props) => {
         const newPrice = e.target.value;
         setNewOptionPrice( parseInt(newPrice) );
     };
+
     const onChangeGroupName = (e: any) => {
         const name = e.target.value;
         setNewOptionGroupName(name);
     };
+
     const onChangeMaxSelect = (e: any) => {
         const newMaxSelect = e.target.value;
         setNewMaxSelect( parseInt(newMaxSelect) );
     };
 
+    const onClickAddNewOption = () => {
+        const newOption:OptionsType = {
+            name: newOptionName,
+            price: newOptionPrice
+        };
+        setOptions((prev:OptionsType[]) => [...prev, newOption]);
+        setNewOptionName('');
+        setNewOptionPrice(0);
+    };
+
     const onSubmitOptionGroup=()=>{
-        
-        menu.push({
-            name: newOptionGroupName, max_select: newMaxSelect, options: [...options]
-        });
+        props.setIsModalOpen(false);
+        const optionGroupObj:newOptionGroup = {
+            name: newOptionGroupName,
+            max_select: newMaxSelect,
+            options: options
+        }
         dispatch(
-            StoreAction.addOptionGroupFirebase(newOptionGroupName,newMaxSelect,options)
+            StoreAction.addOptionGroupFirebase(optionGroupObj)
         )
         setNewOptionGroupName('');
         setNewMaxSelect(0);
@@ -64,18 +86,10 @@ const OptionGroupEditor: React.FC<props> = (props) => {
                 <div>
                     <div className="OptionGroupDiv">
                         <h1>옵션 이름</h1>
-                        <input minLength={options.length} onChange={onChangeName}/>
+                        <input minLength={options?.length} onChange={onChangeName}/>
                         <h1>옵션 가격</h1>
                         <input onChange={onChangePrice}/>
-                        <button onClick={(e:any)=>{
-                            let optionList =options;
-                            optionList.push({
-                                name:newOptionName,
-                                price:newOptionPrice
-                            });
-                            setOptions(optionList);
-                            console.log(options);
-                        }}>
+                        <button onClick={onClickAddNewOption}>
                             옵션 추가
                         </button>
                     </div>
@@ -84,11 +98,15 @@ const OptionGroupEditor: React.FC<props> = (props) => {
             <div className="AddedOptionsDiv">
                 <h2>추가된 세부 옵션 목록</h2>
                 {
+                    options?.map((option) => {
+                        return(
+                            <div key={option.name}>
+                                <div>{option.name}{option.price}</div>
+                                {/* <div></div> */}
+                            </div>
+                        )
+                    })
                 }
-                {/*
-
-                 options.map 들어갈 곳  ${options.map(name=> {return(<div>{name.name}</div>)})
-                */}
             </div>
 
             <div className="ButtonDiv">

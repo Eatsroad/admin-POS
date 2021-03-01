@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import { Buckets } from '@redux/reducers/OrderReducer';
@@ -62,7 +64,27 @@ const TableViewItem = ({item, index, length, id, orderTime}:Props) => {
                 <div>{numberWithCommas(item.price)}원</div>
             </div>
             <div className="TableViewModalContentOptions">
-                <div>{item.options}</div>
+
+                {
+                    item.options.map((doc:any) => {
+                        return (
+                            <div className="tvmco-con">
+                                <div className="tvmco-o-name">{doc.name} : </div>
+                                <div className="tvmco-name-price">
+                                    {
+                                        doc.options.map((option:any) => {
+                                            if(option.state) {
+                                                return (
+                                                    <div>{option.name}({numberWithCommas(option.price)}원)</div>
+                                                )
+                                            }
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
             {
                 index === length -1? <></>:<div className="TableLine"/>
