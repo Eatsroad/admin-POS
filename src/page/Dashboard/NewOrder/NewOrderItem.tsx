@@ -3,8 +3,6 @@
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import numberWithCommas from '@util/addCommaFunc';
-import { O_DSYNC } from 'constants';
-import OptionGroups from 'page/Preference/Menu/OptionGroup';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 interface Props {
@@ -35,7 +33,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
             dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
         }
     };
-   
     useEffect(() => {
         if(checkItemButtonState !== prevTriggerState) {
             setCheckedState(checkItemTrigger);
@@ -80,7 +77,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
                             })
                         }
                     </div>
-
                 </div>
                 <div className="NewOrderCountPrice">
                     <div>X{count}</div>

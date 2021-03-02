@@ -39,8 +39,9 @@ interface Options_B{
     option_groups: Option_B[]
 }
 interface Option_B{
-    option_group_name: string,
-    option_list:OptionList[]
+    name: string,
+    maxSelect: number,
+    options:OptionList[]
 }
 interface OptionList{
     name: string,
