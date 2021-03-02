@@ -28,6 +28,7 @@ export interface Store {
     address: string;
     phone: string;
     table:number;
+    store_photo_url:string
   };
   menu: {
     categories: Category[];
@@ -43,6 +44,7 @@ const initialState: Store = {
     address: '',
     phone: '',
     table:0,
+    store_photo_url:''
   },
   menu: {
     categories: [],

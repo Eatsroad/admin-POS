@@ -9,7 +9,12 @@ export enum Types {
   ADD_MENU_FIREBASE = '[Store] add menu firebase',
   MODIF_TABLE = '[Store] modify store table',
   S_STORE_ID = '[Store] set store id',
-}
+  MODIFY_CATEGORY_FIREBASE = '[Store] modify category firebase',
+  DELETE_CATEGORY_FIREBASE = '[Store] delete category firebase',
+  ADD_OPTIONGROUP_FIREBASE= '[STORE] add option to firebase',
+  DELETE_OPTION_FIREBASE= '[STORE] delete option from firebase',
+  DELETE_OPTIONGROUP_FIREBASE= '[STORE] delete option from firebase',
+};
 export const modifTable: ActionCreator = (table:number) => {
   return {
     type:Types.MODIF_TABLE,
@@ -26,11 +31,72 @@ export const setStoreId: ActionCreator = (storeId:string) => {
     }
   }
 }
+export const deleteOptionGroupFirebase:ActionCreator=(
+    name:string,
+)=>{
+  return{
+    type:Types.DELETE_OPTIONGROUP_FIREBASE,
+    payload:{
+      name:name,
+    }
+  }
+}
+export const deleteOptionFirebase:ActionCreator=(
+    group_name:string,
+    option_name:string
+)=>{
+  return{
+    type:Types.DELETE_OPTION_FIREBASE,
+    payload:{
+      name:group_name,
+      optionName:option_name,
+    }
+  }
+}
+export const addOptionGroupFirebase:ActionCreator=(
+    newOptionGroups,
+)=>{
+  return{
+    type:Types.ADD_OPTIONGROUP_FIREBASE,
+    payload:{
+      newOptionGroups:newOptionGroups
+    }
+  }
+}
+export const modifyCategoryFireBase: ActionCreator = (
+    name: string,
+    description: string,
+    id:number,
+) => {
+  return {
+    type: Types.MODIFY_CATEGORY_FIREBASE,
+    payload: {
+      name: name,
+      description: description,
+      id:id,
+    },
+  };
+};
+export const deleteCategoryFireBase: ActionCreator = (
+    name: string,
+    description: string,
+    id:number,
+) => {
+  return {
+    type: Types.DELETE_CATEGORY_FIREBASE,
+    payload: {
+      name: name,
+      description: description,
+      id:id,
+    },
+  };
+};
 export const addMenuFirebase: ActionCreator = (
   name,
   price,
   description,
-  categories
+  categories,
+  PhotoUrl
 ) => {
   return {
     type: Types.ADD_MENU_FIREBASE,
@@ -39,10 +105,10 @@ export const addMenuFirebase: ActionCreator = (
       price: price,
       description: description,
       categories: categories,
+      PhotoUrl:PhotoUrl
     },
   };
 };
-
 export const addCategoryFireBase: ActionCreator = (
   name: string,
   description: string
@@ -55,7 +121,6 @@ export const addCategoryFireBase: ActionCreator = (
     },
   };
 };
-
 export const setStoreInformation: ActionCreator = (
   name: string,
   address: string,
@@ -72,7 +137,6 @@ export const setStoreInformation: ActionCreator = (
     },
   };
 };
-
 export const setStoreMenu: ActionCreator = (menu) => {
   return {
     type: Types.SET_STORE_MENU,
@@ -81,7 +145,6 @@ export const setStoreMenu: ActionCreator = (menu) => {
     },
   };
 };
-
 export const loadStoreFirebase: ActionCreator = () => {
   return {
     type: Types.LOAD_STORE_FIREBASE,

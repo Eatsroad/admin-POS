@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import './AddItem.scss';
-
 import Modal from 'react-modal';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@redux';
 import { StoreAction } from '@redux/actions';
-
+import Resizer from 'react-image-file-resizer';
 interface props {
   currentCategory: string;
-}
+};
 
 const AddItem: React.FC<props> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newMenuName, setNewMenuName] = useState('');
-  const [newMenuPrice, setNewMenuPrice] = useState(8000);
+  const [newMenuPrice, setNewMenuPrice] = useState(0);
   const [newMenuDescription, setNewMenuDescription] = useState('');
   const [newMenuCategories, setNewMenuCategories] = useState([]);
-  const menu = useSelector((state: RootState) => state.Store.menu);
+  const [attachement, setAttachment] = useState<any>(null);
+  const { menu } = useSelector((state: RootState) => ({
+    menu: state.Store.menu
+  }));
   const dispatch = useDispatch();
 
   const handleOnClickAddBtn = () => {
@@ -26,33 +28,75 @@ const AddItem: React.FC<props> = (props) => {
 
   const handleOnCancel = () => {
     setIsModalOpen(false);
+    setNewMenuName('');
+    setNewMenuPrice(0);
+    setNewMenuDescription('');
+    setAttachment(null);
   };
-
-  const handleOnAdd = () => {
+  const handleOnAdd = async () => { 
+    setNewMenuName('');
+    setNewMenuPrice(0);
+    setNewMenuDescription('');
+    setIsModalOpen(false);
+    setAttachment(null);
     dispatch(
       StoreAction.addMenuFirebase(
         newMenuName,
         newMenuPrice,
         newMenuDescription,
-        newMenuCategories
+        newMenuCategories,
+        attachement
       )
     );
-    setNewMenuName('');
-    setNewMenuPrice(0);
-    setNewMenuDescription('');
-    setIsModalOpen(false);
   };
+  const onFileChange = (event: any) => {
+    const {
+      target: { files },
+    } = event;
 
+    const theFile = files[0];
+    const maxWidth = 375;
+    const maxHeight = 375;
+    const compressFormat = 'JPEG';
+    const quality = 100;
+    const rotation = 0;
+    const reader = new FileReader();
+    
+    reader.onload = (finishedEvent:any) => {
+      const { 
+        currentTarget: { result },
+      } = finishedEvent;
+      if(result) {
+        try{
+          Resizer.imageFileResizer(
+            theFile,
+            maxWidth, 
+            maxHeight, 
+            compressFormat, 
+            quality, 
+            rotation,
+            uri => {
+              console.log(uri)
+              setAttachment(uri);
+            },
+            'base64'
+          );
+        }
+        catch(err) {
+        }
+      }
+    }
+    reader.readAsDataURL(theFile);
+  }
   const handleOnSelectCategories = (data: any) => {
     setNewMenuCategories(data.map((cat: any) => cat.value));
   };
-
+  const onClearAttachment = () => setAttachment(null);
   return (
     <>
       <div className="AddBtn" onClick={handleOnClickAddBtn}>
         추가
       </div>
-
       <Modal
         isOpen={isModalOpen}
         className="Modal"
@@ -79,6 +123,17 @@ const AddItem: React.FC<props> = (props) => {
             onChange={(e) => setNewMenuDescription(e.target.value)}
             value={newMenuDescription}
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => onFileChange(e)}
+          />
+          { attachement && 
+            <div>
+              <img src={attachement} style={{width:"100px", height:"100px"}}  alt="menuImg"/>
+              <button onClick={onClearAttachment}>취소</button>
+            </div>
+          }
           <Select
             isMulti={true}
             options={menu.categories.map((cat) => {
