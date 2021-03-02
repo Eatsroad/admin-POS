@@ -52,9 +52,12 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       return a.table_number - b.table_number;
     });
     const rederArr:Orders[] = [];
-    for(let i= page*9 ; i<page + 9 ; i++) {
+    for(let i= page*9 ; i < page*9 + 9 ; i++) {
+      console.log(orders[i])
       if( orders[i] !== undefined ) rederArr.push(orders[i]);
+      
       else break;
+      console.log(rederArr);
     }
     return rederArr;
   };
@@ -89,6 +92,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setTotalPage(Math.floor(orders.length/9) + 1);
     }
   }, []);
+  console.log(orders)
   return(
     <div className="TableViewPage">
       <CancelModal denyButton={denyButton}/>

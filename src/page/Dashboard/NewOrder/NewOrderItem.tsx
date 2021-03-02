@@ -35,7 +35,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
             dispatch(CancelMenuAction.checkForCancelItem(id, !checkedState));
         }
     };
-   
     useEffect(() => {
         if(checkItemButtonState !== prevTriggerState) {
             setCheckedState(checkItemTrigger);
@@ -80,7 +79,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
                             })
                         }
                     </div>
-
                 </div>
                 <div className="NewOrderCountPrice">
                     <div>X{count}</div>

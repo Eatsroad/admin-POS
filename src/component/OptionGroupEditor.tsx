@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../@redux";
+import React, { useState} from "react";
+import { useDispatch } from "react-redux";
 import "./OptionGroupEditor.scss"
 import {StoreAction} from "../@redux/actions";
 interface props {
@@ -12,13 +11,10 @@ interface OptionsType{
 };
 interface newOptionGroup {
     name:string,
-    max_select:number,
+    maxSelect:number,
     options: OptionsType[],
 }
 const OptionGroupEditor: React.FC<props> = (props) => {
-    const { optionGroups, } = useSelector((state: RootState) => ({
-        optionGroups: state.Store.menu.optionGroups
-    }));
     const [ options, setOptions ] = useState<OptionsType[]>([]);
     const [ newOptionGroupName, setNewOptionGroupName ] = useState<string>('');
     const [ newMaxSelect, setNewMaxSelect ] = useState<number>(0);
@@ -61,7 +57,7 @@ const OptionGroupEditor: React.FC<props> = (props) => {
         props.setIsModalOpen(false);
         const optionGroupObj:newOptionGroup = {
             name: newOptionGroupName,
-            max_select: newMaxSelect,
+            maxSelect: newMaxSelect,
             options: options
         }
         dispatch(
@@ -108,7 +104,6 @@ const OptionGroupEditor: React.FC<props> = (props) => {
                     })
                 }
             </div>
-
             <div className="ButtonDiv">
                 <button onClick={()=>{onSubmitOptionGroup()}}>저장</button>
             </div>

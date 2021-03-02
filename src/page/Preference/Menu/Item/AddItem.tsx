@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@redux';
 import { StoreAction } from '@redux/actions';
+import Resizer from 'react-image-file-resizer';
 interface props {
   currentCategory: string;
 };
@@ -15,7 +16,7 @@ const AddItem: React.FC<props> = (props) => {
   const [newMenuPrice, setNewMenuPrice] = useState(0);
   const [newMenuDescription, setNewMenuDescription] = useState('');
   const [newMenuCategories, setNewMenuCategories] = useState([]);
-  const [attachement, setAttachment] = useState<string | null>(null);
+  const [attachement, setAttachment] = useState<any>(null);
   const { menu } = useSelector((state: RootState) => ({
     menu: state.Store.menu
   }));
@@ -30,6 +31,7 @@ const AddItem: React.FC<props> = (props) => {
     setNewMenuName('');
     setNewMenuPrice(0);
     setNewMenuDescription('');
+    setAttachment(null);
   };
   const handleOnAdd = async () => { 
     setNewMenuName('');
@@ -46,19 +48,43 @@ const AddItem: React.FC<props> = (props) => {
         attachement
       )
     );
-    
   };
   const onFileChange = (event: any) => {
     const {
       target: { files },
     } = event;
+
     const theFile = files[0];
+    const maxWidth = 375;
+    const maxHeight = 375;
+    const compressFormat = 'JPEG';
+    const quality = 100;
+    const rotation = 0;
     const reader = new FileReader();
+    
     reader.onload = (finishedEvent:any) => {
       const { 
         currentTarget: { result },
       } = finishedEvent;
-      setAttachment(result);
+      if(result) {
+        try{
+          Resizer.imageFileResizer(
+            theFile,
+            maxWidth, 
+            maxHeight, 
+            compressFormat, 
+            quality, 
+            rotation,
+            uri => {
+              console.log(uri)
+              setAttachment(uri);
+            },
+            'base64'
+          );
+        }
+        catch(err) {
+        }
+      }
     }
     reader.readAsDataURL(theFile);
   }
@@ -104,7 +130,7 @@ const AddItem: React.FC<props> = (props) => {
           />
           { attachement && 
             <div>
-              <img src={attachement} style={{width:"100px", height:"100px"}} alt="menuImg"/>
+              <img src={attachement} style={{width:"100px", height:"100px"}}  alt="menuImg"/>
               <button onClick={onClearAttachment}>취소</button>
             </div>
           }
