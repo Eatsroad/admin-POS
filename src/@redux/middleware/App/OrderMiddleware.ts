@@ -31,6 +31,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 let receipts:any[] = [];
                 snapShot.forEach((doc) => {
                     const data = doc.data();
+                    console.log(data);
                     const order = {
                         table_number:data.table_number,
                         table_id:doc.id,

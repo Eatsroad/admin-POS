@@ -56,7 +56,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
                         <div>{name}</div>
                     </div>
                     <div>
-                        
                         {
                             options.map((doc:any) => {
                                 return (
@@ -79,7 +78,6 @@ const NewOrderItem = ({name, id, options, itemTotalPrice, count}:Props) => {
                                 )
                             })
                         }
-                        
                     </div>
                 </div>
                 <div className="NewOrderCountPrice">
