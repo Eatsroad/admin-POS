@@ -38,7 +38,6 @@ const OptionGroups: React.FC<props> = (props) => {
       </div>
     );
   };
-
   const OptionTile = (props: any) => {
     return (
       <div className="option">
@@ -47,7 +46,6 @@ const OptionGroups: React.FC<props> = (props) => {
       </div>
     );
   };
-
   return (
     <div className="OptionGroups">
       <div className="OptionGroupsHeader">

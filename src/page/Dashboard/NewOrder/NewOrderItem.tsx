@@ -3,8 +3,6 @@
 import { RootState } from '@redux';
 import { CancelMenuAction } from '@redux/actions';
 import numberWithCommas from '@util/addCommaFunc';
-import { O_DSYNC } from 'constants';
-import OptionGroups from 'page/Preference/Menu/OptionGroup';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 interface Props {
