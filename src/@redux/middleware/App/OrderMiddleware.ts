@@ -3,9 +3,6 @@ import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
 import { Buckets, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
-import numberWithCommas from '@util/addCommaFunc';
-const {ipcRenderer} = window;
-
 interface param {
     dispatch: any;
     getState: () => RootState;
@@ -17,10 +14,10 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
     next(action);
    const storeId = window.localStorage.getItem('storeId');
    const orders = getState().Order.orders;
-   let count = 0;
 
     if(OrderAction.Types.C_LOAD_ORDERS === action.type) {
         window.localStorage.setItem('storeId',action.payload.storeId);
+        
         dbService
             .collection('stores')
             .doc(`${action.payload.storeId}`)
@@ -31,7 +28,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                 let receipts:any[] = [];
                 snapShot.forEach((doc) => {
                     const data = doc.data();
-                    console.log(data);
                     const order = {
                         table_number:data.table_number,
                         table_id:doc.id,
@@ -58,33 +54,8 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     })
                     orders.push(order);
                 });
-                // tempArr = receipts;
                 dispatch(OrderAction.setOrders(orders,receipts));
-                if(count < receipts.length) {
-                    count = receipts.length;
-                    console.log(receipts);
-                    let oCount = 0;
-                    let totalPrice = 0;
-                    console.log(receipts[count-1])
-                    for(let i=0 ; i<receipts.length ; i++){
-                        for(let k=0 ; k<receipts[i].receipts.length ; k++) {
-                            if(receipts[i].receipts[k].state === '주문 완료') {
-                                oCount+=receipts[i].receipts[k].count;
-                                totalPrice += receipts[i].receipts[k].item_total_price;
-                            }
-                        }
-                    }
-
-                    ipcRenderer.send('msgReceive', {
-                        content:receipts[count-1].receipts,
-                        order_count:receipts[count-1].receipts.length,
-                        table_number:receipts[count-1].table_number,
-                        count: oCount,
-                        total_price: numberWithCommas(totalPrice)
-                    });
-                } else if(count>receipts.length) {
-                    count = receipts.length;
-                }
+                
             });
     };
     if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {

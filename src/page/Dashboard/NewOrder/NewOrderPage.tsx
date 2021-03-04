@@ -11,6 +11,7 @@ import NewOrderDashRight from './NewOrderDashRight';
 import NewOrderDashConfig from './NewOrderDashConfig';
 import CancelModal from '../CancelModal';
 
+
 interface props {
   orders: NewOrders[]
 };
@@ -19,7 +20,9 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   const [selectedOrder, setSelectedOrder] = useState<NewOrders | undefined >(orders[0]);
   const [page, setPage ] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(1);
+  const [prvCount, setPrevCount] = useState<number>(0);
   const dispatch = useDispatch();
+  
   const pageArray = () => {
     return renderArray(orders, page);
   };
@@ -56,8 +59,11 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     };
     if(orders.length === 1) {
       setSelectedOrder(pageArray()[0]);
-    }
-  }, [selectedOrder,orders, page]);
+    };
+    if(prvCount === 0) {
+      setPrevCount(0);
+    };
+  }, [selectedOrder, orders, page]);
   
   return (
     <div className="NewOrderPage">
