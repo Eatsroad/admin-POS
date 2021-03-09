@@ -64,7 +64,6 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
       setPrevCount(0);
     };
   }, [selectedOrder, orders, page]);
-  
   return (
     <div className="NewOrderPage">
       <CancelModal denyButton={denyButton}/>

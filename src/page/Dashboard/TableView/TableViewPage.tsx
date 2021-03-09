@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CancelMenuAction, OrderAction, UIAction } from '@redux/actions';
 import { Orders } from '@redux/reducers/OrderReducer';
 import React, { useEffect, useState } from 'react';
@@ -13,32 +14,32 @@ import ArrowL from '@util/image/icon/icon_arrow_left_white_x3.png';
 interface props {
   orders:Orders[]
 };
-interface Receipt {
-  order_time:string,
-  state:string,
-  receipts:Buckets[],
-}
-interface Buckets{
-  name: string,
-  price: number,
-  id: string,
-  count: number,
-  options:Options_B[],
-  item_total_price: number,
-  state: string,
-}
-interface Options_B{
-  option_groups: Option_B[]
-}
-interface Option_B{
-  option_group_name: string,
-  option_list:OptionList[]
-}
-interface OptionList{
-  name: string,
-  price: number,
-  state: boolean,
-};
+// interface Receipt {
+//   order_time:string,
+//   state:string,
+//   receipts:Buckets[],
+// }
+// interface Buckets{
+//   name: string,
+//   price: number,
+//   id: string,
+//   count: number,
+//   options:Options_B[],
+//   item_total_price: number,
+//   state: string,
+// }
+// interface Options_B{
+//   option_groups: Option_B[]
+// }
+// interface Option_B{
+//   option_group_name: string,
+//   option_list:OptionList[]
+// }
+// interface OptionList{
+//   name: string,
+//   price: number,
+//   state: boolean,
+// };
 
 const TableViewPage: React.FC<props> = ({orders}:props) => {
   const dispatch = useDispatch();
@@ -55,9 +56,7 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     for(let i= page*9 ; i < page*9 + 9 ; i++) {
       console.log(orders[i])
       if( orders[i] !== undefined ) rederArr.push(orders[i]);
-      
       else break;
-      console.log(rederArr);
     }
     return rederArr;
   };
@@ -82,8 +81,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
     if(page !== totalPage - 1){
       setPage(page + 1);
     }
-    // ipcRenderer.send('print')
-  
   };
   useEffect(() => {
     if(orders.length%9 === 0) {
@@ -92,7 +89,6 @@ const TableViewPage: React.FC<props> = ({orders}:props) => {
       setTotalPage(Math.floor(orders.length/9) + 1);
     }
   }, []);
-  console.log(orders)
   return(
     <div className="TableViewPage">
       <CancelModal denyButton={denyButton}/>

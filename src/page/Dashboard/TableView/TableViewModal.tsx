@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { RootState } from '@redux';
 import { UIAction } from '@redux/actions';
 import { Orders, Receipt } from '@redux/reducers/OrderReducer';
@@ -75,9 +76,9 @@ const TableViewModal = ({modalClose, setModalState, curOrder, modalState }:Props
                                     :<button className="TableViewModalCancel_S" onClick={()=>dispatch(UIAction.showComfirmModal(true))}>주문 취소</button>
                                 }
                                 {
-                                     !showModalState
-                                     ?<button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
-                                     :<button onClick={()=>dispatch(UIAction.cancleDeny())} className="TableViewModalCheck_S">취소</button>
+                                    !showModalState
+                                    ?<button onClick={modalClose} className="TableViewModalCheck">결제 완료</button>
+                                    :<button onClick={()=>dispatch(UIAction.cancleDeny())} className="TableViewModalCheck_S">취소</button>
                                 }
                                 
                                 

@@ -81,20 +81,21 @@ const NewOrderDashLeft = ({orders, page, setSelectedOrder, blockClickDe, blockCl
                                         <div>{order.order_time}</div>
                                     </div>
                                     <div className="NewOrderContent">
-                                    {filter(order.receipts)[0].name}
-                                    {
-                                        receiptCount(order.receipts) === 1 
-                                        ?` ${filter(order.receipts)[0].count}개`
-                                        :`외 ${receiptCount(order.receipts)-1}개`
-                                    }
+                                        {filter(order.receipts)[0].name}
+                                        {
+                                            receiptCount(order.receipts) === 1 
+                                            ?` ${filter(order.receipts)[0].count}개`
+                                            :`외 ${receiptCount(order.receipts)-1}개`
+                                        }
+                                        <div className="payment">{order.payment[0]}{order.payment[1]}</div>
                                     </div>
                                     <div className="NewOrderPrice">
-                                    <div className="NewOrderSp">
-                                        <div>주문 보기</div>
-                                    </div>
-                                    <div className="NewOrderItemPrice">
-                                        <div>{numberWithCommas(itemPrice(order))}원</div>
-                                    </div>
+                                        <div className="NewOrderSp">
+                                            <div>주문 보기</div>
+                                        </div>
+                                        <div className="NewOrderItemPrice">
+                                            <div>{numberWithCommas(itemPrice(order))}원</div>
+                                        </div>
                                     </div>
                                 </div>
                             );

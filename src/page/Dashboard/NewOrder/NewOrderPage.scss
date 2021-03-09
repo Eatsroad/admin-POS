@@ -60,6 +60,19 @@
             padding-left: 20px;
             border-bottom: solid 1px  #999999;
             font-weight: bold;
+            justify-content: space-between;
+            .payment{
+              font-size: 13px;
+              background-color: #ff0000;
+              border-radius: 100px;
+              width: 44px;
+              height: 25px;
+              color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 20px;
+            }
           }
           .NewOrderPrice{
             // height: 46px;
@@ -135,6 +148,17 @@
             border-bottom: solid 2px rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: space-between;
+            .payment{
+              background-color: #ff0000;
+              width: 44px;
+              height: 25px;
+              border-radius: 100px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: white;
+              font-size: 13px;
+            }
           }
           .rightContentTimeButton{
             display: flex;
