@@ -145,7 +145,7 @@
             font-size: 17px;
             font-weight: bold;
             padding-bottom: 10px;
-            border-bottom: solid 2px rgba(0, 0, 0, 0.6);
+            
             display: flex;
             justify-content: space-between;
             .payment{
@@ -161,6 +161,7 @@
             }
           }
           .rightContentTimeButton{
+            border-top: solid 2px rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: space-between;
             align-items: center;

@@ -86,6 +86,7 @@ const TableViewItem = ({item, index, length, id, orderTime}:Props) => {
                     })
                 }
             </div>
+           
             {
                 index === length -1? <></>:<div className="TableLine"/>
             }

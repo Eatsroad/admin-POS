@@ -41,6 +41,9 @@ const NewOrderDashRight = ({selectedOrder, checkOrders, }:Props) => {
                       <div>Table {selectedOrder.table_number}</div>
                       <div className="payment">{selectedOrder.payment[0]}{selectedOrder.payment[1]}</div>
                   </div>
+                  <div>
+                    <div>요청 사항 : {selectedOrder.request ? `${selectedOrder.request}`:'없음'}</div>
+                  </div>
                   <div className="rightContentTimeButton">
                     <div className="rightContentTime">{selectedOrder.order_time}</div>
                     {
@@ -57,6 +60,7 @@ const NewOrderDashRight = ({selectedOrder, checkOrders, }:Props) => {
                 <div className="NewOrderSpecificPrice">
                   <div className="NewOrderSpecificTotal">총 금액</div>
                   <div className="NewOrderSpecificTotalPrice">{numberWithCommas(itemPrice(selectedOrder))}원</div>
+                  
                 </div>
               </div>
               <div className="NewOrderSpecificButton">

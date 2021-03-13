@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { RootState } from '@redux';
 import { ObserverAction } from '@redux/actions';
 import { Buckets, Receipt } from '@redux/reducers/OrderReducer';
@@ -32,13 +33,14 @@ const TableViewItems = ({doc, }:Props) => {
                 ?<div className="TableViewModalInnerContent">
                     <div className="TableViewModalTime">
                         <div>{doc.order_time}</div>
+                        <div className="payment">{doc.payment[0]}{doc.payment[1]}</div>
                         {
                             showModalState 
                             ? !checkItemButtonState
                                 ? <button className="TableViewModalButton" onClick={() => {dispatch(ObserverAction.triggerCheckAll_T());dispatch(ObserverAction.clickCheckButton())}}>전체 선택</button>
                                 : <button className="TableViewModalButton" onClick={() => {dispatch(ObserverAction.triggerCheckAll_F());dispatch(ObserverAction.clickCheckButton())}}>전체 선택 취소</button>
                             : <></>
-                            }
+                        }
                     </div>
                     {
                         doc.receipts.map((item:Buckets, index:number) => {
@@ -55,6 +57,9 @@ const TableViewItems = ({doc, }:Props) => {
                             }
                         })
                     }
+                    <div>
+                        <div>요청 사항 : {doc.request ? `${doc.request}`:'없음'}</div>
+                    </div>
                 </div>
                 :<></>
             }

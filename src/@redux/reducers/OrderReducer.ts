@@ -13,7 +13,8 @@ export interface Orders {
     state: boolean,
     order_state: boolean,
     orderAt:string,
-    payment:string
+    
+
 }
 export interface NewOrders {
     table_number:string,
@@ -21,12 +22,15 @@ export interface NewOrders {
     receipts: Buckets[],
     state: string,
     order_time:string,
-    payment:string
+    payment:string,
+    request:string
 }
 export interface Receipt {
     order_time:string,
     state:string,
     receipts:Buckets[],
+    payment:string,
+    request:string
 }
 export interface Buckets{
     name: string,

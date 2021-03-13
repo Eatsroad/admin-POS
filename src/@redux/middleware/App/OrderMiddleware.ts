@@ -48,6 +48,7 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                                 table_id:doc.id,
                                 receipts: tmpReceipts,
                                 payment:data.payment,
+                                request:data.request,
                                 ...rec
                             };
                             if(count !== 0) receipts.push(newOrder);
