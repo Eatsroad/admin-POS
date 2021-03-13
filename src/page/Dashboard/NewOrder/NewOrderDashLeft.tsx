@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Buckets, NewOrders, } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';
 import { renderArray } from '@util/renderArr';
