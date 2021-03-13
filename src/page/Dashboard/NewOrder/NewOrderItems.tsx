@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { NewOrders } from '@redux/reducers/OrderReducer';
 import React from 'react';
 import NewOrderItem from './NewOrderItem';
