@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable array-callback-return */
 import { Buckets, NewOrders, } from '@redux/reducers/OrderReducer';
 import numberWithCommas from '@util/addCommaFunc';

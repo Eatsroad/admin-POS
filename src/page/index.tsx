@@ -1,7 +1,6 @@
 import React from 'react';
 import './index.scss';
-
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DashbaordRouter from 'page/Dashboard';
 import LoginPage from 'page/Auth/LoginPage';
 import { useSelector } from 'react-redux';

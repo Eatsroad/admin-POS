@@ -3,6 +3,7 @@ import { RootState } from '@redux';
 import { OrderAction } from '@redux/actions';
 import { Buckets, Receipt } from '@redux/reducers/OrderReducer';
 import { Action } from '@redux/Types';
+
 interface param {
     dispatch: any;
     getState: () => RootState;
@@ -57,7 +58,6 @@ export const OrderMiddleware = ({dispatch, getState}:param) => (
                     orders.push(order);
                 });
                 dispatch(OrderAction.setOrders(orders,receipts));
-                
             });
     };
     if(OrderAction.Types.C_DENY_ORDER_ITEM === action.type) {

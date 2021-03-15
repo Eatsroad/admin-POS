@@ -10,7 +10,7 @@ import NewOrderDashLeft from './NewOrderDashLeft';
 import NewOrderDashRight from './NewOrderDashRight';
 import NewOrderDashConfig from './NewOrderDashConfig';
 import CancelModal from '../CancelModal';
-
+const audio = new Audio('./alretSound');
 
 interface props {
   orders: NewOrders[]
@@ -45,6 +45,7 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
     dispatch(UIAction.cancleDeny());
   }
   useEffect(() => {
+    audio.play();
     if(selectedOrder === undefined) {
       setSelectedOrder(pageArray()[0]);
     };
@@ -66,6 +67,9 @@ const NewOrder: React.FC<props> = ({orders}:props) => {
   }, [selectedOrder, orders, page]);
   return (
     <div className="NewOrderPage">
+      <audio autoPlay>
+        <source src="@util/sound/alretSound.wav"/>
+      </audio>
       <CancelModal denyButton={denyButton}/>
       <NewOrderDashConfig/>
       <div className="container">
